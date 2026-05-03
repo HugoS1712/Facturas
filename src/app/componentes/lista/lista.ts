@@ -14,7 +14,7 @@ export class Lista {
   public facturas: Factura[] = [];
   public tipo: string = 'text';
   public EtipoFactura = TipoFactura;
-
+  public claseFactura: string = 'factura';
   constructor() {
     this.facturas.push(new Factura(new Date(), 1, TipoFactura.A, "Cliente A"));
 
@@ -47,24 +47,9 @@ export class Lista {
   guardar() {
     console.info(this.facturas);
   }
-  cambiarTipo() {
-    switch (this.tipo) {
-      case "text":
-        this.tipo = "select"
-        break;
-      case "select":
-        this.tipo = "date"
-        break;
-      case "date":
-        this.tipo = "button"
-        break;
-      case "button":
-        this.tipo = "checkbox"
-        break;
-
-      default:
-        this.tipo = "text"
-        break;
-    }
+  cambiarFondo() {
+    this.claseFactura = this.facturas[0].tipo === this.EtipoFactura.A ? 'cuerpo-contraste' :
+      this.facturas[0].tipo === this.EtipoFactura.B ? 'cuerpo-pastel' : 'body';
   }
+
 }
