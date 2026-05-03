@@ -1,0 +1,106 @@
+<div class="factura">
+
+    <!-- ================= ENCABEZADO ================= -->
+    <header class="encabezado">
+
+        <div class="empresa">
+            <h2>Arca S.A</h2>
+            <p>CUIT: 30-12345678-9</p>
+            <p>IVA Responsable Inscripto</p>
+            <p>Dirección 123 - Buenos Aires</p>
+        </div>
+
+        <div class="tipo-comprobante">
+
+            FACTURA <select [(ngModel)]="facturas[0].tipo">
+                <option [value]="EtipoFactura.A">A</option>
+                <option [value]="EtipoFactura.B">B</option>
+                <option [value]="EtipoFactura.C">C</option>
+
+
+            </select>
+
+        </div>
+
+        <div class="datos-comprobante">
+            <p><strong>N°:</strong> 0001-000-<input type="number" [(ngModel)]="facturas[0].numero"></p>
+
+            <p>
+                <strong>Fecha:</strong>
+                {{ facturas[0].fecha | date:'dd/MM/yyyy' }}
+                <input type="date" [(ngModel)]="facturas[0].fecha">
+            </p>
+        </div>
+
+    </header>
+
+    <!-- ================= CLIENTE ================= -->
+    <section class="cliente">
+        <h3>Datos del Cliente</h3>
+
+        <div class="grid-cliente">
+            <p>
+                <strong>Nombre:</strong>
+                <input type="text" [(ngModel)]="facturas[0].receptor">
+            </p>
+
+            <p><strong>CUIT:</strong> 20-12345678-9</p>
+            <p><strong>Condición IVA:</strong> Responsable Inscripto</p>
+            <p><strong>Domicilio:</strong> Calle Falsa 123</p>
+        </div>
+    </section>
+
+    <!-- ================= DETALLE ================= -->
+    <button type="button" (click)="agregarDetalle()">
+        Agregar Detalle
+    </button>
+
+    <table class="detalle">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Descripción</th>
+                <th>Cant.</th>
+                <th>Precio Unit.</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let item of facturas[0].detalles">
+                <td>{{ item.codigo }}</td>
+                <td>{{ item.descripcion }}</td>
+                <td>{{ item.cantidad }}</td>
+                <td>{{ item.precio }}</td>
+                <td>{{ item.cantidad * item.precio }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ================= TOTALES ================= -->
+    <section class="totales">
+
+        <div class="linea">
+            <p><strong>Neto:</strong> ${{ facturas[0].neto }}</p>
+        </div>
+
+        <div class="linea">
+            <span>IVA 21%</span>
+            <p><strong>IVA:</strong> ${{ facturas[0].iva }}</p>
+        </div>
+
+        <div class="linea total-final">
+            <span>Total</span>
+            <p><strong>Total:</strong> ${{ facturas[0].total }}</p>
+        </div>
+
+    </section>
+
+    <!-- ================= PIE FISCAL ================= -->
+    <footer class="fiscal">
+        <p><strong>CAE:</strong> 12345678901234</p>
+        <p><strong>Vencimiento CAE:</strong> 30/04/2026</p>
+        <p>Comprobante Autorizado por ARCA</p>
+    </footer>
+
+</div>

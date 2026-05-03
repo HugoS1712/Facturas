@@ -1,0 +1,131 @@
+body {
+    background: #f4f4f4;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.factura {
+    width: 800px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+/* ================= ENCABEZADO ================= */
+.encabezado {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #000;
+    padding-bottom: 15px;
+}
+
+/* IZQUIERDA */
+.empresa {
+    width: 35%;
+}
+
+.empresa h2 {
+    margin: 0 0 5px 0;
+}
+
+/* CENTRO REAL */
+.tipo-comprobante {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 2px solid #000;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tipo-comprobante .texto {
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.tipo-comprobante .letra {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+/* DERECHA */
+.datos-comprobante {
+    width: 35%;
+    text-align: right;
+}
+
+/* ================= CLIENTE ================= */
+.cliente {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.grid-cliente {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px 15px;
+}
+
+/* ================= DETALLE ================= */
+.detalle {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.detalle th,
+.detalle td {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+.detalle th {
+    background: #eee;
+}
+
+/* ================= TOTALES ================= */
+.totales {
+    width: 320px;
+    margin-left: auto;
+    margin-top: 20px;
+}
+
+.totales .linea {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+.total-final {
+    border-top: 2px solid #000;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* ================= PIE ================= */
+.fiscal {
+    margin-top: 30px;
+    font-size: 12px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+
+/* ================= PRINT ================= */
+@media print {
+    body {
+        background: #fff;
+    }
+
+    .factura {
+        border: none;
+        width: 100%;
+        margin: 0;
+    }
+}
