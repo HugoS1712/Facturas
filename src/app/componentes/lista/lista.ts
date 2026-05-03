@@ -14,7 +14,6 @@ import { Detallefactura } from '../../clases/detallefactura';
 export class Lista {
 
   public facturas: Factura[] = [];
-  public tipo: string = 'text';
   public EtipoFactura = TipoFactura;
   public claseFactura: string = 'contenedor';
 
@@ -25,8 +24,8 @@ export class Lista {
   }
 
   mostrarLetra(valor: TipoFactura): string {
-    return valor == TipoFactura.A ? 'A' :
-      valor == TipoFactura.B ? 'B' : 'C';
+    return valor === TipoFactura.A ? 'A' :
+      valor === TipoFactura.B ? 'B' : 'C';
   }
 
   mostrarFecha() {
@@ -38,25 +37,26 @@ export class Lista {
 
   agregarDetalle() {
 
-    // 🔥 crear detalle correctamente (INSTANCIA)
     const nuevoDetalle = new Detallefactura();
     nuevoDetalle.cantidad = 1;
     nuevoDetalle.descripcion = 'Producto 1';
     nuevoDetalle.precioUnitario = 2500;
 
-    // 🔥 agregar a la factura
     this.facturas[0].detalles.push(nuevoDetalle);
 
-    // 🔥 recalcular neto
-    this.facturas[0].neto = this.facturas[0].detalles
-      .reduce((acc, d) => acc + d.cantidad * d.precioUnitario, 0);
-
-    // 🔥 recalcular IVA y total
+    // 🔥 recalcular TODO desde la clase
     this.facturas[0].calcularTotales();
   }
 
   guardar() {
-    console.info(this.facturas);
+    console.log("FACTURAS:", this.facturas);
+
+    localStorage.setItem(
+      "facturas",
+      JSON.stringify(this.facturas)
+    );
+
+    alert("Factura guardada");
   }
 
   cambiarFondo() {
@@ -65,6 +65,7 @@ export class Lista {
         this.facturas[0].tipo === this.EtipoFactura.B ? 'cuerpo-pastel' :
           'contenedor';
   }
+
   imprimir() {
     window.print();
   }
