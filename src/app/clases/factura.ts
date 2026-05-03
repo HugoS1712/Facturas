@@ -1,9 +1,7 @@
+import { Detallefactura } from "./detallefactura";
+
 export class Factura {
 
-    calcularTotales() {
-        this.iva = this.neto * 0.21;
-        this.total = this.neto + this.iva;
-    }
 
     public fecha: Date;
     public tipo: TipoFactura;
@@ -12,15 +10,26 @@ export class Factura {
     public total: number = 0;
     public neto: number = 0;
     public receptor: string;
+    public detalles: Detallefactura[] = [];
+    public items: Array<Detallefactura> = [];
 
-    public detalles: any[] = [];
+
 
     constructor(fecha: Date, numero: number, tipo: TipoFactura, receptor: string) {
         this.fecha = fecha;
         this.numero = numero;
         this.tipo = tipo;
         this.receptor = receptor;
+        this.items = new Array<Detallefactura>();
     }
+    calcularTotales() {
+
+        this.neto = this.items.reduce((acum, item) => { return acum + (item.cantidad * item.precioUnitario); }, 0);
+
+        this.iva = this.neto * 0.21;
+        this.total = this.neto + this.iva;
+    }
+
 
 }
 
