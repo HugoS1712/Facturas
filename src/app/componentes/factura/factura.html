@@ -1,0 +1,149 @@
+<p>factura works!</p>
+<h1 class="titulo">Comprobante Fiscal - ARCA</h1>
+
+<div class="factura">
+
+    <!-- ENCABEZADO -->
+    <header class="encabezado">
+
+        <div class="empresa">
+            <h2>Arca S.A</h2>
+            <p>CUIT: 30-12345678-9</p>
+            <p>IVA Responsable Inscripto</p>
+            <p>Dirección 123 - Buenos Aires</p>
+        </div>
+
+        <div class="tipo-comprobante">
+            <div class="letra">
+                {{ facturas[0].tipo }}
+            </div>
+
+            <select [(ngModel)]="facturas[0].tipo" (change)="cambiarFondo()">
+                <option [value]="EtipoFactura.A">A</option>
+                <option [value]="EtipoFactura.B">B</option>
+                <option [value]="EtipoFactura.C">C</option>
+            </select>
+        </div>
+
+        <div class="datos-comprobante">
+            <p>
+                <strong>N°:</strong>
+                0001-000-
+                <input type="number" [(ngModel)]="facturas[0].numero">
+            </p>
+
+            <p>
+                <strong>Fecha:</strong>
+                {{ facturas[0].fecha | date:'dd/MM/yyyy' }}
+                <input type="date" [(ngModel)]="facturas[0].fecha">
+            </p>
+        </div>
+
+    </header>
+
+    <!-- CLIENTE -->
+    <section class="cliente">
+        <div class="seccion-titulo">Datos del cliente</div>
+
+        <div class="campo-fila">
+            <span class="campo-label">Razón social:</span>
+            <input class="campo-linea" type="text" [(ngModel)]="facturas[0].receptor">
+        </div>
+
+
+        <!--<div *ngIf="facturas[0].receptor === 'Holamundo'" class="campo-fila">-->
+
+        @if (facturas[0].receptor == 'Holamundo') {
+        <div class="campo-fila">
+            <span class="campo-label">Domicilio:</span>
+            <span class="campo-linea">{{ facturas[0].receptor }}</span>
+        </div>
+        } @else {
+
+        <div class="campo-fila">
+
+            <span class="campo-label">Localidad:</span>
+            <input class="campo-linea" type="text">
+        </div>
+        }
+        <div class="campo-fila">
+            <span class="campo-label">Cuit:</span>
+            <input class="campo-linea" type="text">
+        </div>
+    </section>
+
+    <!-- DETALLE -->
+    <button type="button" (click)="agregarDetalle()">Agregar Detalle</button>
+
+    <table class="detalle">
+
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Descripción</th>
+                <th>Cant.</th>
+                <th>Precio Unit.</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @for (detalles of facturas[0].detalles; track detalles; let i = $index; let odd = $odd) {
+
+            <tr [ngClass]="{ 'impar': odd }">
+                <td>{{ i + 1 }}</td>
+                <td>{{ detalles.descripcion }}</td>
+                <td>{{ detalles.cantidad }}</td>
+                <td>{{ detalles.precioUnitario }}</td>
+                <td>{{ detalles.cantidad * detalles.precioUnitario }}</td>
+            </tr>
+
+            } @empty {
+
+            <tr class="fila-vacia">
+                <td colspan="5">Sin detalles</td>
+            </tr>
+
+            }
+
+        </tbody>
+
+    </table>
+
+    <!-- TOTALES -->
+    <section class="totales">
+
+        <div class="linea">
+            <span>Neto</span>
+            <span>${{ facturas[0].neto }}</span>
+        </div>
+
+        <div class="linea">
+            <span>IVA 21%</span>
+            <span>${{ facturas[0].iva }}</span>
+        </div>
+
+        <div class="linea total-final">
+            <span>Total</span>
+            <span>${{ facturas[0].total }}</span>
+        </div>
+
+    </section>
+
+    <!-- PIE -->
+    <footer class="fiscal">
+        <p><strong>CAE:</strong> 12345678901234</p>
+        <p><strong>Vencimiento:</strong> 30/04/2026</p>
+    </footer>
+
+</div>
+
+<!-- BOTONES -->
+<div class="acciones">
+    <!--<button (click)="guardar()">💾 Guardar</button>
+    <button (click)="imprimir()">🖨️ Imprimir</button>
+    <a routerLink="/lista">Ir a lista de facturas</a>-->
+    <button class="btn-print" (click)="this.guardar()">💾 imprimir/guardar PDF</button>
+    <a routerLink="/lista">Ir a lista de facturas</a>
+</div>

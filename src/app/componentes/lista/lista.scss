@@ -120,6 +120,13 @@ body {
     background: #eee;
 }
 
+.fila-vacia td {
+    height: 24px;
+}
+
+/* Altura para filas vacías */
+
+
 /* ================= TOTALES ================= */
 .totales {
     width: 320px;
@@ -161,33 +168,72 @@ body {
     color: #fff;
 }
 
-/* ================= INPUTS ================= */
-input {
-    border: 1px solid #ccc;
-    padding: 3px;
-    font-size: 13px;
-}
+.impar {
+    background: rgb(224, 226, 103);
 
-/* ================= PRINT ================= */
-@media print {
-
-    .titulo {
-        display: none;
-    }
-
-    .acciones {
-        display: none;
-    }
-
-    button,
-    select,
+    /* ================= INPUTS ================= */
     input {
-        display: none;
+        border: 1px solid #ccc;
+        padding: 3px;
+        font-size: 13px;
     }
 
-    .factura {
-        border: none;
-        box-shadow: none;
-        width: 100%;
+    /* ================= PRINT ================= */
+    @media print {
+
+        .titulo {
+            display: none;
+        }
+
+        .acciones {
+            display: none;
+        }
+
+        button,
+        select,
+        input {
+            display: none;
+        }
+
+        .factura {
+            border: none;
+            box-shadow: none;
+            width: 100%;
+        }
+
+        .seccion-titulo {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            background: #eee;
+            padding: 5px;
+        }
+
+        .campo-fila {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .campo-label {
+            width: 150px;
+            font-weight: bold;
+        }
+
+        .campo-linea {
+            flex: 1;
+            border: none;
+            border-bottom: 1px solid #000;
+            outline: none;
+            padding: 4px;
+        }
+
+
     }
+
+    /* Mejor alineación */
+    .cliente input {
+        font-size: 14px;
+    }
+
 }

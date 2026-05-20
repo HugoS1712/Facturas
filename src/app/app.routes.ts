@@ -3,11 +3,13 @@ import { Lista } from './componentes/lista/lista';
 import { Error } from './componentes/error/error';
 import { NotFound } from './componentes/not-found/not-found';
 import { Principal } from './componentes/principal/principal';
+import { FacturaComponent } from './componentes/factura/factura';
 
 export const routes: Routes = [
     { path: 'lista', component: Lista },
     { path: 'error', component: Error },
     { path: '', component: Principal },
+    { path: 'factura', component: FacturaComponent },
     { path: '**', component: NotFound }
 
 ];

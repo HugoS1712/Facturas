@@ -20,7 +20,6 @@ export class Factura {
         this.numero = numero;
         this.tipo = tipo;
         this.receptor = receptor;
-        this.neto = 0;
     }
 
     calcularTotales() {
