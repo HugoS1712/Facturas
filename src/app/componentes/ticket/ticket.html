@@ -1,60 +1,75 @@
 <div class="page">
+
     <!-- Sidebar -->
     <aside class="sidebar">
         <h2>Soporte IT</h2>
+
         <div class="ticket-box">
             <span>N° Ticket</span>
-            <!-- Bind dinámico -->
-            <h1>{{ ticketNumber || '---' }}</h1>
+
+            <!-- Si existe -->
+            <h1 *ngIf="ticketNumber">{{ ticketNumber }}</h1>
+
+            <!-- Si NO existe -->
+            <p *ngIf="!ticketNumber" class="placeholder">Sin generar</p>
         </div>
     </aside>
 
     <!-- Contenido -->
     <div class="content">
         <div class="card">
+
             <h2>Nuevo Ticket</h2>
 
-            <form>
+            <!-- ✅ FORM CORREGIDO -->
+            <form (ngSubmit)="crearTicket(); $event.preventDefault()" #form="ngForm">
 
                 <!-- Usuario -->
                 <div class="form-group">
                     <label>Usuario</label>
-                    <input type="text" placeholder="Nombre del usuario">
+                    <input type="text" placeholder="Nombre del usuario" [(ngModel)]="usuario" name="usuario" required>
                 </div>
 
                 <!-- Equipo + urgencia -->
                 <div class="row">
+
                     <div class="form-group">
                         <label>Equipo en Falla</label>
-                        <input type="text" placeholder="Ej: Notebook Dell / PC Oficina">
+                        <input type="text" placeholder="Ej: Notebook Dell / PC Oficina" [(ngModel)]="equipo"
+                            name="equipo" required>
                     </div>
 
                     <div class="form-group">
                         <label>Urgencia</label>
-                        <select class="urgencia">
+                        <select [(ngModel)]="urgencia" name="urgencia" required>
+                            <option value="">Seleccionar</option>
                             <option value="alta">🔴 Alta</option>
                             <option value="media">🟡 Media</option>
                             <option value="baja">🟢 Baja</option>
                         </select>
                     </div>
+
                 </div>
 
-                <!-- Categoría -->
+                <!-- Tipo -->
                 <div class="form-group">
                     <label>Tipo de Problema</label>
-                    <select>
-                        <option>Hardware</option>
-                        <option>Software</option>
-                        <option>Red</option>
-                        <option>Acceso</option>
-                        <option>Otro</option>
+                    <select [(ngModel)]="tipo" name="tipo" required>
+                        <option value="">Seleccionar</option>
+                        <option value="Hardware">Hardware</option>
+                        <option value="Software">Software</option>
+                        <option value="Red">Red</option>
+                        <option value="Acceso">Acceso</option>
+                        <option value="Otro">Otro</option>
                     </select>
                 </div>
 
                 <!-- Detalle -->
                 <div class="form-group">
                     <label>Detalle del Problema</label>
-                    <textarea rows="5" placeholder="Explicá qué está pasando..."></textarea>
+                    <textarea rows="5" placeholder="Explicá qué está pasando..." [(ngModel)]="detalle" name="detalle"
+                        required>
+          </textarea>
                 </div>
 
                 <!-- Imagen -->
@@ -63,11 +78,14 @@
                     <input type="file" accept="image/*">
                 </div>
 
-
                 <!-- Botón -->
-                <button type="submit">Crear Ticket</button>
+                <button type="submit">
+                    Crear Ticket
+                </button>
 
             </form>
+
         </div>
     </div>
+
 </div>

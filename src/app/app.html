@@ -1,2 +1,20 @@
-<app-principal></app-principal>
-<router-outlet />
+><nav class="navbar">
+
+    <div class="logo">
+        🧾 Sistema
+    </div>
+
+    <div class="menu">
+        <a routerLink="/" routerLinkActive="activo">Inicio</a>
+        <a routerLink="/ticket" routerLinkActive="activo">Ticket</a>
+        <a routerLink="/factura" routerLinkActive="activo">Factura</a>
+        <a routerLink="/lista" routerLinkActive="activo">Lista</a>
+    </div>
+
+</nav>
+
+
+
+<!-- Contenido dinámico -->
+
+<router-outlet></router-outlet>

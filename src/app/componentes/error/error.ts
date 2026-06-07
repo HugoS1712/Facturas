@@ -3,8 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-error',
   standalone: true,
-  imports: [],
   templateUrl: './error.html',
-  styleUrl: './error.scss',
+  styleUrls: ['./error.scss']
 })
-export class Error { }
+export class ErrorComponent { }
