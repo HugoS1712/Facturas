@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Factura, TipoFactura } from '../../clases/factura';
 import { Detallefactura } from '../../clases/detallefactura';
 import { RouterModule } from '@angular/router';
 import { FacturaService } from '../../servicios/factura-service';
-
 
 @Component({
   selector: 'app-factura',
@@ -15,17 +14,32 @@ import { FacturaService } from '../../servicios/factura-service';
 })
 export class FacturaComponent {
 
-
   public facturas: Factura[] = [];
   public EtipoFactura = TipoFactura;
   public claseFactura: string = 'contenedor';
   public claseDetalle: string = 'detalle';
 
-
   constructor(public servicio: FacturaService) {
+    this.facturas = [];
+  }
 
-    this.facturas = [new Factura(new Date(), 1, TipoFactura.A, "Cliente A")];
+  ngOnInit() {
 
+    // ✅ ahora pasamos el tipo correctamente
+    const tipoInicial = TipoFactura.A;
+
+    this.servicio.obtenerProximoNumero(tipoInicial)
+      .subscribe((numero: number) => {
+
+        const nuevaFactura = new Factura(
+          new Date(),
+          numero,
+          tipoInicial,
+          "Cliente A"
+        );
+
+        this.facturas.push(nuevaFactura);
+      });
   }
 
   mostrarLetra(valor: TipoFactura): string {
@@ -49,15 +63,13 @@ export class FacturaComponent {
 
     this.facturas[0].detalles.push(nuevoDetalle);
 
-    // 🔥 recalcular TODO desde la clase
+    // ✅ recalcula
     this.facturas[0].calcularTotales();
   }
 
   guardar() {
     console.log(this.facturas[0]);
-
     this.servicio.agregarFactura(this.facturas[0]);
-
   }
 
   cambiarFondo() {

@@ -14,9 +14,16 @@ import { FacturaService } from '../../servicios/factura-service';
   templateUrl: './lista.html',
   styleUrl: './lista.scss',
 })
+
 export class Lista {
-  public factura: Array<Factura> = [];
+  public factura: Factura[] = [];
+
+
   constructor(public servicio: FacturaService) {
-    this.factura = this.servicio.retornarFactura();
+
+    this.servicio.retornarFactura().subscribe((data: Factura[]) => {
+      this.factura = data;
+    });
+
   }
 }
