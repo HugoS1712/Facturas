@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TicketService } from '../../servicios/ticket-service';
 
 @Component({
   selector: 'app-ticket',
@@ -21,15 +22,17 @@ export class Ticket {
 
   tickets: any[] = [];
 
-  ngOnInit() {
-    const data = localStorage.getItem('tickets');
+  // ✅ usar service
+  constructor(private ticketService: TicketService) { }
 
-    if (data) {
-      this.tickets = JSON.parse(data);
-    }
+  ngOnInit() {
+    this.ticketService.getTickets().subscribe(data => {
+      this.tickets = data;
+    });
   }
 
   crearTicket() {
+
     let contador = localStorage.getItem('ticketCounter');
 
     if (!contador) {
@@ -44,7 +47,7 @@ export class Ticket {
 
     this.ticketNumber = `TCK-${year}-${contador.padStart(4, '0')}`;
 
-    // ✅ Crear objeto del ticket
+    // ✅ objeto ticket
     const nuevoTicket = {
       numero: this.ticketNumber,
       usuario: this.usuario,
@@ -54,21 +57,13 @@ export class Ticket {
       detalle: this.detalle
     };
 
-    // ✅ Mostrar en pantalla inmediatamente
+    // ✅ USAR SERVICE (clave)
+    this.ticketService.agregarTicket(nuevoTicket);
+
+    // ✅ actualizar UI opcional (instantáneo)
     this.tickets.push(nuevoTicket);
 
-    // ✅ Guardar en localStorage
-    let ticketsStorage = localStorage.getItem('tickets');
-
-    if (ticketsStorage) {
-      const lista = JSON.parse(ticketsStorage);
-      lista.push(nuevoTicket);
-      localStorage.setItem('tickets', JSON.stringify(lista));
-    } else {
-      localStorage.setItem('tickets', JSON.stringify([nuevoTicket]));
-    }
-
-    // ✅ Limpiar formulario
+    // ✅ limpiar formulario
     this.usuario = '';
     this.equipo = '';
     this.urgencia = '';
@@ -76,3 +71,4 @@ export class Ticket {
     this.detalle = '';
   }
 }
+``

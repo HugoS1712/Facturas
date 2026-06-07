@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TicketService } from '../../servicios/ticket-service';
 
 @Component({
   selector: 'app-ticket-list',
@@ -10,14 +11,15 @@ import { CommonModule } from '@angular/common';
 })
 export class TicketList {
 
-  // ✅ ESTO FALTABA
   tickets: any[] = [];
 
-  ngOnInit() {
-    const data = localStorage.getItem('tickets');
+  // ✅ usar el service
+  constructor(private ticketService: TicketService) { }
 
-    if (data) {
-      this.tickets = JSON.parse(data);
-    }
+  ngOnInit() {
+    this.ticketService.getTickets().subscribe(data => {
+      this.tickets = data;
+    });
   }
 }
+``
