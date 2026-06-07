@@ -7,20 +7,18 @@ export const authGuard: CanActivateFn = () => {
 
   console.log('🔥 GUARD ejecutándose');
 
-  // ✅ chequeo si estoy en navegador
   if (typeof window !== 'undefined') {
 
     const logueado = localStorage.getItem('logueado');
 
+    // ✅ Usuario autenticado
     if (logueado === 'true') {
       return true;
-    } else {
-      router.navigate(['/login']);
-      return false;
     }
 
+    // ❌ Usuario NO autenticado → REDIRECCIÓN CORRECTA
+    return router.parseUrl('/login');
   }
 
-  // ✅ si es SSR, dejar pasar
   return true;
 };

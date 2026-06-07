@@ -1,0 +1,72 @@
+/* Fondo general */
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #1e293b, #3b82f6);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Card del login */
+.login-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 320px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Título */
+.login-container h2 {
+    margin-bottom: 1.5rem;
+    color: #1e293b;
+}
+
+/* Inputs */
+.login-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border 0.3s;
+}
+
+.login-container input:focus {
+    outline: none;
+    border: 1px solid #3b82f6;
+}
+
+/* Botón principal */
+.login-container button {
+    width: 100%;
+    padding: 10px;
+    background: #3b82f6;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.login-container button:hover {
+    background: #2563eb;
+}
+
+/* Link o acción secundaria */
+.login-container .reset {
+    margin-top: 10px;
+    display: block;
+    font-size: 13px;
+    color: #3b82f6;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.login-container .reset:hover {
+    text-decoration: underline;
+}

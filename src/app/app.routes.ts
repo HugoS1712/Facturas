@@ -1,7 +1,4 @@
-
-
 import { Routes } from '@angular/router';
-
 import { Lista } from './componentes/lista/lista';
 import { ErrorComponent } from './componentes/error/error';
 import { NotFound } from './componentes/not-found/not-found';
@@ -13,7 +10,9 @@ import { Login } from './componentes/login/login';
 import { authGuard } from './servicios/auth-guard';
 
 export const routes: Routes = [
-    { path: '', component: Principal },
+
+    // ✅ ahora protegido (arranque con login)
+    { path: '', component: Principal, canActivate: [authGuard] },
 
     { path: 'login', component: Login },
 
@@ -28,4 +27,3 @@ export const routes: Routes = [
 
     { path: '**', component: NotFound }
 ];
-``

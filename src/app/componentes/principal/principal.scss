@@ -1,0 +1,33 @@
+.home {
+    text-align: center;
+    margin-top: 80px;
+    font-family: Arial, sans-serif;
+}
+
+.home h1 {
+    color: #1e293b;
+    margin-bottom: 5px;
+}
+
+.home p {
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.fecha {
+    background: #f1f5f9;
+    display: inline-block;
+    padding: 15px 25px;
+    border-radius: 10px;
+}
+
+.fecha span {
+    display: block;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.fecha h2 {
+    margin: 5px 0 0;
+    color: #3b82f6;
+}
