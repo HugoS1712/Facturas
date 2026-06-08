@@ -1,9 +1,8 @@
 <h2>Lista de Tickets</h2>
 
-@for (t of tickets; track $index) {
+@for (t of tickets; track t.numero) {
 
 <div class="ticket">
-
     <h3>{{ t.numero }}</h3>
 
     <p><b>Usuario:</b> {{ t.usuario }}</p>
@@ -11,14 +10,12 @@
     <p><b>Urgencia:</b> {{ t.urgencia }}</p>
     <p><b>Tipo:</b> {{ t.tipo }}</p>
     <p><b>Detalle:</b> {{ t.detalle }}</p>
-
 </div>
 
-}
-@empty {
-
+} @empty {
 <p>No hay tickets creados</p>
-
 }
 
-<a routerLink="/ticket">Crear nuevo ticket</a>
+<div class="acciones">
+    <a routerLink="/ticket" class="btn">Crear nuevo ticket</a>
+</div>

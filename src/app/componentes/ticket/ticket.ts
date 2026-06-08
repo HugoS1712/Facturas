@@ -22,13 +22,10 @@ export class Ticket {
 
   tickets: any[] = [];
 
-  // ✅ usar service
   constructor(private ticketService: TicketService) { }
 
   ngOnInit() {
-    this.ticketService.getTickets().subscribe(data => {
-      this.tickets = data;
-    });
+    this.tickets = this.ticketService.getTickets();
   }
 
   crearTicket() {
@@ -44,10 +41,8 @@ export class Ticket {
     localStorage.setItem('ticketCounter', contador);
 
     const year = new Date().getFullYear();
-
     this.ticketNumber = `TCK-${year}-${contador.padStart(4, '0')}`;
 
-    // ✅ objeto ticket
     const nuevoTicket = {
       numero: this.ticketNumber,
       usuario: this.usuario,
@@ -57,18 +52,30 @@ export class Ticket {
       detalle: this.detalle
     };
 
-    // ✅ USAR SERVICE (clave)
     this.ticketService.agregarTicket(nuevoTicket);
-
-    // ✅ actualizar UI opcional (instantáneo)
     this.tickets.push(nuevoTicket);
 
-    // ✅ limpiar formulario
     this.usuario = '';
     this.equipo = '';
     this.urgencia = '';
     this.tipo = '';
     this.detalle = '';
   }
+
+  editar(ticket: any) {
+    this.usuario = ticket.usuario;
+    this.equipo = ticket.equipo;
+    this.urgencia = ticket.urgencia;
+    this.tipo = ticket.tipo;
+    this.detalle = ticket.detalle;
+  }
+
+  filtrarAlta() {
+    this.tickets = this.tickets.filter(t => t.urgencia === 'alta');
+  }
+
+  cargarTodos() {
+    this.tickets = this.ticketService.getTickets();
+  }
+
 }
-``

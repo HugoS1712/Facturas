@@ -13,13 +13,10 @@ export class TicketList {
 
   tickets: any[] = [];
 
-  // ✅ usar el service
   constructor(private ticketService: TicketService) { }
 
   ngOnInit() {
-    this.ticketService.getTickets().subscribe(data => {
-      this.tickets = data;
-    });
+    this.tickets = this.ticketService.getTickets();
   }
 }
 ``

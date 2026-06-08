@@ -1,0 +1,28 @@
+.ticket {
+    background: #f8fafc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border-left: 4px solid #3b82f6;
+}
+
+.acciones {
+    margin-top: 20px;
+}
+
+.btn {
+    text-decoration: none;
+    background: #3b82f6;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.btn:hover {
+    background: #2563eb;
+}
+
+.empty {
+    color: #64748b;
+    font-style: italic;
+}
