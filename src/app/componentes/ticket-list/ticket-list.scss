@@ -1,45 +1,72 @@
-/* Contenedor en grilla */
+.titulo {
+    margin: 20px;
+    font-size: 24px;
+}
+
+/* ✅ GRID (columnas) */
 .contenedor {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 20px;
     padding: 20px;
 }
 
-/* Tarjeta (cada ticket) */
+/* ✅ CARD */
 .card {
     background: white;
-    padding: 15px;
+    padding: 18px;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
 }
 
-.card:hover {
-    transform: scale(1.03);
+/* ✅ HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-/* Título del ticket */
-.card h3 {
+/* LINK */
+.link {
+    cursor: pointer;
     color: #2563eb;
-    margin-bottom: 10px;
 }
 
-/* Detalle */
-.detalle {
-    margin-top: 10px;
-    color: #555;
+.link:hover {
+    text-decoration: underline;
 }
 
-/* Etiqueta de urgencia */
+/* ✅ ESTADO */
+.estado {
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.abierto {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.cerrado {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* ✅ INFO */
+.info p {
+    margin: 4px 0;
+}
+
+/* ✅ URGENCIA */
 .tag {
-    padding: 4px 8px;
+    padding: 3px 8px;
     border-radius: 8px;
     font-size: 12px;
     font-weight: bold;
 }
 
-/* colores por urgencia */
 .alta {
     background: #fee2e2;
     color: #b91c1c;
@@ -47,7 +74,6 @@
 
 .media {
     background: #fef9c3;
-    color: #854d0e;
 }
 
 .baja {
@@ -55,30 +81,32 @@
     color: #166534;
 }
 
-/* Texto cuando no hay tickets */
-.empty {
-    text-align: center;
-    color: #64748b;
-    font-style: italic;
-    margin-top: 20px;
+/* ✅ FECHAS */
+.fechas {
+    font-size: 12px;
+    color: #666;
 }
 
-/* Acciones */
+/* DETALLE */
+.detalle {
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+/* BOTÓN */
 .acciones {
     text-align: center;
     margin: 20px;
 }
 
-/* Botón */
 .btn {
-    text-decoration: none;
-    background: #3b82f6;
+    background: #2563eb;
     color: white;
     padding: 10px 15px;
     border-radius: 8px;
-    transition: background 0.2s;
+    text-decoration: none;
 }
 
 .btn:hover {
-    background: #2563eb;
+    background: #1d4ed8;
 }

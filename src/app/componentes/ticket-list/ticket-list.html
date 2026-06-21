@@ -1,15 +1,30 @@
-<h2 class="titulo">Lista de Tickets</h2>
+<h2 class="titulo">📋 Lista de Tickets</h2>
 
 <div class="contenedor">
 
     @for (t of tickets; track t.numero) {
 
     <div class="card">
-        <h3>{{ t.numero }}</h3>
 
-        <p><strong>Usuario:</strong> {{ t.usuario }}</p>
-        <p><strong>Equipo:</strong> {{ t.equipo }}</p>
+        <!-- HEADER -->
+        <div class="header">
+            <h3 class="link" (click)="verTicket(t.numero)">
+                {{ t.numero }}
+            </h3>
 
+            <span class="estado" [ngClass]="t.estado">
+                {{ t.estado }}
+            </span>
+        </div>
+
+        <!-- INFO PRINCIPAL -->
+        <div class="info">
+            <p><strong>Usuario:</strong> {{ t.usuario }}</p>
+            <p><strong>Equipo:</strong> {{ t.equipo }}</p>
+            <p><strong>Tipo:</strong> {{ t.tipo }}</p>
+        </div>
+
+        <!-- URGENCIA -->
         <p>
             <strong>Urgencia:</strong>
             <span class="tag" [ngClass]="t.urgencia">
@@ -17,11 +32,26 @@
             </span>
         </p>
 
-        <p><strong>Tipo:</strong> {{ t.tipo }}</p>
-
-        <p class="detalle">
-            <strong>Detalle:</strong> {{ t.detalle }}
+        <!-- RESPONSABLE -->
+        <p>
+            <strong>Responsable:</strong>
+            {{ t.responsable || 'Sin asignar' }}
         </p>
+
+        <!-- FECHAS -->
+        <div class="fechas">
+            <p>🗓 {{ t.fechaCreacion | date:'shortDate' }}</p>
+
+            <p *ngIf="t.fechaCierre" class="cerrado">
+                ✅ {{ t.fechaCierre | date:'shortDate' }}
+            </p>
+        </div>
+
+        <!-- DETALLE -->
+        <p class="detalle">
+            {{ t.detalle }}
+        </p>
+
     </div>
 
     } @empty {

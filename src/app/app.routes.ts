@@ -9,9 +9,11 @@ import { TicketList } from './componentes/ticket-list/ticket-list';
 import { Login } from './componentes/login/login';
 import { authGuard } from './servicios/auth-guard';
 
+/* 👇 LA VAMOS A AGREGAR */
+import { TicketDetalle } from './componentes/ticket-detalle/ticket-detalle';
+
 export const routes: Routes = [
 
-    // ✅ ahora protegido (arranque con login)
     { path: '', component: Principal, canActivate: [authGuard] },
 
     { path: 'login', component: Login },
@@ -19,9 +21,12 @@ export const routes: Routes = [
     { path: 'lista', component: Lista },
     { path: 'factura', component: FacturaComponent },
 
-    // ✅ RUTAS PROTEGIDAS
     { path: 'ticket', component: Ticket, canActivate: [authGuard] },
+
     { path: 'tickets', component: TicketList, canActivate: [authGuard] },
+
+    // 🔥 👉 ESTA ES LA NUEVA RUTA
+    { path: 'tickets/:numero', component: TicketDetalle, canActivate: [authGuard] },
 
     { path: 'error', component: ErrorComponent },
 
