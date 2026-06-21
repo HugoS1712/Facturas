@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { TicketService } from '../../servicios/ticket-service';
 
 @Component({
   selector: 'app-ticket',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './ticket.html',
   styleUrls: ['./ticket.scss']
 })
@@ -28,8 +29,14 @@ export class Ticket {
     this.tickets = this.ticketService.getTickets();
   }
 
-  crearTicket() {
+  crearTicket(form: NgForm) {
 
+    // ✅ VALIDACIÓN
+    if (form.invalid) {
+      return;
+    }
+
+    // ✅ GENERAR NÚMERO
     let contador = localStorage.getItem('ticketCounter');
 
     if (!contador) {
@@ -52,14 +59,14 @@ export class Ticket {
       detalle: this.detalle
     };
 
+    // ✅ GUARDAR SOLO EN EL SERVICE
     this.ticketService.agregarTicket(nuevoTicket);
-    this.tickets.push(nuevoTicket);
 
-    this.usuario = '';
-    this.equipo = '';
-    this.urgencia = '';
-    this.tipo = '';
-    this.detalle = '';
+    // ❌ SACAMOS ESTA LÍNEA (duplicaba)
+    // this.tickets.push(nuevoTicket);
+
+    // ✅ LIMPIAR FORM
+    form.resetForm();
   }
 
   editar(ticket: any) {
@@ -77,5 +84,4 @@ export class Ticket {
   cargarTodos() {
     this.tickets = this.ticketService.getTickets();
   }
-
 }

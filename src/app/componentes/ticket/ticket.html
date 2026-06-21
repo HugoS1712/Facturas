@@ -12,7 +12,6 @@
       } @else {
       <p class="placeholder">Sin generar</p>
       }
-
     </div>
   </aside>
 
@@ -22,13 +21,17 @@
 
       <h2>Nuevo Ticket</h2>
 
-      <!-- FORM -->
-      <form (ngSubmit)="crearTicket()">
+      <!-- ✅ FORM CORREGIDO -->
+      <form #formTicket="ngForm" (ngSubmit)="crearTicket(formTicket)">
 
         <!-- Usuario -->
         <div class="form-group">
           <label>Usuario</label>
-          <input type="text" [(ngModel)]="usuario" name="usuario" required>
+          <input type="text" [(ngModel)]="usuario" name="usuario" required #usuarioRef="ngModel">
+
+          @if (usuarioRef.invalid && usuarioRef.touched) {
+          <small class="error">El usuario es obligatorio</small>
+          }
         </div>
 
         <!-- Equipo + urgencia -->
@@ -36,17 +39,26 @@
 
           <div class="form-group">
             <label>Equipo</label>
-            <input type="text" [(ngModel)]="equipo" name="equipo" required>
+            <input type="text" [(ngModel)]="equipo" name="equipo" required #equipoRef="ngModel">
+
+            @if (equipoRef.invalid && equipoRef.touched) {
+            <small class="error">El equipo es obligatorio</small>
+            }
           </div>
 
           <div class="form-group">
             <label>Urgencia</label>
-            <select [(ngModel)]="urgencia" name="urgencia" required>
+            <select [(ngModel)]="urgencia" name="urgencia" required #urgenciaRef="ngModel">
+
               <option value="">Seleccionar</option>
               <option value="alta">Alta</option>
               <option value="media">Media</option>
               <option value="baja">Baja</option>
             </select>
+
+            @if (urgenciaRef.invalid && urgenciaRef.touched) {
+            <small class="error">Seleccioná una urgencia</small>
+            }
           </div>
 
         </div>
@@ -54,28 +66,39 @@
         <!-- Tipo -->
         <div class="form-group">
           <label>Tipo</label>
-          <select [(ngModel)]="tipo" name="tipo" required>
+          <select [(ngModel)]="tipo" name="tipo" required #tipoRef="ngModel">
+
             <option value="">Seleccionar</option>
             <option value="Hardware">Hardware</option>
             <option value="Software">Software</option>
             <option value="Red">Red</option>
           </select>
+
+          @if (tipoRef.invalid && tipoRef.touched) {
+          <small class="error">Seleccioná un tipo</small>
+          }
         </div>
 
         <!-- Detalle -->
         <div class="form-group">
           <label>Detalle</label>
-          <textarea [(ngModel)]="detalle" name="detalle" required></textarea>
+          <textarea [(ngModel)]="detalle" name="detalle" required #detalleRef="ngModel"></textarea>
+
+          @if (detalleRef.invalid && detalleRef.touched) {
+          <small class="error">El detalle es obligatorio</small>
+          }
         </div>
 
-        <!-- Botón -->
-        <button type="submit">Crear Ticket</button>
+        <!-- ✅ Botón con validación -->
+        <button type="submit" [disabled]="formTicket.invalid">
+          Crear Ticket
+        </button>
 
       </form>
 
-      <!-- ✅ IR A LISTA -->
+      <!-- Ir a lista -->
       <div class="acciones">
-        <a routerLink="/tickets" class="btn">Ver lista de tickets</a>
+        <a routerLink="/tickets" class="btn">📋 Ver lista de tickets</a>
       </div>
 
     </div>
