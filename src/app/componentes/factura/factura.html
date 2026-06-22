@@ -1,147 +1,139 @@
 <h1 class="titulo">Comprobante Fiscal - ARCA</h1>
 
-<div class="factura">
+<!-- ✅ CONTENEDOR PRO SIN BUGS -->
+<div class="contenedor" [ngClass]="{
+       'cuerpo-contraste': facturas[0]?.tipo === EtipoFactura.A,
+       'cuerpo-pastel': facturas[0]?.tipo === EtipoFactura.B,
+       'contenedor': facturas[0]?.tipo === EtipoFactura.C
+     }">
 
-    <!-- ENCABEZADO -->
-    <header class="encabezado">
+    <div class="factura">
 
-        <div class="empresa">
-            <h2>Arca S.A</h2>
-            <p>CUIT: 30-12345678-9</p>
-            <p>IVA Responsable Inscripto</p>
-            <p>Dirección 123 - Buenos Aires</p>
-        </div>
+        <!-- ENCABEZADO -->
+        <header class="encabezado">
 
-        <div class="tipo-comprobante">
-            <div class="letra">
-                {{ facturas[0].tipo }}
+            <div class="empresa">
+                <h2>Arca S.A</h2>
+                <p>CUIT: 30-12345678-9</p>
+                <p>IVA Responsable Inscripto</p>
+                <p>Dirección 123 - Buenos Aires</p>
             </div>
 
-            <select [(ngModel)]="facturas[0].tipo">
-                <option [value]="EtipoFactura.A">A</option>
-                <option [value]="EtipoFactura.B">B</option>
-                <option [value]="EtipoFactura.C">C</option>
-            </select>
-        </div>
+            <div class="tipo-comprobante">
+                <div class="letra">
+                    {{ mostrarLetra(facturas[0].tipo) }}
+                </div>
 
-        <div class="datos-comprobante">
-            <p>
-                <strong>N°:</strong>
-                0001-000-
-                <input type="number" [(ngModel)]="facturas[0].numero">
-            </p>
+                <!-- ✅ SIN EVENTOS (FIX DEFINITIVO) -->
+                <select [(ngModel)]="facturas[0].tipo">
+                    <option [value]="EtipoFactura.A">A</option>
+                    <option [value]="EtipoFactura.B">B</option>
+                    <option [value]="EtipoFactura.C">C</option>
+                </select>
+            </div>
 
-            <p>
-                <strong>Fecha:</strong>
-                {{ facturas[0].fecha | date:'dd/MM/yyyy' }}
-                <input type="date" [(ngModel)]="facturas[0].fecha">
-            </p>
-        </div>
+            <div class="datos-comprobante">
+                <p>
+                    <strong>N°:</strong>
+                    <input type="number" [(ngModel)]="facturas[0].numero">
+                </p>
 
-    </header>
+                <p>
+                    <strong>Fecha:</strong>
+                    <input type="date" [(ngModel)]="facturas[0].fecha">
+                </p>
+            </div>
 
-    <!-- CLIENTE -->
-    <section class="cliente">
+        </header>
 
-        <div class="seccion-titulo">Datos del cliente</div>
+        <!-- CLIENTE -->
+        <section class="cliente">
 
-        <div class="campo-fila">
-            <span class="campo-label">Razón social:</span>
-            <input class="campo-linea" type="text" [(ngModel)]="facturas[0].receptor">
-        </div>
+            <div class="seccion-titulo">Datos del cliente</div>
 
-        @if (facturas[0].receptor == 'Holamundo') {
-        <div class="campo-fila">
-            <span class="campo-label">Domicilio:</span>
-            <span class="campo-linea">{{ facturas[0].receptor }}</span>
-        </div>
-        } @else {
-        <div class="campo-fila">
-            <span class="campo-label">Localidad:</span>
-            <input class="campo-linea" type="text">
-        </div>
-        }
+            <div class="campo-fila">
+                <span class="campo-label">Razón social:</span>
+                <input class="campo-linea" [(ngModel)]="facturas[0].receptor">
+            </div>
 
-        <div class="campo-fila">
-            <span class="campo-label">CUIT:</span>
-            <input class="campo-linea" type="text">
-        </div>
+            <div class="campo-fila">
+                <span class="campo-label">Dirección:</span>
+                <input class="campo-linea" type="text">
+            </div>
 
-    </section>
+            <div class="campo-fila">
+                <span class="campo-label">CUIT:</span>
+                <input class="campo-linea" type="text">
+            </div>
 
-    <!-- DETALLE -->
-    <button type="button" (click)="agregarDetalle()">Agregar Detalle</button>
+        </section>
 
-    <table class="detalle">
+        <!-- BOTÓN -->
+        <button (click)="agregarDetalle()">Agregar Detalle</button>
 
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Descripción</th>
-                <th>Cant.</th>
-                <th>Precio Unit.</th>
-                <th>Subtotal</th>
-            </tr>
-        </thead>
+        <!-- TABLA -->
+        <table class="detalle">
 
-        <tbody>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Descripción</th>
+                    <th>Cant.</th>
+                    <th>Precio</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
 
-            @for (d of facturas[0].detalles; track $index; let i = $index; let odd = $odd) {
+            <tbody>
+                @for (d of facturas[0].detalles; track $index; let i = $index; let odd = $odd) {
 
-            <tr [class.impar]="odd">
-                <td>{{ i + 1 }}</td>
-                <td>{{ d.descripcion }}><input type="text" [(ngModel)]="d.descripcion"
-                        (change)="this.facturas[0].calcularTotales()"></td>
-                <td>{{ d.cantidad }}><input type="number" [(ngModel)]="d.cantidad"
-                        (change)="this.facturas[0].calcularTotales()"></td>
-                <td>{{ d.precioUnitario }}><input type="number" [(ngModel)]="d.precioUnitario" step="0.01"
-                        (change)="this.facturas[0].calcularTotales()"></td>
-                <td>{{ d.cantidad * d.precioUnitario }}</td>
-            </tr>
+                <tr [class.impar]="odd">
+                    <td>{{ i + 1 }}</td>
 
-            } @empty {
+                    <td>
+                        <input class="input-desc" [(ngModel)]="d.descripcion" (change)="facturas[0].calcularTotales()">
+                    </td>
 
-            <tr class="fila-vacia">
-                <td colspan="5">Sin detalles</td>
-            </tr>
+                    <td>
+                        <input class="input-num" type="number" [(ngModel)]="d.cantidad"
+                            (change)="facturas[0].calcularTotales()">
+                    </td>
 
-            }
+                    <td>
+                        <input class="input-num" type="number" [(ngModel)]="d.precioUnitario"
+                            (change)="facturas[0].calcularTotales()">
+                    </td>
 
-        </tbody>
+                    <td>{{ d.cantidad * d.precioUnitario }}</td>
+                </tr>
 
-    </table>
+                } @empty {
 
-    <!-- TOTALES -->
-    <section class="totales">
+                <tr>
+                    <td colspan="5">Sin detalles</td>
+                </tr>
 
-        <div class="linea">
-            <span>Neto</span>
-            <span>${{ facturas[0].neto }}</span>
-        </div>
+                }
 
-        <div class="linea">
-            <span>IVA 21%</span>
-            <span>${{ facturas[0].iva }}</span>
-        </div>
+            </tbody>
 
-        <div class="linea total-final">
-            <span>Total</span>
-            <span>${{ facturas[0].total }}</span>
-        </div>
+        </table>
 
-    </section>
+        <!-- TOTALES -->
+        <section class="totales">
+            <div class="linea">
+                <span>Total</span>
+                <span>${{ facturas[0].total }}</span>
+            </div>
+        </section>
+
+    </div>
 
 </div>
 
-<!-- BOTONES -->
+<!-- ACCIONES -->
 <div class="acciones">
-
-    <div class="botones">
-        <button class="btn-print" (click)="guardar()">💾 Imprimir / Guardar</button>
-    </div>
-
-    <div class="link-volver">
-        <a routerLink="/lista">Ir a lista de facturas</a>
-    </div>
-
+    <button (click)="imprimir()">🖨 Imprimir</button>
+    <button (click)="guardar()">💾 Guardar</button>
+    <a routerLink="/lista">Volver</a>
 </div>

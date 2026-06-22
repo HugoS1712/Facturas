@@ -1,118 +1,117 @@
-/* ================= BASE ================= */
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+:host {
+    display: block;
+    min-height: 100vh;
+}
+
+/* ================= FONDOS ================= */
+
+.contenedor,
+.cuerpo-contraste,
+.cuerpo-pastel {
+    padding: 20px;
+    display: block;
+    min-height: 100%;
+}
+
+/* NORMAL */
+.contenedor {
     background: #eef1f5;
 }
 
+/* ✅ AZUL CLARO (FACTURA A) */
+.cuerpo-contraste {
+    background: #dbeafe;
+    /* 🔥 azul claro moderno */
+    color: #1e293b;
+    /* texto oscuro legible */
+}
+
+/* PASTEL */
+.cuerpo-pastel {
+    background: #fce4ec;
+}
+
 /* ================= TITULO ================= */
+
 .titulo {
     text-align: center;
     font-size: 28px;
-    font-weight: 600;
     margin: 25px 0;
-    color: #2c3e50;
 }
 
 /* ================= FACTURA ================= */
+
 .factura {
     width: 820px;
     margin: auto;
     background: #fff;
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
 /* ================= ENCABEZADO ================= */
+
 .encabezado {
     display: flex;
     justify-content: space-between;
-    border-bottom: 2px solid #f0f0f0;
-    padding-bottom: 15px;
+    align-items: flex-start;
+    gap: 20px;
 }
 
-/* ================= EMPRESA ================= */
-.empresa h2 {
-    margin: 0 0 5px;
-    font-size: 20px;
-    color: #34495e;
+.empresa {
+    width: 30%;
 }
 
-.empresa p {
-    margin: 2px 0;
-    font-size: 13px;
-    color: #666;
-}
-
-/* ================= TIPO FACTURA ================= */
 .tipo-comprobante {
+    width: 20%;
     text-align: center;
-    border-radius: 10px;
-    padding: 10px;
-    background: #f6f8fa;
 }
 
-.tipo-comprobante .letra {
-    font-size: 42px;
-    font-weight: bold;
-    color: #2c3e50;
-}
-
-/* ================= DATOS ================= */
 .datos-comprobante {
+    width: 30%;
     text-align: right;
-    font-size: 13px;
 }
 
-.datos-comprobante input {
-    margin-left: 5px;
+/* LETRA GRANDE */
+.tipo-comprobante .letra {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* SELECT */
+.tipo-comprobante select {
+    width: 60px;
 }
 
 /* ================= CLIENTE ================= */
-.cliente {
-    margin-top: 20px;
-    background: #fafafa;
-    border-radius: 10px;
-    padding: 15px;
-}
-
-.seccion-titulo {
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: #2c3e50;
-}
 
 .campo-fila {
     display: flex;
-    margin-bottom: 10px;
+    align-items: center;
+    gap: 10px;
 }
 
 .campo-label {
     width: 140px;
-    font-weight: 600;
-    color: #555;
+    font-weight: bold;
 }
 
 .campo-linea {
     flex: 1;
-    border-bottom: 1px solid #ccc;
-    padding: 3px;
 }
 
 /* ================= TABLA ================= */
+
 .detalle {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    border-radius: 10px;
-    overflow: hidden;
 }
 
 .detalle th {
-    background: #2c3e50;
+    background: #334155;
     color: white;
-    font-size: 13px;
 }
 
 .detalle th,
@@ -130,20 +129,31 @@ body {
     background: #f5f8ff;
 }
 
-/* hover moderno */
-.detalle tbody tr:hover {
-    background: #dde6ff;
-    transition: 0.2s;
+/* ================= INPUTS TABLA ================= */
+
+.detalle input {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 6px;
+    font-size: 13px;
+}
+
+.input-desc {
+    width: 95%;
+    text-align: left;
+}
+
+.input-num {
+    width: 70px;
+    text-align: center;
 }
 
 /* ================= TOTALES ================= */
+
 .totales {
     width: 320px;
     margin-left: auto;
     margin-top: 20px;
-    background: #fafafa;
-    padding: 15px;
-    border-radius: 10px;
 }
 
 .linea {
@@ -157,71 +167,38 @@ body {
     margin-top: 10px;
     padding-top: 8px;
     font-weight: bold;
-    font-size: 16px;
 }
 
 /* ================= BOTONES ================= */
+
 .acciones {
     width: 820px;
     margin: 25px auto;
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
     gap: 10px;
 }
 
-/* BOTÓN PRINCIPAL */
-.btn-print {
-    padding: 12px 20px;
-    border: none;
-    background: linear-gradient(135deg, #2c3e50, #34495e);
-    color: #fff;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.btn-print:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* LINK */
-.link-volver a {
-    text-decoration: none;
-    color: #2c3e50;
-    font-weight: 600;
-    transition: 0.2s;
-}
-
-.link-volver a:hover {
-    color: #000;
-}
-
-/* ================= INPUTS ================= */
-input {
-    border: 1px solid #ddd;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 13px;
-}
-
 /* ================= PRINT ================= */
+
 @media print {
 
-    body {
-        background: #fff;
+    body,
+    .contenedor,
+    .cuerpo-contraste,
+    .cuerpo-pastel {
+        background: white !important;
+        color: black !important;
     }
 
-    .acciones,
-    button,
     input,
-    select {
+    button,
+    select,
+    .acciones {
         display: none;
     }
 
     .factura {
+        background: white;
         box-shadow: none;
         border-radius: 0;
     }

@@ -8,9 +8,10 @@ import { FacturaService } from '../../servicios/factura-service';
 
 @Component({
   selector: 'app-factura',
+  standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './factura.html',
-  styleUrl: './factura.scss',
+  styleUrls: ['./factura.scss'],   // ✅ 🔥 CORREGIDO (antes styleUrl ❌)
 })
 export class FacturaComponent {
 
@@ -25,7 +26,6 @@ export class FacturaComponent {
 
   ngOnInit() {
 
-    // ✅ ahora pasamos el tipo correctamente
     const tipoInicial = TipoFactura.A;
 
     this.servicio.obtenerProximoNumero(tipoInicial)
@@ -63,7 +63,6 @@ export class FacturaComponent {
 
     this.facturas[0].detalles.push(nuevoDetalle);
 
-    // ✅ recalcula
     this.facturas[0].calcularTotales();
   }
 

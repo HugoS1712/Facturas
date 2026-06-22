@@ -1,8 +1,23 @@
 <h2 class="titulo">📋 Lista de Tickets</h2>
 
+<!-- ✅ FILTROS (FUERA DEL @for) -->
+<div class="filtros">
+
+    <select [(ngModel)]="filtroEstado">
+        <option value="">Todos los estados</option>
+        <option value="abierto">Abiertos</option>
+        <option value="cerrado">Cerrados</option>
+    </select>
+
+    <input type="text" placeholder="Filtrar por usuario" [(ngModel)]="filtroUsuario">
+
+    <button (click)="filtrar()">Filtrar</button>
+
+</div>
+
 <div class="contenedor">
 
-    @for (t of tickets; track t.numero) {
+    @for (t of ticketsFiltrados; track t.numero) {
 
     <div class="card">
 
@@ -17,7 +32,7 @@
             </span>
         </div>
 
-        <!-- INFO PRINCIPAL -->
+        <!-- INFO -->
         <div class="info">
             <p><strong>Usuario:</strong> {{ t.usuario }}</p>
             <p><strong>Equipo:</strong> {{ t.equipo }}</p>
