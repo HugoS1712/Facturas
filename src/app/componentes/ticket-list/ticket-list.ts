@@ -31,9 +31,20 @@ export class TicketList {
       });
   }
 
-  // ✅ función centralizada
+  // ✅ FUNCIÓN CORREGIDA (LA CLAVE)
   cargarTickets() {
-    this.tickets = this.ticketService.getTickets();
+
+    const usuarioLogueado = localStorage.getItem('usuarioLogueado');
+
+    const todos = this.ticketService.getTickets();
+
+    if (usuarioLogueado === 'admin') {
+      this.tickets = todos;  // ✅ admin ve todo
+    } else {
+      this.tickets = todos.filter(
+        t => t.usuario === usuarioLogueado
+      ); // ✅ usuario ve solo lo suyo
+    }
   }
 
   // ✅ navegar al detalle

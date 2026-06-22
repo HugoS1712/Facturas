@@ -1,38 +1,41 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.html',
-  styleUrls: ['./login.scss'],
+  styleUrls: ['./login.scss']   // ✅ 🔥 ESTA LÍNEA ES LA CLAVE
 })
 export class Login {
 
   usuario = '';
   password = '';
 
+  usuarios = [
+    { usuario: 'admin', password: '1234' },
+    { usuario: 'hugo', password: '1234' },
+    { usuario: 'soporte', password: '1234' }
+  ];
+
   constructor(private router: Router) { }
 
   login() {
-    if (this.usuario === 'admin' && this.password === '1234') {
+    const user = this.usuarios.find(u =>
+      u.usuario === this.usuario && u.password === this.password
+    );
 
-      // ✅ Guardar sesión
-      localStorage.setItem('logueado', 'true');
+    if (user) {
+      localStorage.setItem('usuarioLogueado', user.usuario);
 
-      console.log('✅ LOGUEADO OK');
-
-      // ✅ Navegación correcta (sin reload)
-      this.router.navigate(['/']);
+      // ✅ recarga completa (correcto)
+      window.location.href = '/';
 
     } else {
-      alert('Usuario o contraseña incorrectos');
+      alert('❌ Usuario o contraseña incorrectos');
     }
-  }
-
-  resetPassword() {
-    alert('Funcionalidad de reset próximamente');
   }
 }

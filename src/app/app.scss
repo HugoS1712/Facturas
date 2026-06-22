@@ -1,38 +1,74 @@
+/* ✅ NAVBAR */
 .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+
     display: flex;
-    justify-content: space-between;
     align-items: center;
+
     background: #1e293b;
-    padding: 15px 30px;
     color: white;
+
+    padding: 0 30px;
+    z-index: 1000;
 }
 
-/* Logo */
+/* ✅ LOGO */
 .logo {
     font-size: 18px;
     font-weight: bold;
+    margin-right: 40px;
 }
 
-/* Menu */
+/* ✅ MENÚ CENTRAL */
 .menu {
     display: flex;
-    gap: 20px;
+    gap: 25px;
+    flex: 1;
 }
 
 .menu a {
     color: #cbd5e1;
     text-decoration: none;
     font-size: 14px;
-    transition: 0.3s;
 }
 
 .menu a:hover {
     color: white;
 }
 
-/* Activo */
-.menu a.activo {
-    color: #3b82f6;
+/* ✅ USUARIO */
+.user {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+
+    margin-left: auto;
+    margin-right: 55px;
+}
+
+.user span {
     font-weight: bold;
-    border-bottom: 2px solid #3b82f6;
+}
+
+/* ✅ BOTÓN SALIR */
+.user button {
+    background: #475569;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.user button:hover {
+    background: #64748b;
+}
+
+/* ✅ 🔥 FIX REAL */
+.contenido {
+    margin-top: 60px;
 }

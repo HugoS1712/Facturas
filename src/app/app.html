@@ -1,25 +1,27 @@
 <!-- ✅ NAVBAR SOLO SI ESTA LOGUEADO -->
-<nav class="navbar" *ngIf="logueado">
+
+<nav class="navbar" *ngIf="true">
 
     <div class="logo">
         Sistema
     </div>
 
     <div class="menu">
-        <a routerLink="">inicio</a>
-        <a routerLink="/ticket">Crear un Ticket</a>
+        <a routerLink="">Inicio</a>
+        <a routerLink="/ticket">Crear Ticket</a>
         <a routerLink="/tickets">Lista Tickets</a>
         <a routerLink="/factura">Factura</a>
         <a routerLink="/lista">Lista Facturas</a>
     </div>
 
-    <!-- ✅ usuario + logout -->
     <div class="user">
-        <span>👤 admin</span>
+        <span>👤 {{ usuario }}</span>
         <button (click)="logout()">Salir</button>
     </div>
 
 </nav>
 
-<!-- ✅ acá cambia la pantalla -->
-<router-outlet></router-outlet>
+<!-- ✅ CONTENIDO (🔥 ESTO ES LO QUE FALTABA) -->
+<div class="contenido">
+    <router-outlet></router-outlet>
+</div>

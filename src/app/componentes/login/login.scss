@@ -1,72 +1,50 @@
-/* Fondo general */
-:host {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #1e293b, #3b82f6);
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-/* Card del login */
+/* CONTENEDOR GENERAL */
 .login-container {
+    width: 350px;
+    margin: 100px auto;
+    /* centra horizontal */
+    padding: 25px;
+
     background: white;
-    padding: 2rem;
     border-radius: 12px;
-    width: 320px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    text-align: center;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-/* Título */
+/* TITULO */
 .login-container h2 {
-    margin-bottom: 1.5rem;
+    text-align: center;
+    margin-bottom: 10px;
     color: #1e293b;
 }
 
-/* Inputs */
+/* INPUTS */
 .login-container input {
-    width: 100%;
     padding: 10px;
-    margin-bottom: 1rem;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 14px;
-    transition: border 0.3s;
 }
 
 .login-container input:focus {
     outline: none;
-    border: 1px solid #3b82f6;
+    border-color: #2563eb;
 }
 
-/* Botón principal */
+/* BOTÓN */
 .login-container button {
-    width: 100%;
+    background: #2563eb;
+    color: white;
     padding: 10px;
-    background: #3b82f6;
     border: none;
     border-radius: 8px;
-    color: white;
-    font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s;
+    font-size: 14px;
 }
 
 .login-container button:hover {
-    background: #2563eb;
-}
-
-/* Link o acción secundaria */
-.login-container .reset {
-    margin-top: 10px;
-    display: block;
-    font-size: 13px;
-    color: #3b82f6;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.login-container .reset:hover {
-    text-decoration: underline;
+    background: #1d4ed8;
 }

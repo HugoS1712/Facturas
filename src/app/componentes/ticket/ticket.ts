@@ -15,35 +15,28 @@ export class Ticket {
 
   ticketNumber = '';
 
-  usuario = '';
   equipo = '';
   urgencia = '';
   detalle = '';
   tipo = '';
 
-  tickets: any[] = [];
+  usuarioLogueado = ''; // ✅ IMPORTANTE
 
   constructor(private ticketService: TicketService) { }
 
   ngOnInit() {
-    this.tickets = this.ticketService.getTickets();
+    // ✅ traer usuario desde localStorage
+    this.usuarioLogueado = localStorage.getItem('usuarioLogueado') || '';
   }
 
   crearTicket(form: NgForm) {
 
-    // ✅ VALIDACIÓN
-    if (form.invalid) {
-      return;
-    }
+    if (form.invalid) return;
 
-    // ✅ GENERAR NÚMERO
+    const usuarioLogueado = this.usuarioLogueado || 'desconocido';
+
     let contador = localStorage.getItem('ticketCounter');
-
-    if (!contador) {
-      contador = '1';
-    } else {
-      contador = (parseInt(contador) + 1).toString();
-    }
+    contador = contador ? (parseInt(contador) + 1).toString() : '1';
 
     localStorage.setItem('ticketCounter', contador);
 
@@ -52,36 +45,15 @@ export class Ticket {
 
     const nuevoTicket = {
       numero: this.ticketNumber,
-      usuario: this.usuario,
+      usuario: usuarioLogueado,
       equipo: this.equipo,
       urgencia: this.urgencia,
       tipo: this.tipo,
       detalle: this.detalle
     };
 
-    // ✅ GUARDAR SOLO EN EL SERVICE
     this.ticketService.agregarTicket(nuevoTicket);
 
-    // ❌ SACAMOS ESTA LÍNEA (duplicaba)
-    // this.tickets.push(nuevoTicket);
-
-    // ✅ LIMPIAR FORM
     form.resetForm();
-  }
-
-  editar(ticket: any) {
-    this.usuario = ticket.usuario;
-    this.equipo = ticket.equipo;
-    this.urgencia = ticket.urgencia;
-    this.tipo = ticket.tipo;
-    this.detalle = ticket.detalle;
-  }
-
-  filtrarAlta() {
-    this.tickets = this.tickets.filter(t => t.urgencia === 'alta');
-  }
-
-  cargarTodos() {
-    this.tickets = this.ticketService.getTickets();
   }
 }

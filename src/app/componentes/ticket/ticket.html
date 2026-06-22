@@ -21,20 +21,14 @@
 
       <h2>Nuevo Ticket</h2>
 
-      <!-- ✅ FORM CORREGIDO -->
+      <!-- ✅ Usuario desde TS -->
+      <p class="usuario-logueado">
+        👤 Usuario: {{ usuarioLogueado }}
+      </p>
+
+      <!-- FORM -->
       <form #formTicket="ngForm" (ngSubmit)="crearTicket(formTicket)">
 
-        <!-- Usuario -->
-        <div class="form-group">
-          <label>Usuario</label>
-          <input type="text" [(ngModel)]="usuario" name="usuario" required #usuarioRef="ngModel">
-
-          @if (usuarioRef.invalid && usuarioRef.touched) {
-          <small class="error">El usuario es obligatorio</small>
-          }
-        </div>
-
-        <!-- Equipo + urgencia -->
         <div class="row">
 
           <div class="form-group">
@@ -63,7 +57,6 @@
 
         </div>
 
-        <!-- Tipo -->
         <div class="form-group">
           <label>Tipo</label>
           <select [(ngModel)]="tipo" name="tipo" required #tipoRef="ngModel">
@@ -79,7 +72,6 @@
           }
         </div>
 
-        <!-- Detalle -->
         <div class="form-group">
           <label>Detalle</label>
           <textarea [(ngModel)]="detalle" name="detalle" required #detalleRef="ngModel"></textarea>
@@ -89,16 +81,16 @@
           }
         </div>
 
-        <!-- ✅ Botón con validación -->
         <button type="submit" [disabled]="formTicket.invalid">
           Crear Ticket
         </button>
 
       </form>
 
-      <!-- Ir a lista -->
       <div class="acciones">
-        <a routerLink="/tickets" class="btn">📋 Ver lista de tickets</a>
+        <a routerLink="/tickets" class="btn">
+          📋 Ver lista de tickets
+        </a>
       </div>
 
     </div>

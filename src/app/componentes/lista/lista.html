@@ -1,12 +1,32 @@
-@for(factura of factura; track $index) {
-<div class="factura">
-    <h2>Factura #{{ factura.numero }}</h2>
-    <p>Fecha: {{ factura.fecha | date:'dd/MM/yyyy' }}</p>
-    <p>Cliente: {{ factura.receptor }}</p>
-    <p>Detalles:</p>
-    <p>Total: ${{ factura.total | number:'1.2-2' }}</p>
+<div class="tickets-container">
+
+    @for (factura of factura; track $index) {
+    <div class="ticket-card">
+
+        <div class="header">
+            <h3>FACT-{{ factura.numero }}</h3>
+            <span class="estado">factura</span>
+        </div>
+
+        <p><strong>Cliente:</strong> {{ factura.receptor }}</p>
+
+        <p><strong>Fecha:</strong>
+            {{ factura.fecha | date:'dd/MM/yyyy' }}
+        </p>
+
+        <p class="total">
+            💲 {{ factura.total | number:'1.2-2' }}
+        </p>
+
+    </div>
+    }
+
+    @empty {
+    <h2>No hay facturas para mostrar</h2>
+    }
+
+    <a routerLink="/factura" class="btn-crear">
+        ➕ Crear nueva factura
+    </a>
+
 </div>
-} @empty{
-<h2>No hay facturas para mostrar</h2>
-}
-<a routerLink="/factura">Crear nueva factura</a>

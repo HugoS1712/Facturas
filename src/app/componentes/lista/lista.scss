@@ -1,239 +1,59 @@
-/* ================= BASE ================= */
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f4f4f4;
-}
-
-/* ================= CONTENEDOR ================= */
-.contenedor {
-    min-height: 100vh;
-    padding: 30px 0;
+/* CONTENEDOR */
+.tickets-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: #f4f4f4;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 30px;
+    margin-top: 60px;
 }
 
-/* 🔥 FONDOS DINÁMICOS */
-.cuerpo-contraste {
-    background: #1e1e1e;
-}
-
-.cuerpo-pastel {
-    background: #fce4ec;
-}
-
-/* ================= TITULO ================= */
-.titulo {
-    text-align: center;
-    font-size: 26px;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-/* ================= FACTURA ================= */
-.factura {
-    width: 800px;
-    background: #fff;
-    padding: 20px;
-    border: 2px solid #000;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
-}
-
-/* ================= ENCABEZADO ================= */
-.encabezado {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 2px solid #000;
-    padding-bottom: 15px;
-}
-
-/* ================= EMPRESA ================= */
-.empresa {
-    width: 35%;
-}
-
-.empresa h2 {
-    margin: 0 0 5px 0;
-}
-
-/* ================= TIPO FACTURA ================= */
-.tipo-comprobante {
-    position: relative;
-    border: 2px solid #000;
-    padding: 15px;
-    text-align: center;
-    width: 120px;
-    background: #fff;
-}
-
-/* 🔥 LETRA GRANDE */
-.tipo-comprobante .letra {
-    font-size: 60px;
-    font-weight: bold;
-}
-
-/* 🔥 SELECT INVISIBLE PERO FUNCIONAL */
-.tipo-comprobante select {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-}
-
-/* ================= DATOS ================= */
-.datos-comprobante {
-    width: 35%;
-    text-align: right;
-}
-
-/* ================= CLIENTE ================= */
-.cliente {
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    padding: 10px;
-}
-
-.grid-cliente {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-/* ================= DETALLE ================= */
-.detalle {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.detalle th,
-.detalle td {
-    border: 1px solid #ccc;
-    padding: 8px;
-}
-
-.detalle th {
-    background: #eee;
-}
-
-.fila-vacia td {
-    height: 24px;
-}
-
-/* Altura para filas vacías */
-
-
-/* ================= TOTALES ================= */
-.totales {
+/* CARD */
+.ticket-card {
     width: 320px;
-    margin-left: auto;
-    margin-top: 20px;
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.totales .linea {
+/* HEADER */
+.ticket-card .header {
     display: flex;
     justify-content: space-between;
-    padding: 5px 0;
+    align-items: center;
 }
 
-.total-final {
-    border-top: 2px solid #000;
+.ticket-card h3 {
+    color: #2563eb;
+    margin: 0;
+}
+
+/* ESTADO */
+.estado {
+    background: #d1d5db;
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+/* TEXTO */
+.ticket-card p {
+    margin: 5px 0;
+}
+
+/* TOTAL */
+.total {
+    margin-top: 10px;
     font-weight: bold;
     font-size: 16px;
 }
 
-/* ================= BOTONES ================= */
-.acciones {
-    width: 800px;
+/* BOTON */
+.btn-crear {
     margin-top: 20px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.acciones button {
-    padding: 10px 18px;
-    border: 2px solid #000;
-    background: #fff;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.acciones button:hover {
-    background: #000;
-    color: #fff;
-}
-
-.impar {
-    background: rgb(224, 226, 103);
-
-    /* ================= INPUTS ================= */
-    input {
-        border: 1px solid #ccc;
-        padding: 3px;
-        font-size: 13px;
-    }
-
-    /* ================= PRINT ================= */
-    @media print {
-
-        .titulo {
-            display: none;
-        }
-
-        .acciones {
-            display: none;
-        }
-
-        button,
-        select,
-        input {
-            display: none;
-        }
-
-        .factura {
-            border: none;
-            box-shadow: none;
-            width: 100%;
-        }
-
-        .seccion-titulo {
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            background: #eee;
-            padding: 5px;
-        }
-
-        .campo-fila {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .campo-label {
-            width: 150px;
-            font-weight: bold;
-        }
-
-        .campo-linea {
-            flex: 1;
-            border: none;
-            border-bottom: 1px solid #000;
-            outline: none;
-            padding: 4px;
-        }
-
-
-    }
-
-    /* Mejor alineación */
-    .cliente input {
-        font-size: 14px;
-    }
-
+    padding: 10px 20px;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
 }
