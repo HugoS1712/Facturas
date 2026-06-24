@@ -1,8 +1,9 @@
-<div class="home">
+<div class="home" [ngStyle]="{'background': colorFondo}">
   <h1>💻 Sistema de Tickets de Soporte</h1>
-  <p>En que puedo ayudarte?</p>
+  <p>¿En qué puedo ayudarte?</p>
 
   <div class="fecha">
     <span>Hoy es</span>
     <h2>{{ hoy | date:'fullDate' }}</h2>
   </div>
+</div>
