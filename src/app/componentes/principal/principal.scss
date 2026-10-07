@@ -1,12 +1,65 @@
 .home {
-    margin-top: 60px;
-    /* 🔥 CLAVE */
-    min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 70px);
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    color: white;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  color: white;
+
+  padding: 20px;
+}
+
+.home h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.home p {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+}
+
+.fecha {
+  margin-top: 10px;
+}
+
+.fecha span {
+  font-size: 1.2rem;
+}
+
+.fecha h2 {
+  margin-top: 15px;
+  font-size: 2.5rem;
+}
+
+.acceso {
+  margin-top: 40px;
+}
+
+.btn-ingresar {
+
+  padding: 15px 30px;
+
+  background: white;
+
+  color: #1d4ed8;
+
+  text-decoration: none;
+
+  font-weight: bold;
+
+  border-radius: 10px;
+
+  transition: 0.3s;
+}
+
+.btn-ingresar:hover {
+
+  background: #f3f4f6;
+
 }

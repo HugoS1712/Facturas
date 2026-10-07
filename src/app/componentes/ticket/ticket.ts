@@ -20,13 +20,23 @@ export class Ticket {
   detalle = '';
   tipo = '';
 
-  usuarioLogueado = ''; // ✅ IMPORTANTE
+  // ✅ 🔥 NUEVOS CAMPOS
+  nombreHardware = '';
+  nombreSoftware = '';
+
+  usuarioLogueado = '';
 
   constructor(private ticketService: TicketService) { }
 
   ngOnInit() {
-    // ✅ traer usuario desde localStorage
-    this.usuarioLogueado = localStorage.getItem('usuarioLogueado') || '';
+    // ✅ ojo: ahora estás guardando "usuario"
+    this.usuarioLogueado = localStorage.getItem('usuario') || '';
+  }
+
+  // ✅ limpieza al cambiar tipo
+  onTipoChange() {
+    this.nombreHardware = '';
+    this.nombreSoftware = '';
   }
 
   crearTicket(form: NgForm) {
@@ -43,17 +53,31 @@ export class Ticket {
     const year = new Date().getFullYear();
     this.ticketNumber = `TCK-${year}-${contador.padStart(4, '0')}`;
 
+    // ✅ elegir nombre según tipo
+    let nombreExtra = '';
+
+    if (this.tipo === 'Hardware') {
+      nombreExtra = this.nombreHardware;
+    } else if (this.tipo === 'Software') {
+      nombreExtra = this.nombreSoftware;
+    }
+
     const nuevoTicket = {
       numero: this.ticketNumber,
       usuario: usuarioLogueado,
       equipo: this.equipo,
       urgencia: this.urgencia,
       tipo: this.tipo,
+      nombre: nombreExtra, // ✅ 🔥 agregado
       detalle: this.detalle
     };
 
     this.ticketService.agregarTicket(nuevoTicket);
 
+    // ✅ limpiar todo
     form.resetForm();
+
+    this.nombreHardware = '';
+    this.nombreSoftware = '';
   }
 }

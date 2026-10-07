@@ -1,0 +1,96 @@
+<div class="contenedor-admin">
+
+    <h1>Panel de Administración</h1>
+
+    <h2>Nuevo Usuario</h2>
+
+    <div class="formulario">
+
+        <input
+            type="text"
+            placeholder="Nombre"
+            [(ngModel)]="nuevoNombre">
+
+        <input
+            type="email"
+            placeholder="Email"
+            [(ngModel)]="nuevoEmail">
+
+        <select [(ngModel)]="nuevoRol">
+
+            <option value="Usuario">
+                Usuario
+            </option>
+
+            <option value="Admin">
+                Admin
+            </option>
+
+        </select>
+
+        <button (click)="agregarUsuario()">
+            Agregar Usuario
+        </button>
+
+    </div>
+
+    <h2>Usuarios Registrados</h2>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr *ngFor="let usuario of usuarios">
+
+                <td>{{ usuario.nombre }}</td>
+
+                <td>{{ usuario.email }}</td>
+
+                <td>
+
+                    <span
+                        [class.admin]="usuario.rol === 'Admin'"
+                        [class.usuario]="usuario.rol === 'Usuario'">
+
+                        {{ usuario.rol }}
+
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <button
+                        (click)="cambiarRol(usuario)">
+
+                        {{ usuario.rol === 'Admin'
+                        ? 'Hacer Usuario'
+                        : 'Hacer Admin' }}
+
+                    </button>
+
+                    <button
+                        (click)="eliminarUsuario(usuario)">
+
+                        Eliminar
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>

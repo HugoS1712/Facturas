@@ -8,9 +8,9 @@
       <span>N° Ticket</span>
 
       @if (ticketNumber) {
-      <h1>{{ ticketNumber }}</h1>
+        <h1>{{ ticketNumber }}</h1>
       } @else {
-      <p class="placeholder">Sin generar</p>
+        <p class="placeholder">Sin generar</p>
       }
     </div>
   </aside>
@@ -21,7 +21,7 @@
 
       <h2>Nuevo Ticket</h2>
 
-      <!-- ✅ Usuario desde TS -->
+      <!-- Usuario -->
       <p class="usuario-logueado">
         👤 Usuario: {{ usuarioLogueado }}
       </p>
@@ -31,15 +31,17 @@
 
         <div class="row">
 
+          <!-- EQUIPO -->
           <div class="form-group">
             <label>Equipo</label>
             <input type="text" [(ngModel)]="equipo" name="equipo" required #equipoRef="ngModel">
 
             @if (equipoRef.invalid && equipoRef.touched) {
-            <small class="error">El equipo es obligatorio</small>
+              <small class="error">El equipo es obligatorio</small>
             }
           </div>
 
+          <!-- URGENCIA -->
           <div class="form-group">
             <label>Urgencia</label>
             <select [(ngModel)]="urgencia" name="urgencia" required #urgenciaRef="ngModel">
@@ -51,15 +53,20 @@
             </select>
 
             @if (urgenciaRef.invalid && urgenciaRef.touched) {
-            <small class="error">Seleccioná una urgencia</small>
+              <small class="error">Seleccioná una urgencia</small>
             }
           </div>
 
         </div>
 
+        <!-- TIPO -->
         <div class="form-group">
           <label>Tipo</label>
-          <select [(ngModel)]="tipo" name="tipo" required #tipoRef="ngModel">
+          <select [(ngModel)]="tipo"
+                  name="tipo"
+                  required
+                  #tipoRef="ngModel"
+                  (change)="onTipoChange()">
 
             <option value="">Seleccionar</option>
             <option value="Hardware">Hardware</option>
@@ -68,19 +75,56 @@
           </select>
 
           @if (tipoRef.invalid && tipoRef.touched) {
-          <small class="error">Seleccioná un tipo</small>
+            <small class="error">Seleccioná un tipo</small>
           }
         </div>
 
+        <!-- 🔥 HARDWARE -->
+        @if (tipo === 'Hardware') {
+          <div class="form-group">
+            <label>Nombre del equipo</label>
+            <input type="text"
+                   [(ngModel)]="nombreHardware"
+                   name="nombreHardware"
+                   required
+                   #hardwareRef="ngModel">
+
+            @if (hardwareRef.invalid && hardwareRef.touched) {
+              <small class="error">El nombre del equipo es obligatorio</small>
+            }
+          </div>
+        }
+
+        <!-- 🔥 SOFTWARE -->
+        @if (tipo === 'Software') {
+          <div class="form-group">
+            <label>Nombre del software</label>
+            <input type="text"
+                   [(ngModel)]="nombreSoftware"
+                   name="nombreSoftware"
+                   required
+                   #softwareRef="ngModel">
+
+            @if (softwareRef.invalid && softwareRef.touched) {
+              <small class="error">El nombre del software es obligatorio</small>
+            }
+          </div>
+        }
+
+        <!-- DETALLE -->
         <div class="form-group">
           <label>Detalle</label>
-          <textarea [(ngModel)]="detalle" name="detalle" required #detalleRef="ngModel"></textarea>
+          <textarea [(ngModel)]="detalle"
+                    name="detalle"
+                    required
+                    #detalleRef="ngModel"></textarea>
 
           @if (detalleRef.invalid && detalleRef.touched) {
-          <small class="error">El detalle es obligatorio</small>
+            <small class="error">El detalle es obligatorio</small>
           }
         </div>
 
+        <!-- BOTÓN -->
         <button type="submit" [disabled]="formTicket.invalid">
           Crear Ticket
         </button>

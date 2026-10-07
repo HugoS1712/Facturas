@@ -1,27 +1,81 @@
 <!-- ✅ NAVBAR SOLO SI ESTA LOGUEADO -->
 
-<nav class="navbar" *ngIf="true">
+<nav class="navbar" *ngIf="logueado">
 
     <div class="logo">
         Sistema
     </div>
 
     <div class="menu">
-        <a routerLink="">Inicio</a>
-        <a routerLink="/ticket">Crear Ticket</a>
-        <a routerLink="/tickets">Lista Tickets</a>
-        <a routerLink="/factura">Factura</a>
-        <a routerLink="/lista">Lista Facturas</a>
+
+        <a routerLink="">
+            Inicio
+        </a>
+
+        <a routerLink="/ticket">
+            Crear Ticket
+        </a>
+
+        <a routerLink="/tickets">
+            Lista Tickets
+        </a>
+
+        <a routerLink="/factura">
+            Factura
+        </a>
+
+        <a routerLink="/lista">
+            Lista Facturas
+        </a>
+
+        <a routerLink="/foro">
+            Foro
+        </a>
+
+        <!-- ✅ SOLO ADMINISTRADOR -->
+
+        <a
+            *ngIf="rol() === 'admin'"
+            routerLink="/administracion">
+
+            Administración
+
+        </a>
+
     </div>
 
     <div class="user">
-        <span>👤 {{ usuario }}</span>
-        <button (click)="logout()">Salir</button>
+
+        <img
+            *ngIf="fotoUsuario()"
+            [src]="fotoUsuario()"
+            alt="Usuario"
+            class="avatar">
+
+        <div class="user-info">
+
+            <span class="user-name">
+                {{ nombreUsuario() }}
+            </span>
+
+            <span class="user-role">
+
+                {{ rol() === 'admin'
+                    ? '🟡 Administrador'
+                    : '🔵 Usuario' }}
+
+            </span>
+
+        </div>
+
+        <button (click)="logout()">
+            Salir
+        </button>
+
     </div>
 
 </nav>
 
-<!-- ✅ CONTENIDO (🔥 ESTO ES LO QUE FALTABA) -->
 <div class="contenido">
     <router-outlet></router-outlet>
 </div>

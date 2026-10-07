@@ -1,13 +1,75 @@
-<div class="login-container">
+<div
+  class="login-page"
+  [ngStyle]="{'background': colorFondo}">
 
-  <h2>Iniciar sesión</h2>
+  <div class="login-container">
 
-  <!-- Usuario -->
-  <input type="text" [(ngModel)]="usuario" name="usuario" placeholder="Usuario">
+    <h1>🎫</h1>
 
-  <!-- Password -->
-  <input type="password" [(ngModel)]="password" name="password" placeholder="Contraseña">
+    <h2>Sistema de Tickets de Soporte</h2>
 
-  <button (click)="login()">Ingresar</button>
+    <p class="subtitulo">
+      Ingresá para acceder al sistema
+    </p>
+
+    <input
+      type="text"
+      [(ngModel)]="usuario"
+      placeholder="Usuario">
+
+    <div class="password-container">
+
+      <input
+        [type]="mostrarPassword ? 'text' : 'password'"
+        [(ngModel)]="password"
+        placeholder="Contraseña">
+
+      <span
+        class="ojo"
+        (click)="togglePassword()">
+
+        👁
+
+      </span>
+
+    </div>
+
+    <button
+      class="btn-login"
+      (click)="login()">
+
+      Ingresar
+
+    </button>
+
+    <div class="separador">
+      o
+    </div>
+
+    <button
+      class="google-btn"
+      (click)="loguearConGoogle()">
+
+      🔵 Ingresar con Google
+
+    </button>
+
+    <div
+      *ngIf="mensajeError"
+      class="error">
+
+      {{ mensajeError }}
+
+    </div>
+
+    <a
+      routerLink="/"
+      class="volver">
+
+      ← Volver al Inicio
+
+    </a>
+
+  </div>
 
 </div>

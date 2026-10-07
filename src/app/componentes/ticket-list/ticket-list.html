@@ -1,6 +1,6 @@
 <h2 class="titulo">📋 Lista de Tickets</h2>
 
-<!-- ✅ FILTROS (FUERA DEL @for) -->
+<!-- ✅ FILTROS -->
 <div class="filtros">
 
     <select [(ngModel)]="filtroEstado">
@@ -37,6 +37,14 @@
             <p><strong>Usuario:</strong> {{ t.usuario }}</p>
             <p><strong>Equipo:</strong> {{ t.equipo }}</p>
             <p><strong>Tipo:</strong> {{ t.tipo }}</p>
+
+            <!-- ✅ 🔥 NUEVO CAMPO DINÁMICO -->
+            <p *ngIf="t.nombre">
+                <strong>
+                    {{ t.tipo === 'Hardware' ? 'Equipo' : 'Software' }}:
+                </strong>
+                {{ t.nombre }}
+            </p>
         </div>
 
         <!-- URGENCIA -->
