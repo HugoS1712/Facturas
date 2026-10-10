@@ -22,6 +22,16 @@ export class App implements OnInit {
   fotoUsuario = signal('');
   rol = signal('');
 
+ 
+  menu = [
+    { texto: 'Inicio', ruta: '' },
+    { texto: 'Crear Ticket', ruta: '/ticket' },
+    { texto: 'Lista Tickets', ruta: '/tickets' },
+    { texto: 'Factura', ruta: '/factura' },
+    { texto: 'Lista Facturas', ruta: '/lista' },
+    { texto: 'Foro', ruta: '/foro' }
+  ];
+
   constructor(private router: Router) {
 
     this.router.events
@@ -64,7 +74,7 @@ export class App implements OnInit {
 
   }
 
-  logout() {
+    logout() {
 
     if (typeof window === 'undefined') {
       return;
@@ -84,7 +94,6 @@ export class App implements OnInit {
     this.fotoUsuario.set('');
     this.rol.set('');
 
-    // ✅ vuelve a la pantalla de bienvenida
     this.router.navigate(['/']);
 
   }

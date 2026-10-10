@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Usuario } from '../modelos/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -41,28 +42,59 @@ export class UsuarioService {
 
   }
 
+  obtenerUsuario(): Usuario {
+
+    return {
+
+      email:
+        localStorage.getItem(
+          'usuarioLogueado'
+        ) || '',
+
+      nombre:
+        localStorage.getItem(
+          'nombreUsuario'
+        ) || '',
+
+      foto:
+        localStorage.getItem(
+          'fotoUsuario'
+        ) || '',
+
+      uid:
+        localStorage.getItem(
+          'uidUsuario'
+        ) || '',
+
+      rol:
+        localStorage.getItem(
+          'rol'
+        ) || 'usuario'
+
+    };
+
+  }
+
   logout() {
 
     localStorage.removeItem(
       'usuarioLogueado'
     );
-
     localStorage.removeItem(
       'nombreUsuario'
     );
-
     localStorage.removeItem(
       'fotoUsuario'
     );
-
     localStorage.removeItem(
       'uidUsuario'
     );
-
     localStorage.removeItem(
       'logueado'
     );
-
+    localStorage.removeItem(
+      'rol'
+    );
   }
 
 }
