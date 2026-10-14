@@ -1,0 +1,59 @@
+/* CONTENEDOR */
+.tickets-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 30px;
+    margin-top: 60px;
+}
+
+/* CARD */
+.ticket-card {
+    width: 320px;
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* HEADER */
+.ticket-card .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ticket-card h3 {
+    color: #2563eb;
+    margin: 0;
+}
+
+/* ESTADO */
+.estado {
+    background: #d1d5db;
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+/* TEXTO */
+.ticket-card p {
+    margin: 5px 0;
+}
+
+/* TOTAL */
+.total {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* BOTON */
+.btn-crear {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+}

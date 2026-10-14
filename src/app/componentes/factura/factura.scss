@@ -1,0 +1,205 @@
+:host {
+    display: block;
+    min-height: 100vh;
+}
+
+/* ================= FONDOS ================= */
+
+.contenedor,
+.cuerpo-contraste,
+.cuerpo-pastel {
+    padding: 20px;
+    display: block;
+    min-height: 100%;
+}
+
+/* NORMAL */
+.contenedor {
+    background: #eef1f5;
+}
+
+/* ✅ AZUL CLARO (FACTURA A) */
+.cuerpo-contraste {
+    background: #dbeafe;
+    /* 🔥 azul claro moderno */
+    color: #1e293b;
+    /* texto oscuro legible */
+}
+
+/* PASTEL */
+.cuerpo-pastel {
+    background: #fce4ec;
+}
+
+/* ================= TITULO ================= */
+
+.titulo {
+    text-align: center;
+    font-size: 28px;
+    margin: 25px 0;
+}
+
+/* ================= FACTURA ================= */
+
+.factura {
+    width: 820px;
+    margin: auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+}
+
+/* ================= ENCABEZADO ================= */
+
+.encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.empresa {
+    width: 30%;
+}
+
+.tipo-comprobante {
+    width: 20%;
+    text-align: center;
+}
+
+.datos-comprobante {
+    width: 30%;
+    text-align: right;
+}
+
+/* LETRA GRANDE */
+.tipo-comprobante .letra {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* SELECT */
+.tipo-comprobante select {
+    width: 60px;
+}
+
+/* ================= CLIENTE ================= */
+
+.campo-fila {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.campo-label {
+    width: 140px;
+    font-weight: bold;
+}
+
+.campo-linea {
+    flex: 1;
+}
+
+/* ================= TABLA ================= */
+
+.detalle {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.detalle th {
+    background: #334155;
+    color: white;
+}
+
+.detalle th,
+.detalle td {
+    padding: 10px;
+    text-align: center;
+}
+
+.detalle tr {
+    border-bottom: 1px solid #eee;
+}
+
+/* FILAS IMPARES */
+.impar {
+    background: #f5f8ff;
+}
+
+/* ================= INPUTS TABLA ================= */
+
+.detalle input {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 6px;
+    font-size: 13px;
+}
+
+.input-desc {
+    width: 95%;
+    text-align: left;
+}
+
+.input-num {
+    width: 70px;
+    text-align: center;
+}
+
+/* ================= TOTALES ================= */
+
+.totales {
+    width: 320px;
+    margin-left: auto;
+    margin-top: 20px;
+}
+
+.linea {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.total-final {
+    border-top: 2px solid #2c3e50;
+    margin-top: 10px;
+    padding-top: 8px;
+    font-weight: bold;
+}
+
+/* ================= BOTONES ================= */
+
+.acciones {
+    width: 820px;
+    margin: 25px auto;
+    display: flex;
+    gap: 10px;
+}
+
+/* ================= PRINT ================= */
+
+@media print {
+
+    body,
+    .contenedor,
+    .cuerpo-contraste,
+    .cuerpo-pastel {
+        background: white !important;
+        color: black !important;
+    }
+
+    input,
+    button,
+    select,
+    .acciones {
+        display: none;
+    }
+
+    .factura {
+        background: white;
+        box-shadow: none;
+        border-radius: 0;
+    }
+}

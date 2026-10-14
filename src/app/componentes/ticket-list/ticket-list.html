@@ -1,0 +1,90 @@
+<h2 class="titulo">📋 Lista de Tickets</h2>
+
+<!-- ✅ FILTROS -->
+<div class="filtros">
+
+    <select [(ngModel)]="filtroEstado">
+        <option value="">Todos los estados</option>
+        <option value="abierto">Abiertos</option>
+        <option value="cerrado">Cerrados</option>
+    </select>
+
+    <input type="text" placeholder="Filtrar por usuario" [(ngModel)]="filtroUsuario">
+
+    <button (click)="filtrar()">Filtrar</button>
+
+</div>
+
+<div class="contenedor">
+
+    @for (t of ticketsFiltrados; track t.numero) {
+
+    <div class="card">
+
+        <!-- HEADER -->
+        <div class="header">
+            <h3 class="link" (click)="verTicket(t.numero)">
+                {{ t.numero }}
+            </h3>
+
+            <span class="estado" [ngClass]="t.estado">
+                {{ t.estado }}
+            </span>
+        </div>
+
+        <!-- INFO -->
+        <div class="info">
+            <p><strong>Usuario:</strong> {{ t.usuario }}</p>
+            <p><strong>Equipo:</strong> {{ t.equipo }}</p>
+            <p><strong>Tipo:</strong> {{ t.tipo }}</p>
+
+            <!-- ✅ 🔥 NUEVO CAMPO DINÁMICO -->
+            <p *ngIf="t.nombre">
+                <strong>
+                    {{ t.tipo === 'Hardware' ? 'Equipo' : 'Software' }}:
+                </strong>
+                {{ t.nombre }}
+            </p>
+        </div>
+
+        <!-- URGENCIA -->
+        <p>
+            <strong>Urgencia:</strong>
+            <span class="tag" [ngClass]="t.urgencia">
+                {{ t.urgencia }}
+            </span>
+        </p>
+
+        <!-- RESPONSABLE -->
+        <p>
+            <strong>Responsable:</strong>
+            {{ t.responsable || 'Sin asignar' }}
+        </p>
+
+        <!-- FECHAS -->
+        <div class="fechas">
+            <p>🗓 {{ t.fechaCreacion | date:'shortDate' }}</p>
+
+            <p *ngIf="t.fechaCierre" class="cerrado">
+                ✅ {{ t.fechaCierre | date:'shortDate' }}
+            </p>
+        </div>
+
+        <!-- DETALLE -->
+        <p class="detalle">
+            {{ t.detalle }}
+        </p>
+
+    </div>
+
+    } @empty {
+
+    <p class="empty">No hay tickets creados</p>
+
+    }
+
+</div>
+
+<div class="acciones">
+    <a routerLink="/ticket" class="btn">➕ Crear nuevo ticket</a>
+</div>

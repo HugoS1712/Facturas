@@ -1,0 +1,27 @@
+<div class="dashboard">
+
+    <h1>📊 Dashboard</h1>
+
+    <div class="resumen">
+
+        <div class="card">
+            <h3>Total Facturado</h3>
+            <h2>
+                $ {{ totalFacturado | number:'1.2-2' }}
+            </h2>
+        </div>
+
+        <div class="card">
+            <h3>Cantidad de Facturas</h3>
+            <h2>
+                {{ cantidadFacturas }}
+            </h2>
+        </div>
+
+    </div>
+
+    <canvas
+        id="graficoVentas">
+    </canvas>
+
+</div>
