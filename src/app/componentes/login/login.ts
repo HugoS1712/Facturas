@@ -5,7 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { Auth } from '@angular/fire/auth';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import {
+  GoogleAuthProvider,
+  signInWithPopup
+} from 'firebase/auth';
 
 import { UsuarioService } from '../../servicios/usuario-service';
 
@@ -42,7 +45,7 @@ export class Login implements OnInit {
     { usuario: 'soporte', password: '1234' }
   ];
 
-  ngOnInit() {
+  ngOnInit(): void {
 
     if (localStorage.getItem('logueado') === 'true') {
 
@@ -67,20 +70,21 @@ export class Login implements OnInit {
 
   }
 
-  togglePassword() {
+  togglePassword(): void {
 
     this.mostrarPassword =
       !this.mostrarPassword;
 
   }
 
-  login() {
+  login(): void {
 
     this.mensajeError = '';
 
-    const user = this.usuarios.find(u =>
-      u.usuario === this.usuario &&
-      u.password === this.password
+    const user = this.usuarios.find(
+      u =>
+        u.usuario === this.usuario &&
+        u.password === this.password
     );
 
     if (user) {
@@ -118,7 +122,7 @@ export class Login implements OnInit {
 
   }
 
-  async loguearConGoogle() {
+  async loguearConGoogle(): Promise<void> {
 
     this.mensajeError = '';
 
@@ -137,8 +141,6 @@ export class Login implements OnInit {
           provider
         );
 
-      console.log('GOOGLE LOGIN OK', resultado);
-
       const email =
         resultado.user.email ?? '';
 
@@ -151,11 +153,6 @@ export class Login implements OnInit {
       .subscribe({
 
         next: (respuesta) => {
-
-          console.log(
-            'VALIDACION OK',
-            respuesta
-          );
 
           this.usuarioService.guardarUsuario(
             resultado.user.email ?? '',
@@ -179,23 +176,11 @@ export class Login implements OnInit {
             'true'
           );
 
-          this.router.navigate(
-            ['/inicio']
-          );
+          this.router.navigate(['/inicio']);
 
         },
 
-        error: (error) => {
-
-          console.error(
-            'ERROR VALIDAR GOOGLE',
-            error
-          );
-
-          alert(
-            'ERROR VALIDAR GOOGLE:\n\n' +
-            JSON.stringify(error, null, 2)
-          );
+        error: () => {
 
           this.mensajeError =
             'Usuario no autorizado. Solicite acceso al administrador.';
@@ -206,15 +191,7 @@ export class Login implements OnInit {
 
     } catch (error: any) {
 
-      console.error(
-        'ERROR GOOGLE',
-        error
-      );
-
-      alert(
-        'ERROR GOOGLE:\n\n' +
-        (error?.message || JSON.stringify(error))
-      );
+      console.error(error);
 
       this.mensajeError =
         error?.message ||
