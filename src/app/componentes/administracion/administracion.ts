@@ -25,6 +25,8 @@ import {
 })
 export class Administracion implements OnInit {
 
+  private apiUrl = 'https://factura-api-beta.vercel.app';
+
   nuevoNombre = '';
   nuevoEmail = '';
   nuevoRol = 'Usuario';
@@ -43,7 +45,7 @@ export class Administracion implements OnInit {
   constructor(
     private http: HttpClient,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.cargarUsuarios();
@@ -54,7 +56,7 @@ export class Administracion implements OnInit {
     console.log('Cargando usuarios...');
 
     this.http
-      .get<any[]>('http://localhost:3000/usuarios')
+      .get<any[]>(`${this.apiUrl}/usuarios`)
       .subscribe({
 
         next: (data) => {
@@ -92,7 +94,7 @@ export class Administracion implements OnInit {
     }
 
     this.http.post(
-      'http://localhost:3000/usuarios',
+      `${this.apiUrl}/usuarios`,
       {
         username: this.nuevoNombre,
         email: this.nuevoEmail,
@@ -142,7 +144,7 @@ export class Administracion implements OnInit {
   guardarEdicion(): void {
 
     this.http.put(
-      `http://localhost:3000/usuarios/${this.usuarioEditando.id}`,
+      `${this.apiUrl}/usuarios/${this.usuarioEditando.id}`,
       {
         username: this.usuarioEditando.nombre,
         email: this.usuarioEditando.email,
@@ -193,7 +195,7 @@ export class Administracion implements OnInit {
     }
 
     this.http
-      .delete(`http://localhost:3000/usuarios/${usuario.id}`)
+      .delete(`${this.apiUrl}/usuarios/${usuario.id}`)
       .subscribe({
 
         next: () => {
@@ -216,7 +218,7 @@ export class Administracion implements OnInit {
 
   }
 
- cambiarRol(usuario: any): void {
+  cambiarRol(usuario: any): void {
 
     usuario.rol =
       usuario.rol === 'Admin'

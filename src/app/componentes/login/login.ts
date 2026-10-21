@@ -137,11 +137,13 @@ export class Login implements OnInit {
           provider
         );
 
+      console.log('GOOGLE LOGIN OK', resultado);
+
       const email =
         resultado.user.email ?? '';
 
       this.http.post<any>(
-        'http://localhost:3000/validar-google',
+        'https://factura-api-beta.vercel.app/validar-google',
         {
           email
         }
@@ -149,6 +151,11 @@ export class Login implements OnInit {
       .subscribe({
 
         next: (respuesta) => {
+
+          console.log(
+            'VALIDACION OK',
+            respuesta
+          );
 
           this.usuarioService.guardarUsuario(
             resultado.user.email ?? '',
@@ -178,14 +185,20 @@ export class Login implements OnInit {
 
         },
 
-        error: () => {
+        error: (error) => {
+
+          console.error(
+            'ERROR VALIDAR GOOGLE',
+            error
+          );
+
+          alert(
+            'ERROR VALIDAR GOOGLE:\n\n' +
+            JSON.stringify(error, null, 2)
+          );
 
           this.mensajeError =
             'Usuario no autorizado. Solicite acceso al administrador.';
-
-          alert(
-            'Usuario no autorizado. Solicite acceso al administrador.'
-          );
 
         }
 
@@ -193,14 +206,19 @@ export class Login implements OnInit {
 
     } catch (error: any) {
 
-      console.error(error);
-
-      this.mensajeError =
-        'Error al iniciar sesión con Google';
+      console.error(
+        'ERROR GOOGLE',
+        error
+      );
 
       alert(
-        'Error al iniciar sesión con Google'
+        'ERROR GOOGLE:\n\n' +
+        (error?.message || JSON.stringify(error))
       );
+
+      this.mensajeError =
+        error?.message ||
+        'Error al iniciar sesión con Google';
 
     }
 

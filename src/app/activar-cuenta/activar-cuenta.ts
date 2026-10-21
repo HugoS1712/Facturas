@@ -49,7 +49,8 @@ export class ActivarCuenta {
     }
 
     this.http.post(
-      'http://localhost:3000/activar-cuenta',
+      'https://factura-api-beta.vercel.app/activar-cuenta',
+      
       {
         token: this.token,
         password: this.password
