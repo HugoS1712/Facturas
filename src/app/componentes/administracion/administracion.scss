@@ -1,5 +1,7 @@
 .contenedor-admin {
   padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 h1 {
@@ -9,6 +11,22 @@ h1 {
 
 h2 {
   margin-bottom: 20px;
+}
+
+.formulario {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.formulario input,
+.formulario select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  flex: 1;
+  min-width: 200px;
 }
 
 table {
@@ -59,4 +77,65 @@ button:hover {
 
 button:active {
   transform: scale(0.98);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+  .contenedor-admin {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  .formulario {
+    flex-direction: column;
+  }
+
+  .formulario input,
+  .formulario select,
+  .formulario button {
+    width: 100%;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  td button {
+    display: block;
+    width: 100%;
+    margin-bottom: 6px;
+  }
+
+  td {
+    min-width: 120px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  h1 {
+    font-size: 1.2rem;
+  }
+
+  table {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 14px;
+  }
+
 }
