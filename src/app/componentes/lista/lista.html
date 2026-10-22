@@ -1,16 +1,119 @@
-<div class="tickets-container">
+<h2 class="titulo">
+    📋 Lista de Facturas
+</h2>
 
-    <div style="margin-bottom:20px;">
+<div class="filtros">
 
-        <button (click)="mostrarTodas()">
-            Todas
-        </button>
+    <button (click)="mostrarTodas()">
+        Todas
+    </button>
 
-        <button (click)="filtrarImporteMayor()">
-            Mayores a $10.000
-        </button>
+    <input
+        type="text"
+        placeholder="Buscar cliente..."
+        [(ngModel)]="textoBusqueda">
 
+    <button
+        (click)="buscarCliente()">
+        Buscar
+    </button>
+
+    <select
+        [(ngModel)]="filtroPeriodo">
+
+        <option value="">
+            Todos los períodos
+        </option>
+
+        <option value="dia">
+            Hoy
+        </option>
+
+        <option value="semana">
+            Esta semana
+        </option>
+
+        <option value="mes">
+            Este mes
+        </option>
+
+        <option value="anio">
+            Este año
+        </option>
+
+    </select>
+
+    <button
+        (click)="filtrarPeriodo()">
+        Filtrar período
+    </button>
+
+    <select
+        [(ngModel)]="filtroImporte">
+
+        <option value="">
+            Todos los importes
+        </option>
+
+        <option value="menor5000">
+            Menos de $5.000
+        </option>
+
+        <option value="5000-10000">
+            $5.000 - $10.000
+        </option>
+
+        <option value="10000-50000">
+            $10.000 - $50.000
+        </option>
+
+        <option value="mayor50000">
+            Más de $50.000
+        </option>
+
+    </select>
+
+    <button
+        (click)="filtrarImporte()">
+        Filtrar importe
+    </button>
+
+</div>
+
+<div class="estadisticas">
+
+    <div class="estadistica-card">
+        <h4>📄 Facturas</h4>
+        <p>{{ factura.length }}</p>
     </div>
+
+    <div class="estadistica-card">
+        <h4>💰 Total</h4>
+        <p>
+            $
+            {{ totalFacturado | number:'1.2-2' }}
+        </p>
+    </div>
+
+    <div class="estadistica-card">
+        <h4>📈 Promedio</h4>
+        <p>
+            $
+            {{ promedioFacturado | number:'1.2-2' }}
+        </p>
+    </div>
+
+    <div class="estadistica-card">
+        <h4>🏆 Mayor</h4>
+        <p>
+            $
+            {{ mayorFactura | number:'1.2-2' }}
+        </p>
+    </div>
+
+</div>
+
+<div class="tickets-container">
 
     @for (factura of factura; track $index) {
 
@@ -63,12 +166,12 @@
 
     }
 
-    <a
-        routerLink="/factura"
-        class="btn-crear">
-
-        ➕ Crear nueva factura
-
-    </a>
-
 </div>
+
+<a
+    routerLink="/factura"
+    class="btn-crear">
+
+    ➕ Nueva factura
+
+</a>

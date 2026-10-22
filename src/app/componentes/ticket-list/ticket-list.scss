@@ -3,7 +3,34 @@
     font-size: 24px;
 }
 
-/* ✅ GRID (columnas) */
+/* FILTROS */
+
+.filtros {
+    display: flex;
+    gap: 10px;
+    padding: 0 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filtros input,
+.filtros select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.filtros button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+}
+
+/* GRID */
+
 .contenedor {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -11,7 +38,8 @@
     padding: 20px;
 }
 
-/* ✅ CARD */
+/* CARD */
+
 .card {
     background: white;
     padding: 18px;
@@ -19,14 +47,14 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* ✅ HEADER */
+/* HEADER */
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-/* LINK */
 .link {
     cursor: pointer;
     color: #2563eb;
@@ -36,7 +64,8 @@
     text-decoration: underline;
 }
 
-/* ✅ ESTADO */
+/* ESTADO */
+
 .estado {
     padding: 4px 10px;
     border-radius: 10px;
@@ -54,12 +83,14 @@
     color: #991b1b;
 }
 
-/* ✅ INFO */
+/* INFO */
+
 .info p {
     margin: 4px 0;
 }
 
-/* ✅ URGENCIA */
+/* URGENCIA */
+
 .tag {
     padding: 3px 8px;
     border-radius: 8px;
@@ -81,19 +112,23 @@
     color: #166534;
 }
 
-/* ✅ FECHAS */
+/* FECHAS */
+
 .fechas {
     font-size: 12px;
     color: #666;
 }
 
 /* DETALLE */
+
 .detalle {
     margin-top: 8px;
     font-size: 14px;
+    word-break: break-word;
 }
 
-/* BOTÓN */
+/* BOTON */
+
 .acciones {
     text-align: center;
     margin: 20px;
@@ -109,4 +144,53 @@
 
 .btn:hover {
     background: #1d4ed8;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+    .titulo {
+        text-align: center;
+        font-size: 1.6rem;
+    }
+
+    .filtros {
+        flex-direction: column;
+    }
+
+    .filtros input,
+    .filtros select,
+    .filtros button {
+        width: 100%;
+    }
+
+    .contenedor {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .btn {
+        display: block;
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .titulo {
+        font-size: 1.3rem;
+    }
+
+    .card {
+        padding: 14px;
+    }
+
 }

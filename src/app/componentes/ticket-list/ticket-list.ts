@@ -60,18 +60,19 @@ export class TicketList {
       usuarioLogueado === 'admin'
     ) {
 
-      this.tickets = todos;
+      this.tickets = [...todos].reverse();
 
     } else {
 
-      this.tickets = todos.filter(
-        t => t.usuario === usuarioLogueado
-      );
+      this.tickets = todos
+        .filter(
+          t => t.usuario === usuarioLogueado
+        )
+        .reverse();
 
     }
 
-    this.ticketsFiltrados =
-      this.tickets;
+    this.ticketsFiltrados = [...this.tickets];
 
   }
 
@@ -98,6 +99,16 @@ export class TicketList {
         );
 
       });
+
+  }
+
+  mostrarTodas() {
+
+    this.filtroEstado = '';
+    this.filtroUsuario = '';
+
+    this.ticketsFiltrados =
+      [...this.tickets];
 
   }
 

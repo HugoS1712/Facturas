@@ -1,4 +1,5 @@
 /* Layout general */
+
 .page {
     display: flex;
     min-height: 100vh;
@@ -6,6 +7,7 @@
 }
 
 /* Sidebar */
+
 .sidebar {
     width: 220px;
     background: #0f172a;
@@ -18,6 +20,7 @@
 }
 
 /* Caja del ticket */
+
 .ticket-box {
     background: #1e293b;
     padding: 15px;
@@ -41,6 +44,7 @@
 }
 
 /* Contenido principal */
+
 .content {
     flex: 1;
     display: flex;
@@ -51,19 +55,30 @@
 }
 
 /* Card */
+
 .card {
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
     background: white;
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
 }
 
 .card h2 {
     margin-bottom: 20px;
 }
 
+/* Usuario */
+
+.usuario-logueado {
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
 /* Formulario */
+
 .form-group {
     margin-bottom: 15px;
 }
@@ -74,7 +89,6 @@
     font-size: 14px;
 }
 
-/* 🔥 CLAVE: Inputs bien visibles */
 .form-group input,
 .form-group select,
 .form-group textarea {
@@ -83,9 +97,21 @@
     border-radius: 6px;
     border: 1px solid #cbd5e1;
     font-size: 14px;
+    box-sizing: border-box;
 }
 
-/* 🔥 Layout fila */
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.error {
+    color: #dc2626;
+    font-size: 12px;
+}
+
+/* Fila */
+
 .row {
     display: flex;
     gap: 10px;
@@ -95,10 +121,11 @@
     flex: 1;
 }
 
-/* 🔥 BOTÓN PRINCIPAL */
+/* Botón principal */
+
 button {
     margin-top: 10px;
-    padding: 10px;
+    padding: 12px;
     width: 100%;
     border: none;
     border-radius: 6px;
@@ -112,12 +139,67 @@ button:hover {
     background: #2563eb;
 }
 
-/* 🔥 LINK */
+/* Link */
+
 .acciones {
     margin-top: 15px;
     text-align: center;
 }
 
 .btn {
+    display: inline-block;
     text-decoration: none;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+    .page {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .content {
+        padding: 15px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+
+    .row {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .sidebar h2 {
+        font-size: 1.2rem;
+    }
+
+    .ticket-box h1 {
+        font-size: 18px;
+    }
+
+    .card h2 {
+        font-size: 1.4rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 13px;
+    }
+
 }
