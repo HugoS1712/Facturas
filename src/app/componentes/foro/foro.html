@@ -1,3 +1,60 @@
+<h1>💬 Foro</h1>
+
+<div class="nuevo-mensaje">
+
+    <textarea
+        rows="5"
+        cols="60"
+        [(ngModel)]="mensajeForo.mensaje"
+        placeholder="Escribí tu mensaje...">
+    </textarea>
+
+    <br><br>
+
+    <button (click)="enviar()">
+        Enviar Mensaje
+    </button>
+
+</div>
+
+<hr>
+
+<h3>
+    Total mensajes: {{ mensajes.length }}
+</h3>
+
+<div
+    class="mensaje"
+    *ngFor="let item of mensajes">
+
+    <strong>
+        👤 {{ item.nombreUsuario }}
+    </strong>
+
+    <br><br>
+
+    {{ item.mensaje }}
+
+    <br><br>
+
+    <small *ngIf="item.fecha">
+
+        📅
+
+        {{
+          item.fecha?.toDate
+            ? (item.fecha.toDate() | date:'dd/MM/yyyy HH:mm')
+            : (item.fecha | date:'dd/MM/yyyy HH:mm')
+        }}
+
+    </small>
+
+    <hr>
+
+</div>
+
+<!-- TOAST -->
+
 <div
   class="toast-chat"
   *ngIf="mostrarToast">
