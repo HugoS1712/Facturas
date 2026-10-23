@@ -29,6 +29,10 @@ export class Foro implements OnInit {
 
   public mensajes: any[] = [];
 
+  mostrarToast = false;
+  toastUsuario = '';
+  toastMensaje = '';
+
   constructor(
     private foroService: ForoService,
     private cdr: ChangeDetectorRef
@@ -40,6 +44,42 @@ export class Foro implements OnInit {
       .obtenerMensajes()
       .subscribe((datos: any[]) => {
 
+        if (
+          datos.length > 0 &&
+          this.mensajes.length > 0
+        ) {
+
+          const ultimo =
+            datos[datos.length - 1];
+
+          const ultimoAnterior =
+            this.mensajes[
+              this.mensajes.length - 1
+            ];
+
+          if (
+            ultimo.id !==
+            ultimoAnterior?.id
+          ) {
+
+            this.toastUsuario =
+              ultimo.nombreUsuario;
+
+            this.toastMensaje =
+              ultimo.mensaje;
+
+            this.mostrarToast = true;
+
+            setTimeout(() => {
+
+              this.mostrarToast = false;
+
+            }, 5000);
+
+          }
+
+        }
+
         this.mensajes = [...datos];
 
         this.cdr.detectChanges();
@@ -50,7 +90,8 @@ export class Foro implements OnInit {
 
   public async enviar(): Promise<void> {
 
-    const texto = this.mensajeForo.mensaje.trim();
+    const texto =
+      this.mensajeForo.mensaje.trim();
 
     if (!texto) {
       return;
@@ -63,8 +104,9 @@ export class Foro implements OnInit {
         idUsuario: 1,
 
         nombreUsuario:
-          localStorage.getItem('nombreUsuario') ??
-          'Anónimo',
+          localStorage.getItem(
+            'nombreUsuario'
+          ) ?? 'Anónimo',
 
         mensaje: texto,
 

@@ -19,7 +19,10 @@
 
 <hr>
 
-<h3>Total mensajes: {{ mensajes.length }}</h3>
+<h3>
+    Total mensajes:
+    {{ mensajes.length }}
+</h3>
 
 <div
     class="mensaje"
@@ -48,5 +51,21 @@
     </small>
 
     <hr>
+
+</div>
+
+<!-- TOAST -->
+
+<div
+  class="toast-chat"
+  *ngIf="mostrarToast">
+
+  <strong>
+    💬 {{ toastUsuario }}
+  </strong>
+
+  <p>
+    {{ toastMensaje }}
+  </p>
 
 </div>

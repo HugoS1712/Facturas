@@ -9,43 +9,83 @@ import { FacturaService } from '../../servicios/factura-service';
 @Component({
   selector: 'app-factura',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule
+  ],
   templateUrl: './factura.html',
   styleUrls: ['./factura.scss']
 })
 export class FacturaComponent {
 
   public facturas: Factura[] = [];
-  public EtipoFactura = TipoFactura;
-  public claseFactura: string = 'contenedor';
-  public claseDetalle: string = 'detalle';
 
-  constructor(public servicio: FacturaService) {
+  public EtipoFactura = TipoFactura;
+
+  public claseFactura = 'contenedor';
+  public claseDetalle = 'detalle';
+
+  public modoEdicion = false;
+
+  constructor(
+    public servicio: FacturaService
+  ) {
     this.facturas = [];
   }
 
   ngOnInit() {
 
+    const facturaEditar =
+      localStorage.getItem(
+        'facturaEditar'
+      );
+
+    if (facturaEditar) {
+
+      this.facturas = [
+        JSON.parse(facturaEditar)
+      ];
+
+      this.modoEdicion = true;
+
+      localStorage.removeItem(
+        'facturaEditar'
+      );
+
+      return;
+
+    }
+
     const tipoInicial = TipoFactura.A;
 
     this.servicio
-      .obtenerProximoNumero(tipoInicial)
-      .subscribe((numero: number) => {
+      .obtenerProximoNumero(
+        tipoInicial
+      )
+      .subscribe(
+        (numero: number) => {
 
-        const nuevaFactura = new Factura(
-          new Date(),
-          numero,
-          tipoInicial,
-          ''
-        );
+          const nuevaFactura =
+            new Factura(
+              new Date(),
+              numero,
+              tipoInicial,
+              ''
+            );
 
-        this.facturas.push(nuevaFactura);
+          this.facturas.push(
+            nuevaFactura
+          );
 
-      });
+        }
+      );
 
   }
 
-  mostrarLetra(valor: TipoFactura): string {
+  mostrarLetra(
+    valor: TipoFactura
+  ): string {
 
     return valor === TipoFactura.A
       ? 'A'
@@ -61,13 +101,16 @@ export class FacturaComponent {
       this.facturas[0].fecha.getDate() + 1
     );
 
-    alert(this.facturas[0].fecha);
+    alert(
+      this.facturas[0].fecha
+    );
 
   }
 
   agregarDetalle() {
 
-    const nuevoDetalle = new Detallefactura();
+    const nuevoDetalle =
+      new Detallefactura();
 
     nuevoDetalle.cantidad = 1;
     nuevoDetalle.descripcion = 'Producto 1';
@@ -83,16 +126,21 @@ export class FacturaComponent {
 
   guardar() {
 
-    if (!this.facturas[0].receptor?.trim()) {
+    if (
+      !this.facturas[0].receptor?.trim()
+    ) {
 
-      alert('Debe ingresar un cliente');
+      alert(
+        'Debe ingresar un cliente'
+      );
 
       return;
 
     }
 
     if (
-      this.facturas[0].detalles.length === 0
+      this.facturas[0].detalles
+        .length === 0
     ) {
 
       alert(
@@ -103,7 +151,20 @@ export class FacturaComponent {
 
     }
 
-    this.facturas[0].calcularTotales();
+    this.facturas[0]
+      .calcularTotales();
+
+    if (this.modoEdicion) {
+
+      alert(
+        '✅ Factura actualizada correctamente'
+      );
+
+      this.modoEdicion = false;
+
+      return;
+
+    }
 
     this.servicio.agregarFactura(
       this.facturas[0]
@@ -117,32 +178,39 @@ export class FacturaComponent {
       this.facturas[0].tipo;
 
     this.servicio
-      .obtenerProximoNumero(tipoActual)
-      .subscribe((numero: number) => {
+      .obtenerProximoNumero(
+        tipoActual
+      )
+      .subscribe(
+        (numero: number) => {
 
-        this.facturas = [];
+          this.facturas = [];
 
-        const nuevaFactura = new Factura(
-          new Date(),
-          numero,
-          tipoActual,
-          ''
-        );
+          const nuevaFactura =
+            new Factura(
+              new Date(),
+              numero,
+              tipoActual,
+              ''
+            );
 
-        this.facturas.push(
-          nuevaFactura
-        );
+          this.facturas.push(
+            nuevaFactura
+          );
 
-      });
+        }
+      );
 
   }
 
   cambiarFondo() {
 
     this.claseFactura =
-      this.facturas[0].tipo === this.EtipoFactura.A
+      this.facturas[0].tipo ===
+      this.EtipoFactura.A
         ? 'cuerpo-contraste'
-        : this.facturas[0].tipo === this.EtipoFactura.B
+        : this.facturas[0].tipo ===
+          this.EtipoFactura.B
         ? 'cuerpo-pastel'
         : 'contenedor';
 

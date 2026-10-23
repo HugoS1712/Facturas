@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { TicketService } from '../../servicios/ticket-service';
 
 @Component({
   selector: 'app-ticket',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule
+  ],
   templateUrl: './ticket.html',
   styleUrls: ['./ticket.scss']
 })
@@ -20,46 +24,73 @@ export class Ticket {
   detalle = '';
   tipo = '';
 
-  // ✅ 🔥 NUEVOS CAMPOS
   nombreHardware = '';
   nombreSoftware = '';
 
   usuarioLogueado = '';
 
-  constructor(private ticketService: TicketService) { }
+  constructor(
+    private ticketService: TicketService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-    // ✅ ojo: ahora estás guardando "usuario"
-    this.usuarioLogueado = localStorage.getItem('usuario') || '';
+
+    this.usuarioLogueado =
+      localStorage.getItem('usuario') || '';
+
   }
 
-  // ✅ limpieza al cambiar tipo
   onTipoChange() {
+
     this.nombreHardware = '';
     this.nombreSoftware = '';
+
   }
 
   crearTicket(form: NgForm) {
 
-    if (form.invalid) return;
+    if (form.invalid) {
+      return;
+    }
 
-    const usuarioLogueado = this.usuarioLogueado || 'desconocido';
+    const usuarioLogueado =
+      this.usuarioLogueado || 'desconocido';
 
-    let contador = localStorage.getItem('ticketCounter');
-    contador = contador ? (parseInt(contador) + 1).toString() : '1';
+    let contador =
+      localStorage.getItem(
+        'ticketCounter'
+      );
 
-    localStorage.setItem('ticketCounter', contador);
+    contador = contador
+      ? (parseInt(contador) + 1).toString()
+      : '1';
 
-    const year = new Date().getFullYear();
-    this.ticketNumber = `TCK-${year}-${contador.padStart(4, '0')}`;
+    localStorage.setItem(
+      'ticketCounter',
+      contador
+    );
 
-    // ✅ elegir nombre según tipo
+    const year =
+      new Date().getFullYear();
+
+    this.ticketNumber =
+      `TCK-${year}-${contador.padStart(4, '0')}`;
+
     let nombreExtra = '';
 
     if (this.tipo === 'Hardware') {
-      nombreExtra = this.nombreHardware;
-    } else if (this.tipo === 'Software') {
-      nombreExtra = this.nombreSoftware;
+
+      nombreExtra =
+        this.nombreHardware;
+
+    } else if (
+      this.tipo === 'Software'
+    ) {
+
+      nombreExtra =
+        this.nombreSoftware;
+
     }
 
     const nuevoTicket = {
@@ -68,16 +99,27 @@ export class Ticket {
       equipo: this.equipo,
       urgencia: this.urgencia,
       tipo: this.tipo,
-      nombre: nombreExtra, // ✅ 🔥 agregado
-      detalle: this.detalle
+      nombre: nombreExtra,
+      detalle: this.detalle,
+      estado: 'abierto',
+      fechaCreacion: new Date(),
+      fechaActualizacion: new Date()
     };
 
-    this.ticketService.agregarTicket(nuevoTicket);
+    this.ticketService.agregarTicket(
+      nuevoTicket
+    );
 
-    // ✅ limpiar todo
-    form.resetForm();
+    alert(
+      '✅ Ticket creado correctamente\n\n' +
+      'Número: ' +
+      this.ticketNumber
+    );
 
-    this.nombreHardware = '';
-    this.nombreSoftware = '';
+    this.router.navigate([
+      '/tickets'
+    ]);
+
   }
+
 }

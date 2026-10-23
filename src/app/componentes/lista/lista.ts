@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Factura } from '../../clases/factura';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { FacturaService } from '../../servicios/factura-service';
 
 @Component({
@@ -26,7 +26,8 @@ export class Lista {
   filtroImporte = '';
 
   constructor(
-    public servicio: FacturaService
+    public servicio: FacturaService,
+    private router: Router
   ) {
 
     this.servicio
@@ -130,6 +131,7 @@ export class Lista {
               );
 
             default:
+
               return true;
 
           }
@@ -178,7 +180,8 @@ export class Lista {
 
         this.factura =
           this.facturaOriginal.filter(
-            (f: any) => f.total > 50000
+            (f: any) =>
+              f.total > 50000
           );
 
         break;
@@ -232,15 +235,14 @@ export class Lista {
     factura: Factura
   ): void {
 
-    console.log(
-      'Editar factura:',
-      factura
+    localStorage.setItem(
+      'facturaEditar',
+      JSON.stringify(factura)
     );
 
-    alert(
-      'Editar factura N° ' +
-      factura.numero
-    );
+    this.router.navigate([
+      '/factura'
+    ]);
 
   }
 
