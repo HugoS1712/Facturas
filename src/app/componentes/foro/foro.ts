@@ -13,7 +13,10 @@ import { ForoService } from '../../servicios/foro.service';
 @Component({
   selector: 'app-foro',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
   templateUrl: './foro.html',
   styleUrls: ['./foro.scss']
 })
@@ -33,6 +36,8 @@ export class Foro implements OnInit {
   toastUsuario = '';
   toastMensaje = '';
 
+  cantidadMensajes = 0;
+
   constructor(
     private foroService: ForoService,
     private cdr: ChangeDetectorRef
@@ -45,40 +50,31 @@ export class Foro implements OnInit {
       .subscribe((datos: any[]) => {
 
         if (
-          datos.length > 0 &&
-          this.mensajes.length > 0
+          this.cantidadMensajes > 0 &&
+          datos.length > this.cantidadMensajes
         ) {
 
           const ultimo =
             datos[datos.length - 1];
 
-          const ultimoAnterior =
-            this.mensajes[
-              this.mensajes.length - 1
-            ];
+          this.toastUsuario =
+            ultimo.nombreUsuario;
 
-          if (
-            ultimo.id !==
-            ultimoAnterior?.id
-          ) {
+          this.toastMensaje =
+            ultimo.mensaje;
 
-            this.toastUsuario =
-              ultimo.nombreUsuario;
+          this.mostrarToast = true;
 
-            this.toastMensaje =
-              ultimo.mensaje;
+          setTimeout(() => {
 
-            this.mostrarToast = true;
+            this.mostrarToast = false;
 
-            setTimeout(() => {
-
-              this.mostrarToast = false;
-
-            }, 5000);
-
-          }
+          }, 5000);
 
         }
+
+        this.cantidadMensajes =
+          datos.length;
 
         this.mensajes = [...datos];
 

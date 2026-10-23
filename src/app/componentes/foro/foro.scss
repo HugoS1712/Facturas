@@ -40,7 +40,7 @@ button:hover {
   right: 20px;
   bottom: 20px;
 
-  width: 280px;
+  width: 300px;
 
   background: #1e293b;
   color: white;
@@ -52,7 +52,7 @@ button:hover {
   box-shadow:
     0 8px 20px rgba(0,0,0,.25);
 
-  z-index: 9999;
+  z-index: 99999;
 
   animation: aparecer .3s ease;
 }
@@ -65,6 +65,7 @@ button:hover {
 .toast-chat p {
   margin: 0;
   font-size: 13px;
+  word-break: break-word;
 }
 
 @keyframes aparecer {
@@ -101,6 +102,7 @@ button:hover {
 
     right: 15px;
     bottom: 15px;
+
   }
 
 }
