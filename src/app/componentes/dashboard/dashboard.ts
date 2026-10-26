@@ -17,11 +17,48 @@ export class Dashboard implements OnInit {
   totalFacturado = 0;
   cantidadFacturas = 0;
 
+  promedioFacturado = 0;
+  mayorFactura = 0;
+  facturasMes = 0;
+
+  totalTickets = 0;
+  ticketsAbiertos = 0;
+  ticketsCerrados = 0;
+
+  nombreUsuario = '';
+
+  ultimasFacturas: Factura[] = [];
+
   constructor(
     private facturaService: FacturaService
   ) { }
 
   ngOnInit(): void {
+
+    this.nombreUsuario =
+      localStorage.getItem(
+        'nombreUsuario'
+      ) || 'Usuario';
+
+    const tickets =
+      JSON.parse(
+        localStorage.getItem('tickets') || '[]'
+      );
+
+    this.totalTickets =
+      tickets.length;
+
+    this.ticketsAbiertos =
+      tickets.filter(
+        (t: any) =>
+          t.estado === 'abierto'
+      ).length;
+
+    this.ticketsCerrados =
+      tickets.filter(
+        (t: any) =>
+          t.estado === 'cerrado'
+      ).length;
 
     this.facturaService
       .retornarFactura()
@@ -33,11 +70,64 @@ export class Dashboard implements OnInit {
         this.totalFacturado =
           facturas.reduce(
             (total, factura) =>
-              total + Number(factura.total || 0),
+              total +
+              Number(
+                factura.total || 0
+              ),
             0
           );
 
-        this.crearGrafico(facturas);
+        this.promedioFacturado =
+          this.cantidadFacturas > 0
+            ? this.totalFacturado /
+              this.cantidadFacturas
+            : 0;
+
+        this.mayorFactura =
+          facturas.length > 0
+            ? Math.max(
+                ...facturas.map(
+                  f =>
+                    Number(
+                      f.total || 0
+                    )
+                )
+              )
+            : 0;
+
+        const hoy = new Date();
+
+        this.facturasMes =
+          facturas.filter(f => {
+
+            const fecha =
+              new Date(f.fecha);
+
+            return (
+              fecha.getMonth() ===
+                hoy.getMonth() &&
+              fecha.getFullYear() ===
+                hoy.getFullYear()
+            );
+
+          }).length;
+
+        this.ultimasFacturas =
+          [...facturas]
+            .sort(
+              (a, b) =>
+                new Date(
+                  b.fecha
+                ).getTime() -
+                new Date(
+                  a.fecha
+                ).getTime()
+            )
+            .slice(0, 5);
+
+        this.crearGrafico(
+          facturas
+        );
 
       });
 
@@ -49,22 +139,46 @@ export class Dashboard implements OnInit {
 
     const ventasPorCliente: any = {};
 
-    facturas.forEach(factura => {
+    facturas.forEach(
+      factura => {
 
-      const cliente =
-        factura.receptor || 'Sin nombre';
+        const cliente =
+          factura.receptor ||
+          'Sin nombre';
 
-      ventasPorCliente[cliente] =
-        (ventasPorCliente[cliente] || 0)
-        + Number(factura.total || 0);
+        ventasPorCliente[
+          cliente
+        ] =
+          (
+            ventasPorCliente[
+              cliente
+            ] || 0
+          ) +
+          Number(
+            factura.total || 0
+          );
 
-    });
+      }
+    );
 
     const labels =
-      Object.keys(ventasPorCliente);
+      Object.keys(
+        ventasPorCliente
+      );
 
     const datos =
-      Object.values(ventasPorCliente);
+      Object.values(
+        ventasPorCliente
+      );
+
+    const existente =
+      Chart.getChart(
+        'graficoVentas'
+      );
+
+    if (existente) {
+      existente.destroy();
+    }
 
     new Chart(
       'graficoVentas',
@@ -74,14 +188,18 @@ export class Dashboard implements OnInit {
           labels,
           datasets: [
             {
-              label: 'Ventas por Cliente',
+              label:
+                'Ventas por Cliente',
               data: datos,
-              borderWidth: 1
+              borderWidth: 1,
+              backgroundColor:
+                '#2563eb'
             }
           ]
         },
         options: {
-          responsive: true
+          responsive: true,
+          maintainAspectRatio: false
         }
       }
     );

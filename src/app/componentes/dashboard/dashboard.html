@@ -1,25 +1,112 @@
 <div class="dashboard">
 
-    <h1>📊 Dashboard</h1>
+    <div class="bienvenida">
+
+        <h1>
+            👋 Bienvenido {{ nombreUsuario }}
+        </h1>
+
+        <p>
+            Resumen general del sistema
+        </p>
+
+    </div>
 
     <div class="resumen">
 
-        <div class="card">
-            <h3>Total Facturado</h3>
+        <div class="card card-verde">
+            <h3>💰 Total Facturado</h3>
             <h2>
                 $ {{ totalFacturado | number:'1.2-2' }}
             </h2>
         </div>
 
-        <div class="card">
-            <h3>Cantidad de Facturas</h3>
+        <div class="card card-azul">
+            <h3>📄 Facturas</h3>
             <h2>
                 {{ cantidadFacturas }}
             </h2>
         </div>
 
+        <div class="card card-morado">
+            <h3>📈 Promedio</h3>
+            <h2>
+                $ {{ promedioFacturado | number:'1.2-2' }}
+            </h2>
+        </div>
+
+        <div class="card card-rojo">
+            <h3>🏆 Mayor Factura</h3>
+            <h2>
+                $ {{ mayorFactura | number:'1.2-2' }}
+            </h2>
+        </div>
+
+        <div class="card card-naranja">
+            <h3>📅 Facturas Este Mes</h3>
+            <h2>
+                {{ facturasMes }}
+            </h2>
+        </div>
+
+        <div class="card card-ticket">
+            <h3>🎫 Tickets</h3>
+            <h2>
+                {{ totalTickets }}
+            </h2>
+        </div>
+
+        <div class="card card-abierto">
+            <h3>🔓 Abiertos</h3>
+            <h2>
+                {{ ticketsAbiertos }}
+            </h2>
+        </div>
+
+        <div class="card card-cerrado">
+            <h3>✅ Cerrados</h3>
+            <h2>
+                {{ ticketsCerrados }}
+            </h2>
+        </div>
+
     </div>
 
-    <canvas id="graficoVentas"></canvas>
+    <div class="grafico-container">
+
+        <h2>
+            📊 Ventas por Cliente
+        </h2>
+
+        <canvas id="graficoVentas"></canvas>
+
+    </div>
+
+    <div class="ultimas-facturas">
+
+        <h2>
+            🧾 Últimas Facturas
+        </h2>
+
+        <div
+            class="ultima-card"
+            *ngFor="let factura of ultimasFacturas">
+
+            <strong>
+                FACT-{{ factura.numero }}
+            </strong>
+
+            <span>
+                {{ factura.receptor }}
+            </span>
+
+            <span>
+                $
+                {{ factura.total | number:'1.2-2' }}
+            </span>
+
+        </div>
+
+    </div>
 
 </div>
