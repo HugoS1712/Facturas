@@ -43,20 +43,14 @@ export class TicketList implements OnInit {
     this.ticketService
       .getTickets()
       .subscribe({
+
         next: (datos: any[]) => {
 
-          this.tickets = [...datos];
-          this.ticketsFiltrados = [...datos];
+          console.log('Tickets:', datos);
 
-          console.log(
-            'Usuario:',
-            localStorage.getItem('usuario')
-          );
+          this.tickets = datos;
 
-          console.log(
-            'Tickets:',
-            datos
-          );
+          this.filtrar();
 
         },
 
@@ -75,22 +69,30 @@ export class TicketList implements OnInit {
 
   filtrar(): void {
 
+    const estado =
+      this.filtroEstado
+        .trim()
+        .toLowerCase();
+
+    const usuario =
+      this.filtroUsuario
+        .trim()
+        .toLowerCase();
+
     this.ticketsFiltrados =
       this.tickets.filter(
         (t: any) => {
 
           const cumpleEstado =
-            this.filtroEstado === '' ||
-            t.estado === this.filtroEstado;
+            estado === '' ||
+            (t.estado || '')
+              .toLowerCase() === estado;
 
           const cumpleUsuario =
-            this.filtroUsuario === '' ||
-            t.usuario
-              ?.toLowerCase()
-              .includes(
-                this.filtroUsuario
-                  .toLowerCase()
-              );
+            usuario === '' ||
+            (t.usuario || '')
+              .toLowerCase()
+              .includes(usuario);
 
           return (
             cumpleEstado &&
