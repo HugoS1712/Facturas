@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { FacturaService } from '../../servicios/factura-service';
+import { TicketService } from '../../servicios/ticket-service';
+
 import { Factura } from '../../clases/factura';
 
 import Chart from 'chart.js/auto';
@@ -30,7 +33,8 @@ export class Dashboard implements OnInit {
   ultimasFacturas: Factura[] = [];
 
   constructor(
-    private facturaService: FacturaService
+    private facturaService: FacturaService,
+    private ticketService: TicketService
   ) { }
 
   ngOnInit(): void {
@@ -40,96 +44,101 @@ export class Dashboard implements OnInit {
         'nombreUsuario'
       ) || 'Usuario';
 
-    const tickets =
-      JSON.parse(
-        localStorage.getItem('tickets') || '[]'
+    this.ticketService
+      .getTickets()
+      .subscribe(
+        (tickets: any[]) => {
+
+          this.totalTickets =
+            tickets.length;
+
+          this.ticketsAbiertos =
+            tickets.filter(
+              (t: any) =>
+                t.estado === 'abierto'
+            ).length;
+
+          this.ticketsCerrados =
+            tickets.filter(
+              (t: any) =>
+                t.estado === 'cerrado'
+            ).length;
+
+        }
       );
-
-    this.totalTickets =
-      tickets.length;
-
-    this.ticketsAbiertos =
-      tickets.filter(
-        (t: any) =>
-          t.estado === 'abierto'
-      ).length;
-
-    this.ticketsCerrados =
-      tickets.filter(
-        (t: any) =>
-          t.estado === 'cerrado'
-      ).length;
 
     this.facturaService
       .retornarFactura()
-      .subscribe((facturas: Factura[]) => {
+      .subscribe(
+        (facturas: Factura[]) => {
 
-        this.cantidadFacturas =
-          facturas.length;
+          this.cantidadFacturas =
+            facturas.length;
 
-        this.totalFacturado =
-          facturas.reduce(
-            (total, factura) =>
-              total +
-              Number(
-                factura.total || 0
-              ),
-            0
-          );
-
-        this.promedioFacturado =
-          this.cantidadFacturas > 0
-            ? this.totalFacturado /
-              this.cantidadFacturas
-            : 0;
-
-        this.mayorFactura =
-          facturas.length > 0
-            ? Math.max(
-                ...facturas.map(
-                  f =>
-                    Number(
-                      f.total || 0
-                    )
-                )
-              )
-            : 0;
-
-        const hoy = new Date();
-
-        this.facturasMes =
-          facturas.filter(f => {
-
-            const fecha =
-              new Date(f.fecha);
-
-            return (
-              fecha.getMonth() ===
-                hoy.getMonth() &&
-              fecha.getFullYear() ===
-                hoy.getFullYear()
+          this.totalFacturado =
+            facturas.reduce(
+              (total, factura) =>
+                total +
+                Number(
+                  factura.total || 0
+                ),
+              0
             );
 
-          }).length;
+          this.promedioFacturado =
+            this.cantidadFacturas > 0
+              ? this.totalFacturado /
+                this.cantidadFacturas
+              : 0;
 
-        this.ultimasFacturas =
-          [...facturas]
-            .sort(
-              (a, b) =>
-                new Date(
-                  b.fecha
-                ).getTime() -
-                new Date(
-                  a.fecha
-                ).getTime()
-            )
-            .slice(0, 5);
+          this.mayorFactura =
+            facturas.length > 0
+              ? Math.max(
+                  ...facturas.map(
+                    f =>
+                      Number(
+                        f.total || 0
+                      )
+                  )
+                )
+              : 0;
 
-        this.crearGrafico(
-          facturas
-        );
+          const hoy = new Date();
 
-      });
+          this.facturasMes =
+            facturas.filter(
+              f => {
+
+                const fecha =
+                  new Date(f.fecha);
+
+                return (
+                  fecha.getMonth() === hoy.getMonth() &&
+                  fecha.getFullYear() === hoy.getFullYear()
+                );
+
+              }
+            ).length;
+
+          this.ultimasFacturas =
+            [...facturas]
+              .sort(
+                (a, b) =>
+                  new Date(
+                    b.fecha
+                  ).getTime() -
+                  new Date(
+                    a.fecha
+                  ).getTime()
+              )
+              .slice(0, 5);
+
+          this.crearGrafico(
+            facturas
+          );
+
+        }
+      );
 
   }
 

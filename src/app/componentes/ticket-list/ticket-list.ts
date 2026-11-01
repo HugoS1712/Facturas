@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import {
+  RouterModule,
+  Router
+} from '@angular/router';
+
 import { FormsModule } from '@angular/forms';
 import { TicketService } from '../../servicios/ticket-service';
 
@@ -16,7 +19,7 @@ import { TicketService } from '../../servicios/ticket-service';
   templateUrl: './ticket-list.html',
   styleUrls: ['./ticket-list.scss']
 })
-export class TicketList {
+export class TicketList implements OnInit {
 
   tickets: any[] = [];
   ticketsFiltrados: any[] = [];
@@ -29,90 +32,90 @@ export class TicketList {
     private router: Router
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
 
     this.cargarTickets();
 
-    this.router.events
-      .pipe(
-        filter(event => event instanceof NavigationEnd)
-      )
-      .subscribe(() => {
+  }
 
-        this.cargarTickets();
+  cargarTickets(): void {
+
+    this.ticketService
+      .getTickets()
+      .subscribe({
+        next: (datos: any[]) => {
+
+          this.tickets = [...datos];
+          this.ticketsFiltrados = [...datos];
+
+          console.log(
+            'Usuario:',
+            localStorage.getItem('usuario')
+          );
+
+          console.log(
+            'Tickets:',
+            datos
+          );
+
+        },
+
+        error: (error) => {
+
+          console.error(
+            'Error cargando tickets:',
+            error
+          );
+
+        }
 
       });
 
   }
 
-  cargarTickets() {
-
-    const usuarioLogueado =
-      localStorage.getItem('usuario');
-
-    const todos =
-      this.ticketService.getTickets();
-
-    console.log('Usuario:', usuarioLogueado);
-    console.log('Tickets:', todos);
-
-    if (
-      usuarioLogueado === 'admin'
-    ) {
-
-      this.tickets = [...todos].reverse();
-
-    } else {
-
-      this.tickets = todos
-        .filter(
-          t => t.usuario === usuarioLogueado
-        )
-        .reverse();
-
-    }
-
-    this.ticketsFiltrados = [...this.tickets];
-
-  }
-
-  filtrar() {
+  filtrar(): void {
 
     this.ticketsFiltrados =
-      this.tickets.filter(t => {
+      this.tickets.filter(
+        (t: any) => {
 
-        const cumpleEstado =
-          this.filtroEstado === '' ||
-          t.estado === this.filtroEstado;
+          const cumpleEstado =
+            this.filtroEstado === '' ||
+            t.estado === this.filtroEstado;
 
-        const cumpleUsuario =
-          this.filtroUsuario === '' ||
-          t.usuario
-            ?.toLowerCase()
-            .includes(
-              this.filtroUsuario.toLowerCase()
-            );
+          const cumpleUsuario =
+            this.filtroUsuario === '' ||
+            t.usuario
+              ?.toLowerCase()
+              .includes(
+                this.filtroUsuario
+                  .toLowerCase()
+              );
 
-        return (
-          cumpleEstado &&
-          cumpleUsuario
-        );
+          return (
+            cumpleEstado &&
+            cumpleUsuario
+          );
 
-      });
+        }
+      );
 
   }
 
-  mostrarTodas() {
+  mostrarTodas(): void {
 
     this.filtroEstado = '';
     this.filtroUsuario = '';
 
-    this.ticketsFiltrados =
-      [...this.tickets];
+    this.ticketsFiltrados = [
+      ...this.tickets
+    ];
 
   }
 
-  verTicket(numero: string) {
+  verTicket(
+    numero: string
+  ): void {
 
     this.router.navigate([
       '/tickets',

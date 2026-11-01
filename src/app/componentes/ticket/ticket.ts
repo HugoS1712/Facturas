@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
+
 import { TicketService } from '../../servicios/ticket-service';
 
 @Component({
@@ -34,48 +35,45 @@ export class Ticket {
     private router: Router
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
 
     this.usuarioLogueado =
-      localStorage.getItem('usuario') || '';
+      localStorage.getItem(
+        'usuarioLogueado'
+      ) ||
+      localStorage.getItem(
+        'usuario'
+      ) ||
+      '';
 
   }
 
-  onTipoChange() {
+  onTipoChange(): void {
 
     this.nombreHardware = '';
     this.nombreSoftware = '';
 
   }
 
-  crearTicket(form: NgForm) {
+  async crearTicket(
+    form: NgForm
+  ): Promise<void> {
 
     if (form.invalid) {
-      return;
-    }
 
-    const usuarioLogueado =
-      this.usuarioLogueado || 'desconocido';
-
-    let contador =
-      localStorage.getItem(
-        'ticketCounter'
+      alert(
+        'Complete todos los campos obligatorios'
       );
 
-    contador = contador
-      ? (parseInt(contador) + 1).toString()
-      : '1';
+      return;
 
-    localStorage.setItem(
-      'ticketCounter',
-      contador
-    );
+    }
 
-    const year =
-      new Date().getFullYear();
-
-    this.ticketNumber =
-      `TCK-${year}-${contador.padStart(4, '0')}`;
+    const numero =
+      'TCK-' +
+      new Date().getFullYear() +
+      '-' +
+      Date.now();
 
     let nombreExtra = '';
 
@@ -84,9 +82,9 @@ export class Ticket {
       nombreExtra =
         this.nombreHardware;
 
-    } else if (
-      this.tipo === 'Software'
-    ) {
+    }
+
+    if (this.tipo === 'Software') {
 
       nombreExtra =
         this.nombreSoftware;
@@ -94,31 +92,60 @@ export class Ticket {
     }
 
     const nuevoTicket = {
-      numero: this.ticketNumber,
-      usuario: usuarioLogueado,
+
+      numero: numero,
+
+      usuario:
+        this.usuarioLogueado,
+
       equipo: this.equipo,
+
       urgencia: this.urgencia,
+
       tipo: this.tipo,
+
       nombre: nombreExtra,
+
       detalle: this.detalle,
+
       estado: 'abierto',
+
+      responsable: '',
+
       fechaCreacion: new Date(),
-      fechaActualizacion: new Date()
+
+      fechaActualizacion: new Date(),
+
+      fechaCierre: null
+
     };
 
-    this.ticketService.agregarTicket(
-      nuevoTicket
-    );
+    try {
 
-    alert(
-      '✅ Ticket creado correctamente\n\n' +
-      'Número: ' +
-      this.ticketNumber
-    );
+      await this.ticketService
+        .agregarTicket(
+          nuevoTicket
+        );
 
-    this.router.navigate([
-      '/tickets'
-    ]);
+      alert(
+        '✅ Ticket creado correctamente'
+      );
+
+      this.router.navigate([
+        '/tickets'
+      ]);
+
+    } catch (error) {
+
+      console.error(
+        error
+      );
+
+      alert(
+        '❌ Error al guardar el ticket'
+      );
+
+    }
 
   }
 

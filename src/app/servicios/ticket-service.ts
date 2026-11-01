@@ -1,68 +1,110 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+
+import {
+  Firestore,
+  collection,
+  addDoc,
+  collectionData,
+  query,
+  orderBy,
+  doc,
+  updateDoc,
+  getDoc
+} from '@angular/fire/firestore';
+
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TicketService {
 
-  private tickets: any[] = [];
+  private firestore = inject(Firestore);
 
-  // ✅ Obtener todos los tickets
-  getTickets() {
-    const data = localStorage.getItem('tickets');
-    this.tickets = data ? JSON.parse(data) : [];
-    return this.tickets;
-  }
+  getTickets(): Observable<any[]> {
 
-  // ✅ Agregar ticket nuevo
-  agregarTicket(ticket: any) {
-    const data = localStorage.getItem('tickets');
-    this.tickets = data ? JSON.parse(data) : [];
-
-    // ✅ datos iniciales del sistema
-    ticket.estado = 'abierto';
-    ticket.responsable = '';
-    ticket.fechaCreacion = new Date();
-    ticket.fechaActualizacion = new Date();
-    ticket.fechaCierre = null;
-
-    this.tickets.push(ticket);
-
-    localStorage.setItem('tickets', JSON.stringify(this.tickets));
-  }
-
-  // ✅ Buscar ticket por número (CORREGIDO)
-  getTicket(numero: string) {
-    const tickets = this.getTickets();
-
-    return tickets.find(t =>
-      t.numero?.toString().trim().toLowerCase() ===
-      numero?.toString().trim().toLowerCase()
-    );
-  }
-
-  // ✅ Actualizar ticket (CORREGIDO y robusto)
-  actualizarTicket(ticketActualizado: any) {
-    const tickets = this.getTickets();
-
-    const index = tickets.findIndex(t =>
-      t.numero?.toString().trim().toLowerCase() ===
-      ticketActualizado.numero?.toString().trim().toLowerCase()
+    const ticketsRef = collection(
+      this.firestore,
+      'ticketsv2'
     );
 
-    if (index !== -1) {
+    const consulta = query(
+      ticketsRef,
+      orderBy(
+        'fechaCreacion',
+        'desc'
+      )
+    );
 
-      // ✅ actualizar fecha
-      ticketActualizado.fechaActualizacion = new Date();
-
-      // ✅ si se cierra, guardar fecha de cierre
-      if (ticketActualizado.estado === 'cerrado' && !ticketActualizado.fechaCierre) {
-        ticketActualizado.fechaCierre = new Date();
+    return collectionData(
+      consulta,
+      {
+        idField: 'idDoc'
       }
+    ) as Observable<any[]>;
 
-      tickets[index] = ticketActualizado;
-
-      localStorage.setItem('tickets', JSON.stringify(tickets));
-    }
   }
+
+  async agregarTicket(
+    ticket: any
+  ): Promise<void> {
+
+    const ticketsRef = collection(
+      this.firestore,
+      'ticketsv2'
+    );
+
+    await addDoc(
+      ticketsRef,
+      ticket
+    );
+
+  }
+
+  async actualizarTicket(
+    idDoc: string,
+    datos: any
+  ): Promise<void> {
+
+    const ticketRef = doc(
+      this.firestore,
+      'ticketsv2',
+      idDoc
+    );
+
+    await updateDoc(
+      ticketRef,
+      datos
+    );
+
+  }
+
+  async getTicket(
+    idDoc: string
+  ): Promise<any> {
+
+    const ticketRef = doc(
+      this.firestore,
+      'ticketsv2',
+      idDoc
+    );
+
+    const snapshot =
+      await getDoc(
+        ticketRef
+      );
+
+    if (snapshot.exists()) {
+
+      return {
+        idDoc: snapshot.id,
+        ...snapshot.data()
+      };
+
+    }
+
+    return null;
+
+  }
+
 }

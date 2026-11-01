@@ -11,12 +11,10 @@ export const authGuard: CanActivateFn = () => {
 
     const logueado = localStorage.getItem('logueado');
 
-    // ✅ Usuario autenticado
     if (logueado === 'true') {
       return true;
     }
 
-    // ❌ Usuario NO autenticado → REDIRECCIÓN CORRECTA
     return router.parseUrl('/login');
   }
 
