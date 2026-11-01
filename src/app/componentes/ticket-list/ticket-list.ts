@@ -46,11 +46,21 @@ export class TicketList implements OnInit {
 
         next: (datos: any[]) => {
 
-          console.log('Tickets:', datos);
+          this.tickets = datos.filter(
+            (t: any) =>
+              t &&
+              t.numero &&
+              t.usuario
+          );
 
-          this.tickets = datos;
+          this.ticketsFiltrados = [
+            ...this.tickets
+          ];
 
-          this.filtrar();
+          console.log(
+            'Tickets cargados:',
+            this.tickets
+          );
 
         },
 

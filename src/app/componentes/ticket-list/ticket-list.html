@@ -1,6 +1,5 @@
 <h2 class="titulo">📋 Lista de Tickets</h2>
 
-<!-- ✅ FILTROS -->
 <div class="filtros">
 
     <select [(ngModel)]="filtroEstado">
@@ -9,82 +8,146 @@
         <option value="cerrado">Cerrados</option>
     </select>
 
-    <input type="text" placeholder="Filtrar por usuario" [(ngModel)]="filtroUsuario">
+    <input
+        type="text"
+        placeholder="Filtrar por usuario"
+        [(ngModel)]="filtroUsuario"
+    >
 
-    <button (click)="filtrar()">Filtrar</button>
+    <button (click)="filtrar()">
+        Filtrar
+    </button>
 
 </div>
 
 <div class="contenedor">
 
-    @for (t of ticketsFiltrados; track t.numero) {
+    @for (t of ticketsFiltrados; track $index) {
 
-    <div class="card">
+        @if (t.numero && t.usuario) {
 
-        <!-- HEADER -->
-        <div class="header">
-            <h3 class="link" (click)="verTicket(t.numero)">
-                {{ t.numero }}
-            </h3>
+            <div class="card">
 
-            <span class="estado" [ngClass]="t.estado">
-                {{ t.estado }}
-            </span>
-        </div>
+                <div class="header">
 
-        <!-- INFO -->
-        <div class="info">
-            <p><strong>Usuario:</strong> {{ t.usuario }}</p>
-            <p><strong>Equipo:</strong> {{ t.equipo }}</p>
-            <p><strong>Tipo:</strong> {{ t.tipo }}</p>
+                    <h3
+                        class="link"
+                        (click)="verTicket(t.numero)"
+                    >
+                        {{ t.numero }}
+                    </h3>
 
-            <!-- ✅ 🔥 NUEVO CAMPO DINÁMICO -->
-            <p *ngIf="t.nombre">
-                <strong>
-                    {{ t.tipo === 'Hardware' ? 'Equipo' : 'Software' }}:
-                </strong>
-                {{ t.nombre }}
-            </p>
-        </div>
+                    <span
+                        class="estado"
+                        [ngClass]="t.estado"
+                    >
+                        {{ t.estado }}
+                    </span>
 
-        <!-- URGENCIA -->
-        <p>
-            <strong>Urgencia:</strong>
-            <span class="tag" [ngClass]="t.urgencia">
-                {{ t.urgencia }}
-            </span>
-        </p>
+                </div>
 
-        <!-- RESPONSABLE -->
-        <p>
-            <strong>Responsable:</strong>
-            {{ t.responsable || 'Sin asignar' }}
-        </p>
+                <div class="info">
 
-        <!-- FECHAS -->
-        <div class="fechas">
-            <p>🗓 {{ t.fechaCreacion | date:'shortDate' }}</p>
+                    <p>
+                        <strong>Usuario:</strong>
+                        {{ t.usuario }}
+                    </p>
 
-            <p *ngIf="t.fechaCierre" class="cerrado">
-                ✅ {{ t.fechaCierre | date:'shortDate' }}
-            </p>
-        </div>
+                    <p>
+                        <strong>Equipo:</strong>
+                        {{ t.equipo }}
+                    </p>
 
-        <!-- DETALLE -->
-        <p class="detalle">
-            {{ t.detalle }}
-        </p>
+                    <p>
+                        <strong>Tipo:</strong>
+                        {{ t.tipo }}
+                    </p>
 
-    </div>
+                    @if (t.nombre) {
+
+                        <p>
+
+                            <strong>
+
+                                {{ t.tipo === 'Hardware'
+                                    ? 'Equipo'
+                                    : 'Software'
+                                }}:
+
+                            </strong>
+
+                            {{ t.nombre }}
+
+                        </p>
+
+                    }
+
+                </div>
+
+                <p>
+
+                    <strong>Urgencia:</strong>
+
+                    <span
+                        class="tag"
+                        [ngClass]="t.urgencia"
+                    >
+                        {{ t.urgencia }}
+                    </span>
+
+                </p>
+
+                <p>
+
+                    <strong>Responsable:</strong>
+
+                    {{ t.responsable || 'Sin asignar' }}
+
+                </p>
+
+                <div class="fechas">
+
+                    <p>
+                        🗓
+                        {{ t.fechaCreacion | date:'shortDate' }}
+                    </p>
+
+                    @if (t.fechaCierre) {
+
+                        <p class="cerrado">
+                            ✅
+                            {{ t.fechaCierre | date:'shortDate' }}
+                        </p>
+
+                    }
+
+                </div>
+
+                <p class="detalle">
+                    {{ t.detalle }}
+                </p>
+
+            </div>
+
+        }
 
     } @empty {
 
-    <p class="empty">No hay tickets creados</p>
+        <p class="empty">
+            No hay tickets creados
+        </p>
 
     }
 
 </div>
 
 <div class="acciones">
-    <a routerLink="/ticket" class="btn">➕ Crear nuevo ticket</a>
+
+    <a
+        routerLink="/ticket"
+        class="btn"
+    >
+        ➕ Crear nuevo ticket
+    </a>
+
 </div>
