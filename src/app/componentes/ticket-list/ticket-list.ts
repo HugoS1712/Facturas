@@ -21,7 +21,6 @@ import { TicketService } from '../../servicios/ticket-service';
 })
 export class TicketList implements OnInit {
 
-  tickets: any[] = [];
   ticketsFiltrados: any[] = [];
 
   filtroEstado = '';
@@ -36,59 +35,44 @@ export class TicketList implements OnInit {
 
     this.ticketService
       .getTickets()
-      .subscribe(
-        (datos: any[]) => {
+      .subscribe((datos: any[]) => {
 
-          this.tickets = datos;
-          this.ticketsFiltrados = datos;
+        this.ticketsFiltrados = [...datos];
 
-          console.log(
-            'Tickets cargados:',
-            datos
-          );
-
-        }
-      );
+      });
 
   }
 
   filtrar(): void {
 
-    this.ticketsFiltrados =
-      this.tickets.filter(
-        (t: any) => {
+    this.ticketService
+      .getTickets()
+      .subscribe((datos: any[]) => {
 
-          const cumpleEstado =
-            this.filtroEstado === '' ||
-            t.estado === this.filtroEstado;
+        this.ticketsFiltrados = datos.filter(
+          (t: any) => {
 
-          const cumpleUsuario =
-            this.filtroUsuario === '' ||
-            (t.usuario || '')
-              .toLowerCase()
-              .includes(
-                this.filtroUsuario
-                  .toLowerCase()
-              );
+            const cumpleEstado =
+              this.filtroEstado === '' ||
+              t.estado === this.filtroEstado;
 
-          return (
-            cumpleEstado &&
-            cumpleUsuario
-          );
+            const cumpleUsuario =
+              this.filtroUsuario === '' ||
+              (t.usuario || '')
+                .toLowerCase()
+                .includes(
+                  this.filtroUsuario.toLowerCase()
+                );
 
-        }
-      );
+            return (
+              cumpleEstado &&
+              cumpleUsuario
+            );
 
-  }
+          }
+        );
 
-  mostrarTodas(): void {
-
-    this.filtroEstado = '';
-    this.filtroUsuario = '';
-
-    this.ticketsFiltrados = [
-      ...this.tickets
-    ];
+      });
 
   }
 
