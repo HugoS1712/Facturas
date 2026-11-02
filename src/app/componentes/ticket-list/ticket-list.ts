@@ -39,18 +39,13 @@ export class TicketList implements OnInit {
       .subscribe(
         (datos: any[]) => {
 
-          const ticketsValidos =
-            datos.filter(
-              (t: any) =>
-                t &&
-                t.numero
-            );
+          this.tickets = datos;
+          this.ticketsFiltrados = datos;
 
-          this.tickets = ticketsValidos;
-
-          this.ticketsFiltrados = [
-            ...ticketsValidos
-          ];
+          console.log(
+            'Tickets cargados:',
+            datos
+          );
 
         }
       );
