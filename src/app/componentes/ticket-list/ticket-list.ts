@@ -34,75 +34,47 @@ export class TicketList implements OnInit {
 
   ngOnInit(): void {
 
-    this.cargarTickets();
-
-  }
-
-  cargarTickets(): void {
-
     this.ticketService
       .getTickets()
-      .subscribe({
+      .subscribe(
+        (datos: any[]) => {
 
-        next: (datos: any[]) => {
+          const ticketsValidos =
+            datos.filter(
+              (t: any) =>
+                t &&
+                t.numero
+            );
 
-          this.tickets = datos.filter(
-            (t: any) =>
-              t &&
-              t.numero &&
-              t.usuario
-          );
+          this.tickets = ticketsValidos;
 
           this.ticketsFiltrados = [
-            ...this.tickets
+            ...ticketsValidos
           ];
 
-          console.log(
-            'Tickets cargados:',
-            this.tickets
-          );
-
-        },
-
-        error: (error) => {
-
-          console.error(
-            'Error cargando tickets:',
-            error
-          );
-
         }
-
-      });
+      );
 
   }
 
   filtrar(): void {
-
-    const estado =
-      this.filtroEstado
-        .trim()
-        .toLowerCase();
-
-    const usuario =
-      this.filtroUsuario
-        .trim()
-        .toLowerCase();
 
     this.ticketsFiltrados =
       this.tickets.filter(
         (t: any) => {
 
           const cumpleEstado =
-            estado === '' ||
-            (t.estado || '')
-              .toLowerCase() === estado;
+            this.filtroEstado === '' ||
+            t.estado === this.filtroEstado;
 
           const cumpleUsuario =
-            usuario === '' ||
+            this.filtroUsuario === '' ||
             (t.usuario || '')
               .toLowerCase()
-              .includes(usuario);
+              .includes(
+                this.filtroUsuario
+                  .toLowerCase()
+              );
 
           return (
             cumpleEstado &&
