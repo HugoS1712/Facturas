@@ -21,7 +21,6 @@ import { TicketService } from '../../servicios/ticket-service';
 })
 export class TicketList implements OnInit {
 
-  tickets: any[] = [];
   ticketsFiltrados: any[] = [];
 
   filtroEstado = '';
@@ -38,14 +37,9 @@ export class TicketList implements OnInit {
       .getTickets()
       .subscribe((datos: any[]) => {
 
-        console.log(
-          'TICKETS RECIBIDOS:',
-          datos.length
-        );
+        console.log('RECIBIDOS:', datos);
 
-        this.tickets = datos;
-
-        this.ticketsFiltrados = datos;
+        this.ticketsFiltrados = [...datos];
 
       });
 
@@ -53,46 +47,11 @@ export class TicketList implements OnInit {
 
   filtrar(): void {
 
-    this.ticketsFiltrados =
-      this.tickets.filter(
-        (t: any) => {
-
-          const cumpleEstado =
-            !this.filtroEstado ||
-            t.estado === this.filtroEstado;
-
-          const cumpleUsuario =
-            !this.filtroUsuario ||
-            (t.usuario || '')
-              .toLowerCase()
-              .includes(
-                this.filtroUsuario.toLowerCase()
-              );
-
-          return (
-            cumpleEstado &&
-            cumpleUsuario
-          );
-
-        }
-      );
+    // vacío por ahora
 
   }
 
-  mostrarTodas(): void {
-
-    this.filtroEstado = '';
-    this.filtroUsuario = '';
-
-    this.ticketsFiltrados = [
-      ...this.tickets
-    ];
-
-  }
-
-  verTicket(
-    numero: string
-  ): void {
+  verTicket(numero: string): void {
 
     this.router.navigate([
       '/tickets',
