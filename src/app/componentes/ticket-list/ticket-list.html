@@ -22,7 +22,7 @@
 
 <div class="contenedor">
 
-    @for (t of ticketsFiltrados; track $index) {
+    @for (t of ticketsFiltrados; track t.idDoc) {
 
         <div class="card">
 
@@ -66,10 +66,12 @@
                     <p>
 
                         <strong>
+
                             {{ t.tipo === 'Hardware'
                                 ? 'Equipo'
                                 : 'Software'
                             }}:
+
                         </strong>
 
                         {{ t.nombre }}
@@ -104,15 +106,13 @@
             <div class="fechas">
 
                 <p>
-                    🗓
-                    {{ t.fechaCreacion | date:'shortDate' }}
+                    🗓 {{ t.fechaCreacion | date:'shortDate' }}
                 </p>
 
                 @if (t.fechaCierre) {
 
                     <p class="cerrado">
-                        ✅
-                        {{ t.fechaCierre | date:'shortDate' }}
+                        ✅ {{ t.fechaCierre | date:'shortDate' }}
                     </p>
 
                 }

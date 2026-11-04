@@ -21,6 +21,7 @@ import { TicketService } from '../../servicios/ticket-service';
 })
 export class TicketList implements OnInit {
 
+  tickets: any[] = [];
   ticketsFiltrados: any[] = [];
 
   filtroEstado = '';
@@ -35,44 +36,58 @@ export class TicketList implements OnInit {
 
     this.ticketService
       .getTickets()
-      .subscribe((datos: any[]) => {
+      .subscribe(
+        (datos: any[]) => {
 
-        this.ticketsFiltrados = [...datos];
+          console.log(
+            'Tickets Firestore:',
+            datos
+          );
 
-      });
+          this.tickets = [...datos];
+          this.ticketsFiltrados = [...datos];
+
+        }
+      );
 
   }
 
   filtrar(): void {
 
-    this.ticketService
-      .getTickets()
-      .subscribe((datos: any[]) => {
+    this.ticketsFiltrados =
+      this.tickets.filter(
+        (t: any) => {
 
-        this.ticketsFiltrados = datos.filter(
-          (t: any) => {
+          const cumpleEstado =
+            this.filtroEstado === '' ||
+            t.estado === this.filtroEstado;
 
-            const cumpleEstado =
-              this.filtroEstado === '' ||
-              t.estado === this.filtroEstado;
+          const cumpleUsuario =
+            this.filtroUsuario === '' ||
+            (t.usuario || '')
+              .toLowerCase()
+              .includes(
+                this.filtroUsuario.toLowerCase()
+              );
 
-            const cumpleUsuario =
-              this.filtroUsuario === '' ||
-              (t.usuario || '')
-                .toLowerCase()
-                .includes(
-                  this.filtroUsuario.toLowerCase()
-                );
+          return (
+            cumpleEstado &&
+            cumpleUsuario
+          );
 
-            return (
-              cumpleEstado &&
-              cumpleUsuario
-            );
+        }
+      );
 
-          }
-        );
+  }
 
-      });
+  mostrarTodas(): void {
+
+    this.filtroEstado = '';
+    this.filtroUsuario = '';
+
+    this.ticketsFiltrados = [
+      ...this.tickets
+    ];
 
   }
 
