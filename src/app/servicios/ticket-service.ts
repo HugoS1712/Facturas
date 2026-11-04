@@ -23,6 +23,10 @@ export class TicketService {
 
   getTickets(): Observable<any[]> {
 
+    console.log(
+      'LEYENDO ticketsv2'
+    );
+
     const ticketsRef = collection(
       this.firestore,
       'ticketsv2'
