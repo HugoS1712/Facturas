@@ -1,14 +1,17 @@
 <div class="contenedor">
-    <h2 class="titulo">📋 Lista de Tickets</h2>
 
-<p>
-  Total tickets: {{ ticketsFiltrados.length }}
-</p>
+  <h2 class="titulo">📋 Lista de Tickets</h2>
+
+  <p>
+    Total tickets: {{ ticketsFiltrados.length }}
+  </p>
 
   <div
     class="card"
     *ngFor="let t of ticketsFiltrados"
   >
+
+    <pre>{{ t | json }}</pre>
 
     <div class="header">
 
@@ -69,7 +72,6 @@
       >
         {{ t.urgencia }}
       </span>
-
     </p>
 
     <p>
@@ -80,16 +82,14 @@
     <div class="fechas">
 
       <p>
-        🗓
-        {{ t.fechaCreacion | date:'shortDate' }}
+        🗓 {{ t.fechaCreacion | date:'shortDate' }}
       </p>
 
       <p
         *ngIf="t.fechaCierre"
         class="cerrado"
       >
-        ✅
-        {{ t.fechaCierre | date:'shortDate' }}
+        ✅ {{ t.fechaCierre | date:'shortDate' }}
       </p>
 
     </div>
