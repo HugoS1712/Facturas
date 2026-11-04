@@ -1,5 +1,9 @@
 <h2 class="titulo">📋 Lista de Tickets</h2>
 
+<p>
+  Cantidad: {{ ticketsFiltrados.length }}
+</p>
+
 <div class="filtros">
 
     <select [(ngModel)]="filtroEstado">
@@ -64,13 +68,16 @@
                 @if (t.nombre) {
 
                     <p>
+
                         <strong>
                             {{ t.tipo === 'Hardware'
-                              ? 'Equipo'
-                              : 'Software' }}:
+                                ? 'Equipo'
+                                : 'Software'
+                            }}:
                         </strong>
 
                         {{ t.nombre }}
+
                     </p>
 
                 }

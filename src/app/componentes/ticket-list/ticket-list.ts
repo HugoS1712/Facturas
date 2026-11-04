@@ -1,11 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
+
 import {
   RouterModule,
   Router
 } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
+
 import { TicketService } from '../../servicios/ticket-service';
 
 @Component({
@@ -29,26 +36,44 @@ export class TicketList implements OnInit {
 
   constructor(
     private ticketService: TicketService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
 
+    this.cargarTickets();
+
+  }
+
+  cargarTickets(): void {
+
     this.ticketService
       .getTickets()
-      .subscribe(
-        (datos: any[]) => {
+      .subscribe({
 
-          console.log(
-            'Tickets Firestore:',
-            datos
-          );
+        next: (datos: any[]) => {
 
           this.tickets = [...datos];
-          this.ticketsFiltrados = [...datos];
+
+          this.ticketsFiltrados = [
+            ...datos
+          ];
+
+          this.cdr.detectChanges();
+
+        },
+
+        error: (error) => {
+
+          console.error(
+            'Error cargando tickets:',
+            error
+          );
 
         }
-      );
+
+      });
 
   }
 
@@ -67,7 +92,8 @@ export class TicketList implements OnInit {
             (t.usuario || '')
               .toLowerCase()
               .includes(
-                this.filtroUsuario.toLowerCase()
+                this.filtroUsuario
+                  .toLowerCase()
               );
 
           return (
@@ -77,6 +103,8 @@ export class TicketList implements OnInit {
 
         }
       );
+
+    this.cdr.detectChanges();
 
   }
 
@@ -88,6 +116,8 @@ export class TicketList implements OnInit {
     this.ticketsFiltrados = [
       ...this.tickets
     ];
+
+    this.cdr.detectChanges();
 
   }
 
