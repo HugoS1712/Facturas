@@ -32,8 +32,8 @@
 /* GRID */
 
 .contenedor {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 20px;
     padding: 20px;
 }
@@ -41,10 +41,10 @@
 /* CARD */
 
 .card {
-    background: white;
+    background: #ffffff;
+    border: 2px solid red;
     padding: 18px;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* HEADER */
