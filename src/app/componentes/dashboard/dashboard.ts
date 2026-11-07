@@ -44,10 +44,29 @@ export class Dashboard implements OnInit {
         'nombreUsuario'
       ) || 'Usuario';
 
+    this.cargarTickets();
+
+    this.cargarFacturas();
+
+  }
+
+  cargarTickets(): void {
+
     this.ticketService
       .getTickets()
-      .subscribe(
-        (tickets: any[]) => {
+      .subscribe({
+
+        next: (tickets: any[]) => {
+
+          console.log(
+            'TICKETS DASHBOARD:',
+            tickets
+          );
+
+          console.log(
+            'CANTIDAD DASHBOARD:',
+            tickets.length
+          );
 
           this.totalTickets =
             tickets.length;
@@ -55,17 +74,50 @@ export class Dashboard implements OnInit {
           this.ticketsAbiertos =
             tickets.filter(
               (t: any) =>
-                t.estado === 'abierto'
+                (t.estado || '')
+                  .toLowerCase() ===
+                'abierto'
             ).length;
 
           this.ticketsCerrados =
             tickets.filter(
               (t: any) =>
-                t.estado === 'cerrado'
+                (t.estado || '')
+                  .toLowerCase() ===
+                'cerrado'
             ).length;
 
+          console.log(
+            'TOTAL:',
+            this.totalTickets
+          );
+
+          console.log(
+            'ABIERTOS:',
+            this.ticketsAbiertos
+          );
+
+          console.log(
+            'CERRADOS:',
+            this.ticketsCerrados
+          );
+
+        },
+
+        error: (error) => {
+
+          console.error(
+            'ERROR TICKETS:',
+            error
+          );
+
         }
-      );
+
+      });
+
+  }
+
+  cargarFacturas(): void {
 
     this.facturaService
       .retornarFactura()
@@ -103,18 +155,23 @@ export class Dashboard implements OnInit {
                 )
               : 0;
 
-          const hoy = new Date();
+          const hoy =
+            new Date();
 
           this.facturasMes =
             facturas.filter(
               f => {
 
                 const fecha =
-                  new Date(f.fecha);
+                  new Date(
+                    f.fecha
+                  );
 
                 return (
-                  fecha.getMonth() === hoy.getMonth() &&
-                  fecha.getFullYear() === hoy.getFullYear()
+                  fecha.getMonth() ===
+                    hoy.getMonth() &&
+                  fecha.getFullYear() ===
+                    hoy.getFullYear()
                 );
 
               }
@@ -131,7 +188,10 @@ export class Dashboard implements OnInit {
                     a.fecha
                   ).getTime()
               )
-              .slice(0, 5);
+              .slice(
+                0,
+                5
+              );
 
           this.crearGrafico(
             facturas
@@ -186,7 +246,9 @@ export class Dashboard implements OnInit {
       );
 
     if (existente) {
+
       existente.destroy();
+
     }
 
     new Chart(
