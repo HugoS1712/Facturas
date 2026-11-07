@@ -23,9 +23,7 @@ export class TicketService {
 
   getTickets(): Observable<any[]> {
 
-    console.log(
-      'LEYENDO ticketsv2'
-    );
+    console.log('LEYENDO ticketsv2');
 
     const ticketsRef = collection(
       this.firestore,
@@ -46,7 +44,6 @@ export class TicketService {
         idField: 'idDoc'
       }
     ) as Observable<any[]>;
-
   }
 
   async agregarTicket(
@@ -62,7 +59,6 @@ export class TicketService {
       ticketsRef,
       ticket
     );
-
   }
 
   async actualizarTicket(
@@ -80,12 +76,16 @@ export class TicketService {
       ticketRef,
       datos
     );
-
   }
 
   async getTicket(
     idDoc: string
   ): Promise<any> {
+
+    console.log(
+      'BUSCANDO ID:',
+      idDoc
+    );
 
     const ticketRef = doc(
       this.firestore,
@@ -98,17 +98,30 @@ export class TicketService {
         ticketRef
       );
 
+    console.log(
+      'EXISTE?:',
+      snapshot.exists()
+    );
+
     if (snapshot.exists()) {
+
+      console.log(
+        'DATOS:',
+        snapshot.data()
+      );
 
       return {
         idDoc: snapshot.id,
         ...snapshot.data()
       };
-
     }
 
-    return null;
+    console.error(
+      'NO SE ENCONTRO EL DOCUMENTO:',
+      idDoc
+    );
 
+    return null;
   }
 
 }
