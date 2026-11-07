@@ -29,13 +29,18 @@
 }
 
 .card {
-    padding: 20px;
-    border-radius: 12px;
-    min-width: 220px;
-    flex: 1;
-    box-sizing: border-box;
 
     background: white;
+
+    padding: 20px;
+
+    border-radius: 12px;
+
+    min-width: 220px;
+
+    flex: 1;
+
+    box-sizing: border-box;
 
     box-shadow:
         0 4px 12px rgba(0, 0, 0, .08);
@@ -44,6 +49,7 @@
 }
 
 .card:hover {
+
     transform: translateY(-4px);
 
     box-shadow:
@@ -51,13 +57,18 @@
 }
 
 .card h3 {
+
     margin-bottom: 12px;
+
     color: #475569;
+
     font-size: 14px;
 }
 
 .card h2 {
+
     margin: 0;
+
     font-size: 28px;
 }
 
@@ -98,39 +109,61 @@
 /* ================= GRAFICO ================= */
 
 .grafico-container {
+
     background: white;
+
     padding: 20px;
+
     border-radius: 12px;
+
     margin-bottom: 25px;
 
     box-shadow:
         0 4px 12px rgba(0, 0, 0, .08);
+
+    height: 450px;
+
+    position: relative;
+
+    overflow: hidden;
 }
 
 .grafico-container h2 {
+
     margin-bottom: 20px;
+
+    color: #1e293b;
 }
 
-canvas {
+#graficoVentas {
+
     width: 100% !important;
-    max-width: 1000px;
+
+    height: 350px !important;
+
     display: block;
-    margin: auto;
 }
 
 /* ================= ULTIMAS FACTURAS ================= */
 
 .ultimas-facturas {
+
     margin-top: 20px;
 }
 
 .ultimas-facturas h2 {
+
     margin-bottom: 15px;
+
+    color: #1e293b;
 }
 
 .ultima-card {
+
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
 
     background: white;
@@ -171,9 +204,22 @@ canvas {
     }
 
     .ultima-card {
+
         flex-direction: column;
+
         align-items: flex-start;
+
         gap: 6px;
+    }
+
+    .grafico-container {
+
+        height: 380px;
+    }
+
+    #graficoVentas {
+
+        height: 280px !important;
     }
 
 }
@@ -189,7 +235,15 @@ canvas {
     }
 
     .grafico-container {
+
         padding: 12px;
+
+        height: 340px;
+    }
+
+    #graficoVentas {
+
+        height: 240px !important;
     }
 
 }
