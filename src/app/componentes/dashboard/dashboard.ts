@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 
 import { FacturaService } from '../../servicios/factura-service';
@@ -13,7 +18,7 @@ import Chart from 'chart.js/auto';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './dashboard.html',
-  styleUrl: './dashboard.scss'
+  styleUrls: ['./dashboard.scss']
 })
 export class Dashboard implements OnInit {
 
@@ -34,7 +39,8 @@ export class Dashboard implements OnInit {
 
   constructor(
     private facturaService: FacturaService,
-    private ticketService: TicketService
+    private ticketService: TicketService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -61,11 +67,6 @@ export class Dashboard implements OnInit {
           console.log(
             'TICKETS DASHBOARD:',
             tickets
-          );
-
-          console.log(
-            'CANTIDAD DASHBOARD:',
-            tickets.length
           );
 
           this.totalTickets =
@@ -101,6 +102,8 @@ export class Dashboard implements OnInit {
             'CERRADOS:',
             this.ticketsCerrados
           );
+
+          this.cdr.detectChanges();
 
         },
 
@@ -188,14 +191,13 @@ export class Dashboard implements OnInit {
                     a.fecha
                   ).getTime()
               )
-              .slice(
-                0,
-                5
-              );
+              .slice(0, 5);
 
           this.crearGrafico(
             facturas
           );
+
+          this.cdr.detectChanges();
 
         }
       );
