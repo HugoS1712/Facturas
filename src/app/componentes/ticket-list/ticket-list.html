@@ -5,16 +5,12 @@
     {{ ticketsFiltrados.length }}
 </p>
 
-<!-- FILTROS -->
-
 <div class="filtros">
 
     <select [(ngModel)]="filtroEstado">
-
         <option value="">Todos los estados</option>
         <option value="abierto">Abiertos</option>
         <option value="cerrado">Cerrados</option>
-
     </select>
 
     <input
@@ -32,25 +28,13 @@
 
 </div>
 
-<!-- CARGA -->
-
-@if (cargando) {
-
-    <p class="empty">
-        ⏳ Cargando tickets...
-    </p>
-
-}
-
-@if (!cargando) {
-
 <div class="contenedor">
 
-    @for (t of ticketsFiltrados; track t.idDoc) {
+    <div
+        class="card"
+        *ngFor="let t of ticketsFiltrados">
 
-    <div class="card">
-
-        <!-- HEADER -->
+        <pre>{{ t | json }}</pre>
 
         <div class="header">
 
@@ -72,8 +56,6 @@
 
         </div>
 
-        <!-- INFO -->
-
         <div class="info">
 
             <p>
@@ -91,27 +73,19 @@
                 {{ t.tipo }}
             </p>
 
-            @if (t.nombre) {
-
-            <p>
+            <p *ngIf="t.nombre">
 
                 <strong>
-
                     {{ t.tipo === 'Hardware'
                         ? 'Equipo'
                         : 'Software' }}:
-
                 </strong>
 
                 {{ t.nombre }}
 
             </p>
 
-            }
-
         </div>
-
-        <!-- URGENCIA -->
 
         <p>
 
@@ -127,8 +101,6 @@
 
         </p>
 
-        <!-- RESPONSABLE -->
-
         <p>
 
             <strong>Responsable:</strong>
@@ -136,8 +108,6 @@
             {{ t.responsable || 'Sin asignar' }}
 
         </p>
-
-        <!-- FECHAS -->
 
         <div class="fechas">
 
@@ -151,9 +121,9 @@
 
             </p>
 
-            @if (t.fechaCierre) {
-
-            <p class="cerrado">
+            <p
+                *ngIf="t.fechaCierre"
+                class="cerrado">
 
                 ✅
 
@@ -163,11 +133,7 @@
 
             </p>
 
-            }
-
         </div>
-
-        <!-- DETALLE -->
 
         <p class="detalle">
             {{ t.detalle }}
@@ -175,17 +141,15 @@
 
     </div>
 
-    } @empty {
+    <p
+        class="empty"
+        *ngIf="ticketsFiltrados.length === 0">
 
-    <p class="empty">
         No hay tickets creados
+
     </p>
 
-    }
-
 </div>
-
-}
 
 <div class="acciones">
 
