@@ -51,7 +51,6 @@ export class Dashboard implements OnInit {
       ) || 'Usuario';
 
     this.cargarTickets();
-
     this.cargarFacturas();
 
   }
@@ -63,11 +62,6 @@ export class Dashboard implements OnInit {
       .subscribe({
 
         next: (tickets: any[]) => {
-
-          console.log(
-            'TICKETS DASHBOARD:',
-            tickets
-          );
 
           this.totalTickets =
             tickets.length;
@@ -88,21 +82,6 @@ export class Dashboard implements OnInit {
                 'cerrado'
             ).length;
 
-          console.log(
-            'TOTAL:',
-            this.totalTickets
-          );
-
-          console.log(
-            'ABIERTOS:',
-            this.ticketsAbiertos
-          );
-
-          console.log(
-            'CERRADOS:',
-            this.ticketsCerrados
-          );
-
           this.cdr.detectChanges();
 
         },
@@ -110,7 +89,7 @@ export class Dashboard implements OnInit {
         error: (error) => {
 
           console.error(
-            'ERROR TICKETS:',
+            'Error cargando tickets:',
             error
           );
 
