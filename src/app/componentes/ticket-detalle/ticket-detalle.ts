@@ -6,7 +6,11 @@ import {
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
 
 import { TicketService } from '../../servicios/ticket-service';
 
@@ -26,6 +30,7 @@ export class TicketDetalle implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private ticketService: TicketService,
     private cdr: ChangeDetectorRef
   ) {}
@@ -69,6 +74,11 @@ export class TicketDetalle implements OnInit {
   async guardar(): Promise<void> {
 
     if (!this.ticket?.idDoc) {
+
+      alert(
+        'No se encontró el ticket'
+      );
+
       return;
     }
 
@@ -83,16 +93,19 @@ export class TicketDetalle implements OnInit {
         }
       );
 
-      alert(
-        '✅ Ticket actualizado'
-      );
+      this.router.navigate([
+        '/tickets'
+      ]);
 
     } catch (error) {
 
-      console.error(error);
+      console.error(
+        'Error actualizando ticket:',
+        error
+      );
 
       alert(
-        '❌ Error al actualizar'
+        '❌ Error al actualizar el ticket'
       );
 
     }
