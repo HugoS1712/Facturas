@@ -27,11 +27,8 @@ export class TicketList implements OnInit {
   filtroEstado = '';
   filtroUsuario = '';
 
-<<<<<<< HEAD
   cargando = true;
 
-=======
->>>>>>> 44784c20de82be3a75a5d666c8cf004d1beb60ab
   constructor(
     private ticketService: TicketService,
     private router: Router
@@ -39,7 +36,6 @@ export class TicketList implements OnInit {
 
   ngOnInit(): void {
 
-<<<<<<< HEAD
     this.cargarTickets();
 
   }
@@ -56,8 +52,6 @@ export class TicketList implements OnInit {
         'rol'
       );
 
-=======
->>>>>>> 44784c20de82be3a75a5d666c8cf004d1beb60ab
     this.ticketService
       .getTickets()
       .subscribe(
@@ -73,7 +67,6 @@ export class TicketList implements OnInit {
             datos.length
           );
 
-<<<<<<< HEAD
           if (rol === 'admin') {
 
             this.tickets = [
@@ -96,15 +89,6 @@ export class TicketList implements OnInit {
           ];
 
           this.cargando = false;
-=======
-          this.tickets = [
-            ...datos
-          ];
-
-          this.ticketsFiltrados = [
-            ...datos
-          ];
->>>>>>> 44784c20de82be3a75a5d666c8cf004d1beb60ab
 
         }
       );
@@ -119,12 +103,7 @@ export class TicketList implements OnInit {
 
           const cumpleEstado =
             this.filtroEstado === '' ||
-<<<<<<< HEAD
-            t.estado ===
-            this.filtroEstado;
-=======
             t.estado === this.filtroEstado;
->>>>>>> 44784c20de82be3a75a5d666c8cf004d1beb60ab
 
           const cumpleUsuario =
             this.filtroUsuario === '' ||
