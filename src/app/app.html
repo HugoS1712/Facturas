@@ -1,0 +1,63 @@
+<nav class="navbar" *ngIf="logueado">
+
+    <div class="logo">
+        Sistema
+    </div>
+
+    <div class="menu">
+
+        <a
+            *ngFor="let item of menu"
+            [routerLink]="item.ruta">
+
+            {{ item.texto }}
+
+        </a>
+
+        <a
+            *ngIf="rol().toLowerCase() === 'admin'"
+            routerLink="/administracion">
+
+            Administración
+
+        </a>
+
+    </div>
+
+    <div class="user">
+
+        <img
+            *ngIf="fotoUsuario()"
+            [src]="fotoUsuario()"
+            alt="Usuario"
+            class="avatar">
+
+        <div class="user-info">
+
+            <span class="user-name">
+                {{ nombreUsuario() }}
+            </span>
+
+            <span class="user-role">
+
+                {{
+                  rol().toLowerCase() === 'admin'
+                    ? '🟡 Administrador'
+                    : '🔵 Usuario'
+                }}
+
+            </span>
+
+        </div>
+
+        <button (click)="logout()">
+            Salir
+        </button>
+
+    </div>
+
+</nav>
+
+<div class="contenido">
+    <router-outlet></router-outlet>
+</div>

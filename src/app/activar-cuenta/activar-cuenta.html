@@ -1,0 +1,32 @@
+<div class="contenedor-activar">
+
+    <h1>Activación de Cuenta</h1>
+
+    <p>
+        Ingrese una contraseña para activar su cuenta.
+    </p>
+
+    <div class="password-container">
+
+        <input
+            [type]="mostrarPassword ? 'text' : 'password'"
+            placeholder="Nueva contraseña"
+            [(ngModel)]="password">
+
+        <span
+            class="ojo"
+            (click)="togglePassword()">
+
+            👁
+
+        </span>
+
+    </div>
+
+    <br><br>
+
+    <button (click)="activarCuenta()">
+        Activar Cuenta
+    </button>
+
+</div>

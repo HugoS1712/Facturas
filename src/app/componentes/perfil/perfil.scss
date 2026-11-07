@@ -1,0 +1,105 @@
+.perfil-container {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: calc(100vh - 120px);
+
+    padding: 30px;
+}
+
+.perfil-card {
+
+    width: 450px;
+
+    background: white;
+
+    padding: 40px;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+
+    transition: transform .3s ease;
+}
+
+.perfil-card:hover {
+
+    transform: translateY(-4px);
+
+}
+
+.foto-perfil {
+
+    width: 140px;
+    height: 140px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    margin-bottom: 25px;
+
+    border: 4px solid #84cc16;
+}
+
+.perfil-card h2 {
+
+    margin-top: 10px;
+    margin-bottom: 25px;
+
+    color: #1e293b;
+
+    font-size: 32px;
+}
+
+.perfil-card p {
+
+    margin: 15px 0;
+
+    font-size: 18px;
+
+    color: #334155;
+}
+
+.perfil-card strong {
+
+    color: #0f172a;
+}
+
+.rol-admin {
+
+    display: inline-block;
+
+    background: #facc15;
+
+    padding: 8px 15px;
+
+    border-radius: 25px;
+
+    font-weight: bold;
+
+    color: #000;
+
+    margin-top: 10px;
+}
+
+.rol-usuario {
+
+    display: inline-block;
+
+    background: #60a5fa;
+
+    padding: 8px 15px;
+
+    border-radius: 25px;
+
+    font-weight: bold;
+
+    color: white;
+
+    margin-top: 10px;
+}

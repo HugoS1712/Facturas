@@ -1,0 +1,232 @@
+<h1 class="titulo">Comprobante Fiscal - ARCA</h1>
+
+<div class="contenedor" [ngClass]="{
+       'cuerpo-contraste': facturas[0]?.tipo === EtipoFactura.A,
+       'cuerpo-pastel': facturas[0]?.tipo === EtipoFactura.B,
+       'contenedor': facturas[0]?.tipo === EtipoFactura.C
+     }">
+
+    <div class="factura">
+
+        <header class="encabezado">
+
+            <div class="empresa">
+                <h2>Arca S.A</h2>
+                <p>CUIT: 30-12345678-9</p>
+                <p>IVA Responsable Inscripto</p>
+                <p>Dirección 123 - Buenos Aires</p>
+            </div>
+
+            <div class="tipo-comprobante">
+
+                <div class="letra">
+                    {{ mostrarLetra(facturas[0].tipo) }}
+                </div>
+
+                <select [(ngModel)]="facturas[0].tipo">
+                    <option [value]="EtipoFactura.A">A</option>
+                    <option [value]="EtipoFactura.B">B</option>
+                    <option [value]="EtipoFactura.C">C</option>
+                </select>
+
+            </div>
+
+            <div class="datos-comprobante">
+
+                <p>
+                    <strong>N°: 00000-</strong>
+                    <input
+                        type="number"
+                        [(ngModel)]="facturas[0].numero">
+                </p>
+
+                <p>
+                    <strong>Fecha:</strong>
+                    <input
+                        type="date"
+                        [(ngModel)]="facturas[0].fecha">
+                </p>
+
+            </div>
+
+        </header>
+
+        <section class="cliente">
+
+            <div class="seccion-titulo">
+                Datos del cliente
+            </div>
+
+            <div class="campo-fila">
+
+                <span class="campo-label">
+                    Razón social:
+                </span>
+
+                <input
+                    class="campo-linea"
+                    [(ngModel)]="facturas[0].receptor">
+
+            </div>
+
+            <div class="campo-fila">
+
+                <span class="campo-label">
+                    Dirección:
+                </span>
+
+                <input
+                    class="campo-linea"
+                    type="text">
+
+            </div>
+
+            <div class="campo-fila">
+
+                <span class="campo-label">
+                    CUIT:
+                </span>
+
+                <input
+                    class="campo-linea"
+                    type="text">
+
+            </div>
+
+        </section>
+
+        <button (click)="agregarDetalle()">
+            Agregar Detalle
+        </button>
+
+        <table class="detalle">
+
+            <thead>
+
+                <tr>
+                    <th>#</th>
+                    <th>Descripción</th>
+                    <th>Cant.</th>
+                    <th>Precio</th>
+                    <th>Subtotal</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @for (
+                    d of facturas[0].detalles;
+                    track $index;
+                    let i = $index;
+                    let odd = $odd
+                ) {
+
+                <tr [class.impar]="odd">
+
+                    <td>{{ i + 1 }}</td>
+
+                    <td>
+                        <input
+                            class="input-desc"
+                            [(ngModel)]="d.descripcion"
+                            (change)="facturas[0].calcularTotales()">
+                    </td>
+
+                    <td>
+                        <input
+                            class="input-num"
+                            type="number"
+                            [(ngModel)]="d.cantidad"
+                            (change)="facturas[0].calcularTotales()">
+                    </td>
+
+                    <td>
+                        <input
+                            class="input-num"
+                            type="number"
+                            [(ngModel)]="d.precioUnitario"
+                            (change)="facturas[0].calcularTotales()">
+                    </td>
+
+                    <td>
+                        {{ d.cantidad * d.precioUnitario }}
+                    </td>
+
+                </tr>
+
+                } @empty {
+
+                <tr>
+
+                    <td colspan="5">
+                        Sin detalles
+                    </td>
+
+                </tr>
+
+                }
+
+            </tbody>
+
+        </table>
+
+        <section class="totales">
+
+            <div class="linea">
+
+                <span>
+                    Neto
+                </span>
+
+                <span>
+                    ${{ facturas[0].neto | number:'1.2-2' }}
+                </span>
+
+            </div>
+
+            <div class="linea">
+
+                <span>
+                    IVA (21%)
+                </span>
+
+                <span>
+                    ${{ facturas[0].iva | number:'1.2-2' }}
+                </span>
+
+            </div>
+
+            <div class="linea total-final">
+
+                <span>
+                    Total
+                </span>
+
+                <span>
+                    ${{ facturas[0].total | number:'1.2-2' }}
+                </span>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</div>
+
+<div class="acciones">
+
+    <button (click)="imprimir()">
+        🖨 Imprimir
+    </button>
+
+    <button (click)="guardar()">
+        💾 Guardar
+    </button>
+
+    <a routerLink="/lista">
+        Volver
+    </a>
+
+</div>

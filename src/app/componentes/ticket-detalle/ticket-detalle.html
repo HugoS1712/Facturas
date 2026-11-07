@@ -1,0 +1,70 @@
+<div class="detalle">
+
+    <h2>Detalle del Ticket</h2>
+
+    <div *ngIf="ticket; else noEncontrado">
+
+        <div class="card">
+
+            <h3>{{ ticket.numero }}</h3>
+
+            <p><strong>Fecha creación:</strong> {{ ticket.fechaCreacion | date:'short' }}</p>
+            <p><strong>Última actualización:</strong> {{ ticket.fechaActualizacion | date:'short' }}</p>
+
+            <div class="form-group">
+                <label>Usuario</label>
+                <input [(ngModel)]="ticket.usuario">
+            </div>
+
+            <div class="form-group">
+                <label>Equipo</label>
+                <input [(ngModel)]="ticket.equipo">
+            </div>
+
+            <div class="form-group">
+                <label>Tipo</label>
+                <input [(ngModel)]="ticket.tipo">
+            </div>
+
+            <div class="form-group">
+                <label>Urgencia</label>
+                <select [(ngModel)]="ticket.urgencia">
+                    <option value="alta">Alta</option>
+                    <option value="media">Media</option>
+                    <option value="baja">Baja</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Responsable</label>
+                <input [(ngModel)]="ticket.responsable">
+            </div>
+
+            <div class="form-group">
+                <label>Estado</label>
+                <select [(ngModel)]="ticket.estado">
+                    <option value="abierto">Abierto</option>
+                    <option value="cerrado">Cerrado</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Detalle</label>
+                <textarea [(ngModel)]="ticket.detalle"></textarea>
+            </div>
+
+            <p *ngIf="ticket.fechaCierre">
+                <strong>Fecha cierre:</strong> {{ ticket.fechaCierre | date:'short' }}
+            </p>
+
+            <button (click)="guardar()">💾 Guardar cambios</button>
+
+        </div>
+
+    </div>
+
+    <ng-template #noEncontrado>
+        <p>No se encontró el ticket</p>
+    </ng-template>
+
+</div>

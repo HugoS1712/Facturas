@@ -1,0 +1,16 @@
+img {
+    display: block;
+    margin: 0 auto;
+    max-width: 500px;
+    /* esta imagen es horizontal, le damos más ancho */
+    width: 90%;
+    height: auto;
+    margin-top: 60px;
+
+    /* estética */
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+
+    /* mejora visual */
+    object-fit: contain;
+}
