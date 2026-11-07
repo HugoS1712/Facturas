@@ -247,30 +247,150 @@
     }
 
 }
- 
+
 /* ================= PRINT ================= */
 
 @media print {
 
-    body,
+    body {
+        background: white !important;
+        margin: 0;
+        padding: 0;
+        color: black !important;
+    }
+
+    :host {
+        background: white !important;
+    }
+
+    nav,
+    aside,
+    .acciones,
+    button,
+    select,
+    a {
+        display: none !important;
+    }
+
+    .titulo {
+        display: none !important;
+    }
+
     .contenedor,
     .cuerpo-contraste,
     .cuerpo-pastel {
         background: white !important;
-        color: black !important;
-    }
-
-    input,
-    button,
-    select,
-    .acciones {
-        display: none;
+        padding: 0 !important;
+        margin: 0 !important;
     }
 
     .factura {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 20px;
         background: white;
-        box-shadow: none;
+        border: 1px solid #000;
         border-radius: 0;
+        box-shadow: none;
+    }
+
+    .encabezado {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        border-bottom: 2px solid black;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+
+    .empresa {
+        width: 40%;
+    }
+
+    .tipo-comprobante {
+        width: 120px;
+        text-align: center;
+    }
+
+    .datos-comprobante {
+        width: 35%;
+        text-align: right;
+    }
+
+    .tipo-comprobante .letra {
+        width: 80px;
+        height: 80px;
+        margin: auto;
+        border: 3px solid black;
+        font-size: 48px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    input {
+        border: none !important;
+        background: transparent !important;
+        color: black !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: auto !important;
+        font-size: inherit !important;
+    }
+
+    .cliente {
+        border: 1px solid black;
+        padding: 12px;
+        margin-top: 15px;
+    }
+
+    .detalle {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .detalle th,
+    .detalle td {
+        border: 1px solid black;
+        padding: 8px;
+    }
+
+    .detalle th {
+        background: #e5e7eb !important;
+        color: black !important;
+    }
+
+    .impar {
+        background: transparent !important;
+    }
+
+    .totales {
+        width: 320px;
+        margin-left: auto;
+        margin-top: 20px;
+    }
+
+    .linea {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .total-final {
+        border-top: 2px solid black;
+        padding-top: 10px;
+        margin-top: 10px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .factura,
+    .cliente,
+    .detalle,
+    .totales {
+        page-break-inside: avoid;
     }
 
 }
