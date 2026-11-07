@@ -31,7 +31,9 @@ export class FacturaComponent {
   constructor(
     public servicio: FacturaService
   ) {
+
     this.facturas = [];
+
   }
 
   ngOnInit() {
@@ -57,7 +59,8 @@ export class FacturaComponent {
 
     }
 
-    const tipoInicial = TipoFactura.A;
+    const tipoInicial =
+      TipoFactura.A;
 
     this.servicio
       .obtenerProximoNumero(
@@ -139,8 +142,7 @@ export class FacturaComponent {
     }
 
     if (
-      this.facturas[0].detalles
-        .length === 0
+      this.facturas[0].detalles.length === 0
     ) {
 
       alert(
@@ -216,9 +218,149 @@ export class FacturaComponent {
 
   }
 
-  imprimir() {
+  imprimir(): void {
 
-    window.print();
+    const factura =
+      document.querySelector(
+        '.factura'
+      ) as HTMLElement;
+
+    if (!factura) {
+
+      alert(
+        'No se encontró la factura'
+      );
+
+      return;
+
+    }
+
+    const ventana =
+      window.open(
+        '',
+        '_blank',
+        'width=1000,height=800'
+      );
+
+    if (!ventana) {
+
+      return;
+
+    }
+
+    ventana.document.write(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+
+        <title>Factura</title>
+
+        <style>
+
+          body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #000;
+          }
+
+          .factura {
+            width: 100%;
+          }
+
+          button,
+          select,
+          .acciones {
+            display: none !important;
+          }
+
+          input {
+            border: none !important;
+            background: transparent !important;
+            width: auto !important;
+            color: black !important;
+          }
+
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+          }
+
+          th,
+          td {
+            border: 1px solid #000;
+            padding: 8px;
+          }
+
+          th {
+            background: #ececec;
+          }
+
+          .encabezado {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+          }
+
+          .letra {
+            border: 3px solid #000;
+            width: 80px;
+            height: 80px;
+            font-size: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+          }
+
+          .totales {
+            width: 300px;
+            margin-left: auto;
+            margin-top: 20px;
+          }
+
+          .linea {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+          }
+
+          .total-final {
+            border-top: 2px solid #000;
+            padding-top: 10px;
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 18px;
+          }
+
+        </style>
+
+      </head>
+
+      <body>
+
+        <div class="factura">
+
+          ${factura.innerHTML}
+
+        </div>
+
+      </body>
+
+      </html>
+    `);
+
+    ventana.document.close();
+
+    ventana.focus();
+
+    setTimeout(() => {
+
+      ventana.print();
+
+      ventana.close();
+
+    }, 500);
 
   }
 
