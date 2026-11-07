@@ -1,26 +1,57 @@
 <h2 class="titulo">📋 Lista de Tickets</h2>
 
-<p>
+<p class="total">
   <strong>Total tickets:</strong>
   {{ ticketsFiltrados.length }}
 </p>
 
 <div class="filtros">
 
-  <select [(ngModel)]="filtroEstado">
-    <option value="">Todos los estados</option>
-    <option value="abierto">Abiertos</option>
-    <option value="cerrado">Cerrados</option>
-  </select>
-
   <input
     type="text"
-    placeholder="Filtrar por usuario"
-    [(ngModel)]="filtroUsuario">
+    placeholder="Buscar ticket, usuario, equipo o software..."
+    [(ngModel)]="textoBusqueda"
+    (input)="filtrar()">
 
-  <button (click)="filtrar()">
-    Filtrar
-  </button>
+  <select
+    [(ngModel)]="filtroEstado"
+    (change)="filtrar()">
+
+    <option value="">
+      Todos los estados
+    </option>
+
+    <option value="abierto">
+      Abiertos
+    </option>
+
+    <option value="cerrado">
+      Cerrados
+    </option>
+
+  </select>
+
+  <select
+    [(ngModel)]="filtroUrgencia"
+    (change)="filtrar()">
+
+    <option value="">
+      Todas las urgencias
+    </option>
+
+    <option value="alta">
+      Alta
+    </option>
+
+    <option value="media">
+      Media
+    </option>
+
+    <option value="baja">
+      Baja
+    </option>
+
+  </select>
 
   <button (click)="mostrarTodas()">
     Mostrar todas
@@ -73,7 +104,9 @@
 
       <p *ngIf="t.nombre">
         <strong>
-          {{ t.tipo === 'Hardware' ? 'Equipo' : 'Software' }}:
+          {{ t.tipo === 'Hardware'
+            ? 'Equipo'
+            : 'Software' }}:
         </strong>
 
         {{ t.nombre }}
@@ -131,7 +164,7 @@
     class="empty"
     *ngIf="ticketsFiltrados.length === 0">
 
-    No hay tickets creados
+    No hay tickets encontrados
 
   </p>
 
