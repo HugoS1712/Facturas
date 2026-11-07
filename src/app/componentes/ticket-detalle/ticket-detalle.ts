@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -21,7 +26,8 @@ export class TicketDetalle implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private ticketService: TicketService
+    private ticketService: TicketService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -29,19 +35,25 @@ export class TicketDetalle implements OnInit {
     const idDoc =
       this.route.snapshot.paramMap.get('numero');
 
+    console.log('ID:', idDoc);
+
     if (!idDoc) {
       return;
     }
 
     try {
 
-      this.ticket =
+      const ticket =
         await this.ticketService.getTicket(idDoc);
 
       console.log(
         'Ticket cargado:',
-        this.ticket
+        ticket
       );
+
+      this.ticket = ticket;
+
+      this.cdr.detectChanges();
 
     } catch (error) {
 
@@ -56,21 +68,7 @@ export class TicketDetalle implements OnInit {
 
   async guardar(): Promise<void> {
 
-    if (!this.ticket) {
-
-      alert(
-        'No se encontró el ticket'
-      );
-
-      return;
-    }
-
-    if (!this.ticket.idDoc) {
-
-      alert(
-        'El ticket no tiene idDoc'
-      );
-
+    if (!this.ticket?.idDoc) {
       return;
     }
 
@@ -80,23 +78,21 @@ export class TicketDetalle implements OnInit {
         this.ticket.idDoc,
         {
           ...this.ticket,
-          fechaActualizacion: new Date()
+          fechaActualizacion:
+            new Date()
         }
       );
 
       alert(
-        '✅ Ticket actualizado correctamente'
+        '✅ Ticket actualizado'
       );
 
     } catch (error) {
 
-      console.error(
-        'Error actualizando ticket:',
-        error
-      );
+      console.error(error);
 
       alert(
-        '❌ Error al actualizar el ticket'
+        '❌ Error al actualizar'
       );
 
     }
