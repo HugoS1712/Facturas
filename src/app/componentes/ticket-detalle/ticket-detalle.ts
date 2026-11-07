@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -15,35 +15,42 @@ import { TicketService } from '../../servicios/ticket-service';
   templateUrl: './ticket-detalle.html',
   styleUrls: ['./ticket-detalle.scss']
 })
-export class TicketDetalle {
+export class TicketDetalle implements OnInit {
 
   ticket: any = null;
 
   constructor(
     private route: ActivatedRoute,
     private ticketService: TicketService
-  ) { }
+  ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
 
-    const numero =
-      this.route.snapshot.paramMap.get(
-        'numero'
+    const idDoc =
+      this.route.snapshot.paramMap.get('numero');
+
+    if (!idDoc) {
+      return;
+    }
+
+    try {
+
+      this.ticket =
+        await this.ticketService.getTicket(idDoc);
+
+      console.log(
+        'Ticket cargado:',
+        this.ticket
       );
 
-    this.ticketService
-      .getTickets()
-      .subscribe(
-        (tickets: any[]) => {
+    } catch (error) {
 
-          this.ticket =
-            tickets.find(
-              (t: any) =>
-                t.numero === numero
-            );
-
-        }
+      console.error(
+        'Error cargando ticket:',
+        error
       );
+
+    }
 
   }
 
@@ -56,7 +63,6 @@ export class TicketDetalle {
       );
 
       return;
-
     }
 
     if (!this.ticket.idDoc) {
@@ -66,20 +72,17 @@ export class TicketDetalle {
       );
 
       return;
-
     }
 
     try {
 
-      await this.ticketService
-        .actualizarTicket(
-          this.ticket.idDoc,
-          {
-            ...this.ticket,
-            fechaActualizacion:
-              new Date()
-          }
-        );
+      await this.ticketService.actualizarTicket(
+        this.ticket.idDoc,
+        {
+          ...this.ticket,
+          fechaActualizacion: new Date()
+        }
+      );
 
       alert(
         '✅ Ticket actualizado correctamente'
