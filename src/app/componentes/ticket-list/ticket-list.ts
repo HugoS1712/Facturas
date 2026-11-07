@@ -21,7 +21,8 @@ export class TicketList implements OnInit {
   ticketsFiltrados: any[] = [];
 
   filtroEstado = '';
-  filtroUsuario = '';
+  filtroUrgencia = '';
+  textoBusqueda = '';
 
   cargando = true;
 
@@ -41,15 +42,18 @@ export class TicketList implements OnInit {
       .subscribe({
         next: (datos: any[]) => {
 
-          console.log('TICKETS RECIBIDOS:', datos);
-
           this.tickets = [...datos];
           this.ticketsFiltrados = [...datos];
 
           this.cargando = false;
         },
         error: (error) => {
-          console.error('Error cargando tickets:', error);
+
+          console.error(
+            'Error cargando tickets:',
+            error
+          );
+
           this.cargando = false;
         }
       });
@@ -57,28 +61,53 @@ export class TicketList implements OnInit {
 
   filtrar(): void {
 
-    this.ticketsFiltrados = this.tickets.filter((t: any) => {
+    this.ticketsFiltrados =
+      this.tickets.filter((t: any) => {
 
-      const cumpleEstado =
-        !this.filtroEstado ||
-        t.estado === this.filtroEstado;
+        const cumpleEstado =
+          !this.filtroEstado ||
+          t.estado === this.filtroEstado;
 
-      const cumpleUsuario =
-        !this.filtroUsuario ||
-        (t.usuario ?? '')
-          .toLowerCase()
-          .includes(this.filtroUsuario.toLowerCase());
+        const cumpleUrgencia =
+          !this.filtroUrgencia ||
+          t.urgencia === this.filtroUrgencia;
 
-      return cumpleEstado && cumpleUsuario;
-    });
+        const texto =
+          this.textoBusqueda.toLowerCase();
+
+        const cumpleBusqueda =
+          texto === '' ||
+          (t.numero || '')
+            .toLowerCase()
+            .includes(texto) ||
+          (t.usuario || '')
+            .toLowerCase()
+            .includes(texto) ||
+          (t.equipo || '')
+            .toLowerCase()
+            .includes(texto) ||
+          (t.nombre || '')
+            .toLowerCase()
+            .includes(texto);
+
+        return (
+          cumpleEstado &&
+          cumpleUrgencia &&
+          cumpleBusqueda
+        );
+
+      });
   }
 
   mostrarTodas(): void {
 
     this.filtroEstado = '';
-    this.filtroUsuario = '';
+    this.filtroUrgencia = '';
+    this.textoBusqueda = '';
 
-    this.ticketsFiltrados = [...this.tickets];
+    this.ticketsFiltrados = [
+      ...this.tickets
+    ];
   }
 
   verTicket(idDoc: string): void {
