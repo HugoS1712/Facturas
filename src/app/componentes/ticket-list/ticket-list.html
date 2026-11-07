@@ -1,164 +1,150 @@
 <h2 class="titulo">📋 Lista de Tickets</h2>
 
 <p>
-    <strong>Total tickets:</strong>
-    {{ ticketsFiltrados.length }}
+  <strong>Total tickets:</strong>
+  {{ ticketsFiltrados.length }}
 </p>
 
 <div class="filtros">
 
-    <select [(ngModel)]="filtroEstado">
-        <option value="">Todos los estados</option>
-        <option value="abierto">Abiertos</option>
-        <option value="cerrado">Cerrados</option>
-    </select>
+  <select [(ngModel)]="filtroEstado">
+    <option value="">Todos los estados</option>
+    <option value="abierto">Abiertos</option>
+    <option value="cerrado">Cerrados</option>
+  </select>
 
-    <input
-        type="text"
-        placeholder="Filtrar por usuario"
-        [(ngModel)]="filtroUsuario">
+  <input
+    type="text"
+    placeholder="Filtrar por usuario"
+    [(ngModel)]="filtroUsuario">
 
-    <button (click)="filtrar()">
-        Filtrar
-    </button>
+  <button (click)="filtrar()">
+    Filtrar
+  </button>
 
-    <button (click)="mostrarTodas()">
-        Mostrar todas
-    </button>
+  <button (click)="mostrarTodas()">
+    Mostrar todas
+  </button>
 
 </div>
 
 <div class="contenedor">
 
-    <div
-        class="card"
-        *ngFor="let t of ticketsFiltrados">
+  <div
+    class="card"
+    *ngFor="let t of ticketsFiltrados">
 
-        <pre>{{ t | json }}</pre>
+    <div class="header">
 
-        <div class="header">
+      <h3
+        class="link"
+        (click)="verTicket(t.idDoc)">
 
-            <h3
-                class="link"
-                (click)="verTicket(t.idDoc)">
+        {{ t.numero }}
 
-                {{ t.numero }}
+      </h3>
 
-            </h3>
+      <span
+        class="estado"
+        [ngClass]="t.estado">
 
-            <span
-                class="estado"
-                [ngClass]="t.estado">
+        {{ t.estado }}
 
-                {{ t.estado }}
-
-            </span>
-
-        </div>
-
-        <div class="info">
-
-            <p>
-                <strong>Usuario:</strong>
-                {{ t.usuario }}
-            </p>
-
-            <p>
-                <strong>Equipo:</strong>
-                {{ t.equipo }}
-            </p>
-
-            <p>
-                <strong>Tipo:</strong>
-                {{ t.tipo }}
-            </p>
-
-            <p *ngIf="t.nombre">
-
-                <strong>
-                    {{ t.tipo === 'Hardware'
-                        ? 'Equipo'
-                        : 'Software' }}:
-                </strong>
-
-                {{ t.nombre }}
-
-            </p>
-
-        </div>
-
-        <p>
-
-            <strong>Urgencia:</strong>
-
-            <span
-                class="tag"
-                [ngClass]="t.urgencia">
-
-                {{ t.urgencia }}
-
-            </span>
-
-        </p>
-
-        <p>
-
-            <strong>Responsable:</strong>
-
-            {{ t.responsable || 'Sin asignar' }}
-
-        </p>
-
-        <div class="fechas">
-
-            <p>
-
-                🗓
-
-                {{ t.fechaCreacion?.toDate
-                    ? (t.fechaCreacion.toDate() | date:'short')
-                    : (t.fechaCreacion | date:'short') }}
-
-            </p>
-
-            <p
-                *ngIf="t.fechaCierre"
-                class="cerrado">
-
-                ✅
-
-                {{ t.fechaCierre?.toDate
-                    ? (t.fechaCierre.toDate() | date:'short')
-                    : (t.fechaCierre | date:'short') }}
-
-            </p>
-
-        </div>
-
-        <p class="detalle">
-            {{ t.detalle }}
-        </p>
+      </span>
 
     </div>
 
-    <p
-        class="empty"
-        *ngIf="ticketsFiltrados.length === 0">
+    <div class="info">
 
-        No hay tickets creados
+      <p>
+        <strong>Usuario:</strong>
+        {{ t.usuario }}
+      </p>
 
+      <p>
+        <strong>Equipo:</strong>
+        {{ t.equipo }}
+      </p>
+
+      <p>
+        <strong>Tipo:</strong>
+        {{ t.tipo }}
+      </p>
+
+      <p *ngIf="t.nombre">
+        <strong>
+          {{ t.tipo === 'Hardware' ? 'Equipo' : 'Software' }}:
+        </strong>
+
+        {{ t.nombre }}
+      </p>
+
+    </div>
+
+    <p>
+      <strong>Urgencia:</strong>
+
+      <span
+        class="tag"
+        [ngClass]="t.urgencia">
+
+        {{ t.urgencia }}
+
+      </span>
     </p>
+
+    <p>
+      <strong>Responsable:</strong>
+      {{ t.responsable || 'Sin asignar' }}
+    </p>
+
+    <div class="fechas">
+
+      <p>
+        🗓
+        {{ t.fechaCreacion?.toDate
+          ? (t.fechaCreacion.toDate() | date:'short')
+          : (t.fechaCreacion | date:'short') }}
+      </p>
+
+      <p
+        *ngIf="t.fechaCierre"
+        class="cerrado">
+
+        ✅
+
+        {{ t.fechaCierre?.toDate
+          ? (t.fechaCierre.toDate() | date:'short')
+          : (t.fechaCierre | date:'short') }}
+
+      </p>
+
+    </div>
+
+    <p class="detalle">
+      {{ t.detalle }}
+    </p>
+
+  </div>
+
+  <p
+    class="empty"
+    *ngIf="ticketsFiltrados.length === 0">
+
+    No hay tickets creados
+
+  </p>
 
 </div>
 
 <div class="acciones">
 
-    <a
-        routerLink="/ticket"
-        class="btn">
+  <a
+    routerLink="/ticket"
+    class="btn">
 
-        ➕ Crear nuevo ticket
+    ➕ Crear nuevo ticket
 
-    </a>
+  </a>
 
 </div>

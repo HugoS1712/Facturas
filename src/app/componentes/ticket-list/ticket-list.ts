@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  RouterModule,
-  Router
-} from '@angular/router';
-
+import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TicketService } from '../../servicios/ticket-service';
 
@@ -32,96 +28,49 @@ export class TicketList implements OnInit {
   constructor(
     private ticketService: TicketService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-
     this.cargarTickets();
-
   }
 
   cargarTickets(): void {
 
-    const usuarioLogueado =
-      localStorage.getItem(
-        'usuarioLogueado'
-      );
-
-    const rol =
-      localStorage.getItem(
-        'rol'
-      );
-
     this.ticketService
       .getTickets()
-      .subscribe(
-        (datos: any[]) => {
+      .subscribe({
+        next: (datos: any[]) => {
 
-          console.log(
-            'DATOS:',
-            datos
-          );
+          console.log('TICKETS RECIBIDOS:', datos);
 
-          console.log(
-            'CANTIDAD:',
-            datos.length
-          );
-
-          if (rol === 'admin') {
-
-            this.tickets = [
-              ...datos
-            ];
-
-          } else {
-
-            this.tickets =
-              datos.filter(
-                t =>
-                  t.usuario ===
-                  usuarioLogueado
-              );
-
-          }
-
-          this.ticketsFiltrados = [
-            ...this.tickets
-          ];
+          this.tickets = [...datos];
+          this.ticketsFiltrados = [...datos];
 
           this.cargando = false;
-
+        },
+        error: (error) => {
+          console.error('Error cargando tickets:', error);
+          this.cargando = false;
         }
-      );
-
+      });
   }
 
   filtrar(): void {
 
-    this.ticketsFiltrados =
-      this.tickets.filter(
-        (t: any) => {
+    this.ticketsFiltrados = this.tickets.filter((t: any) => {
 
-          const cumpleEstado =
-            this.filtroEstado === '' ||
-            t.estado === this.filtroEstado;
+      const cumpleEstado =
+        !this.filtroEstado ||
+        t.estado === this.filtroEstado;
 
-          const cumpleUsuario =
-            this.filtroUsuario === '' ||
-            (t.usuario || '')
-              .toLowerCase()
-              .includes(
-                this.filtroUsuario
-                  .toLowerCase()
-              );
+      const cumpleUsuario =
+        !this.filtroUsuario ||
+        (t.usuario ?? '')
+          .toLowerCase()
+          .includes(this.filtroUsuario.toLowerCase());
 
-          return (
-            cumpleEstado &&
-            cumpleUsuario
-          );
-
-        }
-      );
-
+      return cumpleEstado && cumpleUsuario;
+    });
   }
 
   mostrarTodas(): void {
@@ -129,21 +78,14 @@ export class TicketList implements OnInit {
     this.filtroEstado = '';
     this.filtroUsuario = '';
 
-    this.ticketsFiltrados = [
-      ...this.tickets
-    ];
-
+    this.ticketsFiltrados = [...this.tickets];
   }
 
-  verTicket(
-    numero: string
-  ): void {
+  verTicket(idDoc: string): void {
 
     this.router.navigate([
       '/tickets',
-      numero
+      idDoc
     ]);
-
   }
-
 }
