@@ -2,8 +2,72 @@
 
   <h2>Detalle del Ticket</h2>
 
-  <h3>Prueba de datos</h3>
+  <div *ngIf="ticket">
 
-  <pre>{{ ticket | json }}</pre>
+    <div class="card">
+
+      <h3>{{ ticket.numero }}</h3>
+
+      <p>
+        <strong>Usuario:</strong>
+        {{ ticket.usuario }}
+      </p>
+
+      <p>
+        <strong>Equipo:</strong>
+        {{ ticket.equipo }}
+      </p>
+
+      <p>
+        <strong>Tipo:</strong>
+        {{ ticket.tipo }}
+      </p>
+
+      <div class="form-group">
+
+        <label>Estado</label>
+
+        <select [(ngModel)]="ticket.estado">
+          <option value="abierto">Abierto</option>
+          <option value="cerrado">Cerrado</option>
+        </select>
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Urgencia</label>
+
+        <select [(ngModel)]="ticket.urgencia">
+          <option value="alta">Alta</option>
+          <option value="media">Media</option>
+          <option value="baja">Baja</option>
+        </select>
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Responsable</label>
+
+        <input [(ngModel)]="ticket.responsable">
+
+      </div>
+
+      <div class="form-group">
+
+        <label>Detalle</label>
+
+        <textarea [(ngModel)]="ticket.detalle"></textarea>
+
+      </div>
+
+      <button (click)="guardar()">
+        💾 Guardar cambios
+      </button>
+
+    </div>
+
+  </div>
 
 </div>
